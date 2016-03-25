@@ -1,0 +1,16 @@
+--LIBRARY--
+http://www.bookrix.com/books.html
+<big class="item-title"><a class="word-break" [^>]*>(.+?)</a></big>
+--LIBRARY--
+--LIBRARY--
+http://www.goodreads.com/ebooks
+<a class="bookTitle" [^>]*>(.+?)</a>
+--LIBRARY--
+--LIBRARY--
+http://www.freebookshub.com/
+<h2 class="entry-title feat-title"><a rel="bookmark" [^>]*>(.+?)</a></h2>
+--LIBRARY--
+--LIBRARY--
+www.test.com
+sdsasdsad
+--LIBRARY--
