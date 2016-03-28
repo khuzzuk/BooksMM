@@ -1,8 +1,6 @@
-package Model.Libraries;
+package model.Libraries;
 
-import Model.DatabaseManager.LibrariesLoader;
-import View.DBSaver;
-import org.apache.log4j.Category;
+import model.databaseManager.LibrariesLoader;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

@@ -1,8 +1,7 @@
 package View;
 
-import Model.DatabaseManager.FileSaver;
-import Model.Libraries.AvailableLibraries;
-import org.apache.log4j.Category;
+import model.databaseManager.FileSaver;
+import model.Libraries.AvailableLibraries;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

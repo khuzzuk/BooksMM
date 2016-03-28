@@ -1,6 +1,6 @@
-package Model.Libraries;
+package model.Libraries;
 
-import Model.HtmlDownloader;
+import model.HtmlDownloader;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;

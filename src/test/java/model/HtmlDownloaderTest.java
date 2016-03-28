@@ -1,7 +1,6 @@
 package model;
 
 
-import Model.HtmlDownloader;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

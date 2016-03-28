@@ -1,13 +1,10 @@
-package Model.DatabaseManager;
+package model.databaseManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by mmaczka on 22.03.16.
- */
 public class FileReader extends FileHandler {
 
     String contentNeeded = "";
@@ -21,7 +18,6 @@ public class FileReader extends FileHandler {
         boolean readNext = true;
         String endLine = "\n";
         boolean checklibrary = false;
-
         while (scanner.hasNextLine()) {
             readNext = true;
 

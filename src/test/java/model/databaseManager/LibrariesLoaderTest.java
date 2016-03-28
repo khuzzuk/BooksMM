@@ -1,7 +1,6 @@
 package model.databaseManager;
 
-import Model.DatabaseManager.LibrariesLoader;
-import Model.Libraries.BookFinder;
+import model.Libraries.BookFinder;
 import org.testng.annotations.Test;
 
 import java.io.*;

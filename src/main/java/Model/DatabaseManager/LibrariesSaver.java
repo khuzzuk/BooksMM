@@ -1,4 +1,4 @@
-package Model.DatabaseManager;
+package model.databaseManager;
 
 import org.apache.log4j.Logger;
 

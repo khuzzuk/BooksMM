@@ -1,6 +1,6 @@
 package model.libraries;
 
-import Model.Libraries.BookFinder;
+import model.Libraries.BookFinder;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
