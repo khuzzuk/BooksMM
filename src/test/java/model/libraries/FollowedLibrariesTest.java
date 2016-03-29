@@ -1,7 +1,5 @@
 package model.libraries;
 
-import model.Libraries.BookFinder;
-import model.Libraries.FollowedLibraries;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

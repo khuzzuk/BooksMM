@@ -1,7 +1,7 @@
 package model.databaseManager;
 
-import View.DBWriter;
-import model.Libraries.Library;
+import view.DBWriter;
+import model.libraries.Library;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -22,10 +22,10 @@ import java.util.List;
  */
 public class DBRW {
     private static final DBRW DBRW = new DBRW();
-    private static final String LIBRARY_ELEMENT = "Library";
-    private static final String LIBRARY_NAME_ELEMENT = "name";
-    private static final String LIBRARY_DATE_ELEMENT = "Date";
-    private static final String LIBRARY_TITLE_ELEMENT = "Title";
+    public static final String LIBRARY_ELEMENT = "Library";
+    public static final String LIBRARY_NAME_ELEMENT = "name";
+    public static final String LIBRARY_DATE_ELEMENT = "Date";
+    public static final String LIBRARY_TITLE_ELEMENT = "Title";
     static Document DB;
     private static List<Library> libraries;
     private static File dbFile = new File("DB.xml");

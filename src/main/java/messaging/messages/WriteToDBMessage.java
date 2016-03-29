@@ -1,7 +1,6 @@
 package messaging.messages;
 
-import model.Libraries.Library;
-import org.w3c.dom.Element;
+import model.libraries.Library;
 
 public class WriteToDBMessage implements Message {
     Library item;

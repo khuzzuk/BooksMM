@@ -1,8 +1,6 @@
 package model.libraries;
 
 import model.databaseManager.LibrariesLoader;
-import model.Libraries.AvailableLibraries;
-import model.Libraries.BookFinder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

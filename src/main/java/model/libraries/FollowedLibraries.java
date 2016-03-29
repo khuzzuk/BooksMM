@@ -1,4 +1,4 @@
-package model.Libraries;
+package model.libraries;
 
 import org.apache.log4j.Logger;
 

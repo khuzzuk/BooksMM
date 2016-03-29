@@ -1,14 +1,10 @@
-package View;
+package view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.apache.log4j.Category;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * Created by mmaczka on 18.03.16.

@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import model.databaseManager.DBRW;
 import messaging.Subscriber;

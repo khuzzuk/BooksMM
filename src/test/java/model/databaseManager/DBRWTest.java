@@ -1,6 +1,6 @@
 package model.databaseManager;
 
-import model.Libraries.Library;
+import model.libraries.Library;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

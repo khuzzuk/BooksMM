@@ -1,6 +1,6 @@
 package model.databaseManager;
 
-import model.Libraries.BookFinder;
+import model.libraries.BookFinder;
 
 import java.io.File;
 import java.io.IOException;

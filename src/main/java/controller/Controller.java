@@ -1,10 +1,10 @@
-package Controller;
+package controller;
 
 import model.databaseManager.FileReader;
 import model.databaseManager.LibrariesSaver;
-import model.Libraries.AvailableLibraries;
-import model.Libraries.BookFinder;
-import model.Libraries.FollowedLibraries;
+import model.libraries.AvailableLibraries;
+import model.libraries.BookFinder;
+import model.libraries.FollowedLibraries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

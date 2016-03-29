@@ -1,4 +1,4 @@
-package model.Libraries;
+package model.libraries;
 
 import model.databaseManager.LibrariesLoader;
 import org.apache.log4j.Logger;
@@ -6,9 +6,6 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by mmaczka on 21.03.16.
- */
 public class AvailableLibraries {
     public ArrayList<BookFinder> listOfLibraries =new ArrayList<BookFinder>();
     public ArrayList <String>stringListForGUI=new ArrayList<String>();
