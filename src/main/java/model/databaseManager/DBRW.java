@@ -65,6 +65,12 @@ public class DBRW {
         createXMLContent();
         updateDBFile();
     }
+
+    /**
+     * This method will write an {@link org.w3c.dom.Element} object to the log file.
+     * Be aware that the {@link org.w3c.dom.Element} will be added to the root element of a document.
+     * @param item {@link org.w3c.dom.Element} that will be added.
+     */
     public static void write(Element item){
         DB.getDocumentElement().appendChild(item);
         updateDBFile();
@@ -124,6 +130,12 @@ public class DBRW {
         }
     }
 
+    /**
+     * This method extract all entries for expected libraries.
+     * Be aware that libraries will be compared by name.
+     * @param name name of the library resided in log file.
+     * @return
+     */
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
         if (libraries==null) return librariesByName;
