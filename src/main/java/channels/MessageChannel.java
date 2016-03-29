@@ -31,13 +31,13 @@ public class MessageChannel {
         subscribers.put(messageClass, list);
     }
 
-    public void publish(Message message) {
-        if (worker==null) activateWorker();
-        channelQueue.add(message);
+    public static void publish(Message message) {
+        if (channel.worker==null) activateWorker();
+        channel.channelQueue.add(message);
     }
 
-    private void activateWorker() {
-        worker = new MessageWorker(channelQueue,subscribers);
-        worker.activate(1);
+    private static void activateWorker() {
+        channel.worker = new MessageWorker(channel.channelQueue,channel.subscribers);
+        channel.worker.activate(1);
     }
 }
