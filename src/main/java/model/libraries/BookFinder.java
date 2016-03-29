@@ -20,7 +20,7 @@ public class BookFinder {
     private Logger logger = Logger.getLogger(BookFinder.class);
 
     public String listOfBooks() {
-        String result = "";
+        StringBuilder result = new StringBuilder(2000);
 
         String site = HtmlDownloader.downloadPage(url);
 
@@ -32,10 +32,10 @@ public class BookFinder {
         }
 
         for(String match : allMatches) {
-            result += match + "\n";
+            result.append(match + "\n");
         }
 
-        return result;
+        return result.toString();
     }
 
      public BookFinder(String url, String pattern){

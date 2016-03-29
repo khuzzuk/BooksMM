@@ -15,9 +15,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class MessageChannel {
     public static final MessageChannel channel = new MessageChannel();
-    private BlockingDeque<Message> channelQueue;
-    private Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers;
-    MessageWorker worker;
+    private final BlockingDeque<Message> channelQueue;
+    private final Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers;
+    private MessageWorker worker;
 
     private MessageChannel() {
         channelQueue = new LinkedBlockingDeque<>();
@@ -31,7 +31,7 @@ public class MessageChannel {
         subscribers.put(messageClass, list);
     }
 
-    public void send(Message message) {
+    public void publish(Message message) {
         if (worker==null) activateWorker();
         channelQueue.add(message);
     }

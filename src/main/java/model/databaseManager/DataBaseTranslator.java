@@ -14,8 +14,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
-public class DataBaseTranslator {
-    public DataBaseTranslator() throws ParserConfigurationException, IOException, SAXException, TransformerException {
+class DataBaseTranslator {
+    private DataBaseTranslator() throws ParserConfigurationException, IOException, TransformerException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(DataBaseTranslator.class.getResourceAsStream("/DB")));
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         Element db = doc.createElement("DB");
@@ -36,6 +36,7 @@ public class DataBaseTranslator {
             } else if (libraryElement) {
                 if (line.equals("--DATE--")) dateElement = !dateElement;
                 else if (dateElement) {
+                    //noinspection ConstantConditions
                     dateElement = !dateElement;
                     Element date = doc.createElement("Date");
                     date.setTextContent(line);
@@ -61,7 +62,7 @@ public class DataBaseTranslator {
     public static void main(String[] args) {
         try {
             new DataBaseTranslator();
-        } catch (ParserConfigurationException | TransformerException | IOException | SAXException e) {
+        } catch (ParserConfigurationException | TransformerException | IOException e) {
             e.printStackTrace();
         }
     }

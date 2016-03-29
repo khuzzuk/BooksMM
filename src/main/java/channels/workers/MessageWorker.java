@@ -16,7 +16,7 @@ public class MessageWorker {
         this.channel =channel;
         this.subscribers = subscribers;
     }
-    public void activate (int numberOfWorkers){
+    public void activate (@SuppressWarnings("SameParameterValue") int numberOfWorkers){
         for (int i=0; i<numberOfWorkers || i<30; i++){
             new Thread(new Worker()).start();
         }
@@ -26,6 +26,7 @@ public class MessageWorker {
         @Override
         public void run() {
             Message message;
+            //noinspection InfiniteLoopStatement
             while (true){
                 message = channel.poll();
                 if (message==null){
@@ -36,6 +37,7 @@ public class MessageWorker {
                     }
                 }
                 else{
+                    @SuppressWarnings("unchecked")
                     List<Subscriber<? extends Message>> currentSubscribers = subscribers.get(message.getClass());
                     try {
                         if (currentSubscribers==null)
@@ -43,7 +45,9 @@ public class MessageWorker {
                     } catch (NoSuchElementException e) {
                         e.printStackTrace();
                     }
+                    //noinspection ConstantConditions
                     for (Subscriber s : currentSubscribers){
+                        //noinspection unchecked
                         s.receive(message);
                     }
                 }
