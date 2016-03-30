@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+  <Romance>
+    <url>http://www.bookrix.com/books;romance,id:56,sort:1.html</url>
+  </Romance>
+  <IT>
+    <url>http://www.bookrix.com/books;technology-engineering,id:48,sort:1.html</url>
+  </IT>
+  <History>
+    <url>http://www.bookrix.com/books;history,id:21,sort:1.html</url>
+  </History>
+  <noCategory>
+    <url>http://www.bookrix.com/books;sort:1.html</url>
+    <url>http://www.goodreads.com/ebooks</url>
+    <url>http://www.freebookshub.com/</url>
+  </noCategory>
+</root>

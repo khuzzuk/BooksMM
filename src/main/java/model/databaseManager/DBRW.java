@@ -22,7 +22,7 @@ import java.util.List;
  * It has only static methods, and no instance of this object is provided.
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
-public class DBRW {
+public class DBRW implements XMLWriter {
     private static final DBRW DBRW = new DBRW();
     public static final String LIBRARY_ELEMENT = "Library";
     private static final String LIBRARY_NAME_ELEMENT = "name";
@@ -92,7 +92,7 @@ public class DBRW {
         libraries.add(library);
         newXML();
         createXMLContent();
-        updateDBFile();
+        DBRW.updateDBFile(dbFile, DB);
     }
 
     /**
@@ -102,7 +102,7 @@ public class DBRW {
      */
     public static void write(Element item){
         DB.getDocumentElement().appendChild(item);
-        updateDBFile();
+        DBRW.updateDBFile(dbFile,DB);
     }
 
     private static void createXMLContent() {
@@ -145,18 +145,6 @@ public class DBRW {
      */
     public static void setOutputDBFile(File file){
         dbFile=file;
-    }
-
-    private static void updateDBFile() {
-        try (FileOutputStream outputStream = new FileOutputStream(dbFile)){
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            transformer.transform(new DOMSource(DB), new StreamResult(outputStream));
-        } catch (TransformerException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
