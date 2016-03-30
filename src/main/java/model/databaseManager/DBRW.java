@@ -1,5 +1,7 @@
 package model.databaseManager;
 
+import messaging.MessageProducer;
+import messaging.messages.FinishedTaskMessage;
 import org.apache.log4j.Logger;
 import messaging.subscribers.DBWriter;
 import model.libraries.Library;
@@ -22,7 +24,7 @@ import java.util.List;
  * It has only static methods, and no instance of this object is provided.
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
-public class DBRW implements XMLWriter {
+public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
     private static final DBRW DBRW = new DBRW();
     public static final String LIBRARY_ELEMENT = "Library";
     private static final String LIBRARY_NAME_ELEMENT = "name";
@@ -41,6 +43,8 @@ public class DBRW implements XMLWriter {
      * In order to reset logs just invoke this method again.
      * It will then read a log file and eventually, when no file
      * is found, it will create a new one.
+     * Please mind, that you must initialize {@link DBRW} explicitly,
+     * since there is no auto-initialization with first use.
      */
     public static void initializeDB(){
         libraries = new ArrayList<>();
@@ -93,6 +97,7 @@ public class DBRW implements XMLWriter {
         newXML();
         createXMLContent();
         DBRW.updateDBFile(dbFile, DB);
+        DBRW.send(new FinishedTaskMessage());
     }
 
     /**

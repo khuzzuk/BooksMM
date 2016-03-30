@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <DB>
-  <Library name="bookrix">
+  <name name="bookrix">
     <Date>2016/03/23</Date>
     <Title>New Life </Title>
     <Title>A cute love story</Title>
@@ -12,8 +12,8 @@
     <Title>Dragon Girl</Title>
     <Title>My Sophomore Year</Title>
     <Title>Kingdom of a thousand</Title>
-  </Library>
-  <Library name="goodreads">
+  </name>
+  <name name="goodreads">
     <Date>2016/03/23</Date>
     <Title>Anthology Complex</Title>
     <Title>Stuff My Stocking: M/M Romance Stories that are Nice and… Naughty</Title>
@@ -65,8 +65,8 @@
     <Title>عائد إلى حيفا</Title>
     <Title>ثلاثية غرناطة</Title>
     <Title>Reclaim: The Septemist Manifesto</Title>
-  </Library>
-  <Library name="freebookshub">
+  </name>
+  <name name="freebookshub">
     <Date>2016/03/23</Date>
     <Title>Contingency (Covenant of Trust Book 1)</Title>
     <Title>Close Up the Sky</Title>
@@ -98,8 +98,8 @@
     <Title>Secrets of Small-House Living</Title>
     <Title>Maui Madness (Zoe Donovan Mystery Book 7)</Title>
     <Title>David Copperfield: Personal History of David Copperfield (Penguin Classics)</Title>
-  </Library>
-  <Library name="bookrix">
+  </name>
+  <name name="bookrix">
     <Date>2016/03/23</Date>
     <Title>New Life </Title>
     <Title>A cute love story</Title>
@@ -111,8 +111,8 @@
     <Title>Dragon Girl</Title>
     <Title>My Sophomore Year</Title>
     <Title>Kingdom of a thousand</Title>
-  </Library>
-  <Library name="goodreads">
+  </name>
+  <name name="goodreads">
     <Date>2016/03/23</Date>
     <Title>Anthology Complex</Title>
     <Title>Stuff My Stocking: M/M Romance Stories that are Nice and… Naughty</Title>
@@ -164,8 +164,8 @@
     <Title>عائد إلى حيفا</Title>
     <Title>ثلاثية غرناطة</Title>
     <Title>Reclaim: The Septemist Manifesto</Title>
-  </Library>
-  <Library name="freebookshub">
+  </name>
+  <name name="freebookshub">
     <Date>2016/03/23</Date>
     <Title>Contingency (Covenant of Trust Book 1)</Title>
     <Title>Close Up the Sky</Title>
@@ -197,5 +197,104 @@
     <Title>Secrets of Small-House Living</Title>
     <Title>Maui Madness (Zoe Donovan Mystery Book 7)</Title>
     <Title>David Copperfield: Personal History of David Copperfield (Penguin Classics)</Title>
-  </Library>
+  </name>
+  <name name="bookrix">
+    <Date>2016/3/30</Date>
+    <Title>Bookrix Marauders Truth Or Dare Competition</Title>
+    <Title>A New Leaf</Title>
+    <Title>`</Title>
+    <Title>Awash With Tears</Title>
+    <Title>Awake</Title>
+    <Title>Underestimated</Title>
+    <Title>Parent With Purpose</Title>
+    <Title>Is This Real?</Title>
+    <Title>Facebook Posts and Other Stuff</Title>
+    <Title>Two Steps Forward, and Two-Hundred Steps Back</Title>
+  </name>
+  <name name="goodreads">
+    <Date>2016/3/30</Date>
+    <Title>Anthology Complex</Title>
+    <Title>Stuff My Stocking: M/M Romance Stories that are Nice and… Naughty</Title>
+    <Title>Broken</Title>
+    <Title>James Potter and the Hall of Elders&amp;#39; Crossing (James Potter, #1)</Title>
+    <Title>Of Honor and Love</Title>
+    <Title>The Fault in Our Stars</Title>
+    <Title>Gitanjali</Title>
+    <Title>The Secret Garden</Title>
+    <Title>The Great Book of Best Quotes Of All Time</Title>
+    <Title>تحفة العروس</Title>
+    <Title>دليل علم لغة الجسد</Title>
+    <Title>رحلتي من الشك إلى الإيمان</Title>
+    <Title>Body Language</Title>
+    <Title>Figure Drawing for All It&amp;#39;s Worth</Title>
+    <Title>James Potter and the Curse of the Gatekeeper (James Potter, #2)</Title>
+    <Title>نصف إنعكاس</Title>
+    <Title>الخالدون مائة، أعظمهم محمد صلى الله عليه وسلم</Title>
+    <Title>أنت لي</Title>
+    <Title>And Then There Were None</Title>
+    <Title>Romeo and Juliet</Title>
+    <Title>You Melted Me</Title>
+    <Title>James Potter and the Vault of Destinies (James Potter, #3)</Title>
+    <Title>രണ്ടാമൂഴം | Randamoozham</Title>
+    <Title>The Mating (Law of the Lycans, #3)</Title>
+    <Title>End of the Beginning</Title>
+    <Title>Friars and Filipinos: An Abridged Translation of Dr. Jose Rizal&amp;#39;s Tagalog Novel, Noli Me Tangere</Title>
+    <Title>City of Bones (The Mortal Instruments, #1)</Title>
+    <Title>Show Me Yours</Title>
+    <Title>Little Red Riding Crop (The Original Sinners, #0.6)</Title>
+    <Title>ليتها تقرأ</Title>
+    <Title>فوق الدولة: جمهورية الضباط في مصر</Title>
+    <Title>أنا ستيف: ستيف جوبز كما ترسمه كلماته</Title>
+    <Title>The Big Questions: A Short Introduction to Philosophy</Title>
+    <Title>More than Moonlight (Lucky Moon, #0.5)</Title>
+    <Title>Bran&amp;#39;s Story (The Slave Breakers, #1)</Title>
+    <Title>القرآن الكريم</Title>
+    <Title>Animal Farm</Title>
+    <Title>Play With Me (Grover Beach Team, #1)</Title>
+    <Title>سر المعبد: الأسرار الخفية لجماعة الإخوان المسلمين</Title>
+    <Title>يوميات اتنين مخطوبين</Title>
+    <Title>Pride and Prejudice</Title>
+    <Title>Don&amp;#39;t Read in the Closet: GayRomLit Retreat 2011 Special Edition</Title>
+    <Title>Jane Eyre</Title>
+    <Title>مذكرات حرب أكتوبر</Title>
+    <Title>Physics of the Future: How Science Will Shape Human Destiny and Our Daily Lives by the Year 2100</Title>
+    <Title>Evenfall: Volume 1: Director&amp;#39;s Cut (In the Company of Shadows, #1 part #1)</Title>
+    <Title>في ديسمبر تنتهي كل الأحلام</Title>
+    <Title>عائد إلى حيفا</Title>
+    <Title>ثلاثية غرناطة</Title>
+    <Title>Reclaim: The Septemist Manifesto</Title>
+  </name>
+  <name name="freebookshub">
+    <Date>2016/3/30</Date>
+    <Title>Endless Vacation</Title>
+    <Title>The Beloved Daughter</Title>
+    <Title>Sons of Thunder</Title>
+    <Title>The Mindbender&amp;#8211;A Suspense Novel</Title>
+    <Title>Star Wanderers: Outworlder (Part I)</Title>
+    <Title>The False Prince (Fall Of A King Book 1)</Title>
+    <Title>THREE DAYS to DIE (Aaron Quinn thriller series, No. 1)</Title>
+    <Title>Paradise Found: That Second Chance, Book 4</Title>
+    <Title>The Life and Times of Jesus: From His Earthly Beginnings to the Sermon on the Mount (Part I)</Title>
+    <Title>Project StrikeForce</Title>
+    <Title>Sarah Woods Mystery Series (Volume 1) Box Set (Sarah Woods Mystery Series Boxset)</Title>
+    <Title>Myrkron (The Chronicles of the Myrkron Book 2)</Title>
+    <Title>The Warble (The Bernovem Chronicles Book 1)</Title>
+    <Title>150 Easy Classic Chicken Recipes</Title>
+    <Title>John Milton&amp;#8217;s Paradise Lost In Plain English</Title>
+    <Title>Mission Compromised: A Novel (Peter Newman Book 1)</Title>
+    <Title>Finding Out: A Novel</Title>
+    <Title>The Day I Was Crucified: As Told by Jesus Christ</Title>
+    <Title>Rooms</Title>
+    <Title>Dragon Isle (The Legend of Vanx Malic Book 2)</Title>
+    <Title>The Watched &amp;#8211; CSI Reilly Steel #4</Title>
+    <Title>A Plain Scandal (An Appleseed Creek Mystery Book 2)</Title>
+    <Title>The Curvy Girls Club: Where Confidence is the New Black</Title>
+    <Title>Entwined (Eternal Guardians Book 2)</Title>
+    <Title>Immanuel&amp;#8217;s Veins</Title>
+    <Title>The Ups and Downs of Being Dead</Title>
+    <Title>How Forever Feels (Friends First)</Title>
+    <Title>Decaying Humanity</Title>
+    <Title>The Messiah Matrix</Title>
+    <Title>Sherlock Holmes and the Case of the Sword Princess (The Great Detective in Love Book 1)</Title>
+  </name>
 </DB>

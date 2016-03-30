@@ -38,6 +38,6 @@ public class MessageChannel {
 
     private static void activateWorker() {
         channel.worker = new MessageWorker(channel.channelQueue,channel.subscribers);
-        channel.worker.activate(1);
+        channel.worker.activate();
     }
 }

@@ -1,13 +1,17 @@
 package model.databaseManager;
 
+import messaging.subscribers.FinishedTaskSubscriber;
 import model.libraries.Library;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import view.QueryMaker;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class DBRWTest {
 
@@ -16,6 +20,8 @@ public class DBRWTest {
 
     @Test(groups = "fast")
     public void testWriteToNewXml() {
+        QueryMaker query = mock(QueryMaker.class);
+        new FinishedTaskSubscriber(query);
         DBRW.initializeDB();
         DBRW.setOutputDBFile(testFile);
         DBRW.write(new Library(testElementName, "1"));
@@ -35,5 +41,10 @@ public class DBRWTest {
         int testElementsInFile = e.getLength();
         int expectedCount = 1;
         assertThat(testElementsInFile).isEqualTo(expectedCount);
+    }
+
+    @AfterMethod
+    public void tearDown() throws Exception {
+        testFile.delete();
     }
 }

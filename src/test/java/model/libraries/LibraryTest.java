@@ -7,25 +7,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LibraryTest {
 
-    private Library l;
+    private Library library;
 
     @BeforeMethod
     public void setUp() throws Exception {
-        l = new Library("name", "date");
+        library = new Library("name", "date");
     }
 
     @Test(groups = "fast")
     public void testAddTitle() {
-        l.add("title");
-        int actualTitlesNumber = l.getTitles().size();
+        library.add("title");
+        int actualTitlesNumber = library.getTitles().size();
         int expectedNumber = 1;
         assertThat(actualTitlesNumber).isEqualTo(expectedNumber);
     }
 
     @Test(groups = "fast")
     public void testAddArrayOfTitles() {
-        l.addAll("title1","title2");
-        int actualTitlesNumber = l.getTitles().size();
+        library.addAll("title1","title2");
+        int actualTitlesNumber = library.getTitles().size();
         int expectedNumber = 2;
         assertThat(actualTitlesNumber).isEqualTo(expectedNumber);
     }

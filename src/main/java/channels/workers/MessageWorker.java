@@ -16,10 +16,13 @@ public class MessageWorker {
         this.channel =channel;
         this.subscribers = subscribers;
     }
-    public void activate (@SuppressWarnings("SameParameterValue") int numberOfWorkers){
-        for (int i=0; i<numberOfWorkers || i<30; i++){
+
+    /**
+     * This method will create one worker in separate thread that will compute communications between
+     * objects. Mind that only one worker is active, so every message will be processed in one thread.
+     */
+    public void activate(){
             new Thread(new Worker()).start();
-        }
     }
 
     private class Worker implements Runnable {

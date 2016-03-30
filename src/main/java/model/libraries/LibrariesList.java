@@ -22,7 +22,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
     private Document doc;
     private File libFile = new File("libraries.xml");
     private static final String URL_ELEMENT = "url";
-    private static final String NAME_ELEMENT = "name";
+    private static final String NAME_ATTRIBUTE = "name";
 
     private void startDB() {
         doc = getDocument();
@@ -39,6 +39,10 @@ public class LibrariesList implements XMLWriter, XMLParser {
         updateDBFile(libFile, doc);
     }
 
+    /**
+     * This method will alternate an external xml file with links to the libraries.
+     * @param libFile {@link File} that don't have to exist.
+     */
     public void setLibFile(File libFile) {
         this.libFile = libFile;
     }
@@ -97,9 +101,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
         if (doc == null) initializeLibraries();
         Element address = doc.createElement(URL_ELEMENT);
         address.setTextContent(url);
-        Element nameElement = doc.createElement(NAME_ELEMENT);
-        nameElement.setTextContent(name);
-        address.appendChild(nameElement);
+        address.setAttribute(NAME_ATTRIBUTE, name);
         Element root = (Element) doc.getElementsByTagName(category.toString()).item(0);
         root.appendChild(address);
         updateDBFile(libFile, doc);

@@ -22,3 +22,5 @@ Lack of clean code.
 somewhere you can find logger.fatal - but it is simple error.
 Project didn't leave IDE - all paths links to sources.
 Lots of ineffective string concatenations. Every operation logging books require computing strings concatenation with simple "+" operator.
+
+Estimated finish time - two weeks.

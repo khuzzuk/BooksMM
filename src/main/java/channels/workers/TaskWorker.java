@@ -3,6 +3,7 @@ package channels.workers;
 import channels.Task;
 import channels.TaskChannel;
 import messaging.MessageProducer;
+import messaging.messages.FinishedTaskMessage;
 import messaging.messages.WriteToDBMessage;
 import model.libraries.Library;
 
