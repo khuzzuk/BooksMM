@@ -1,5 +1,6 @@
 Software failed to run after first compile.
 After writing some tests it came out, that FreeBooksHub is not correctly computed. The result is always 0 titles.
+Every query (in every day) results with the same titles. It's because links list most popular books, not newest ones.
 Starting points in main methods links to hardcoded paths with username account.
 Meny fields are public - major refactor needed.
 Mane paths in the code links to file with "IdeaProject/src/..." - they won't work after compile on another machine.

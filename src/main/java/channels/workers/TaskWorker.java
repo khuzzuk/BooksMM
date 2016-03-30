@@ -28,7 +28,7 @@ public class TaskWorker {
                 }
                 else {
                     Library library = task.getLibrary();
-                    new WriteToDBMessage(library);
+                    send(new WriteToDBMessage(library));
                 }
             }
         }

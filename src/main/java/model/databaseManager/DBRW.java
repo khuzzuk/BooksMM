@@ -1,5 +1,6 @@
 package model.databaseManager;
 
+import org.apache.log4j.Logger;
 import view.DBWriter;
 import model.libraries.Library;
 import org.w3c.dom.Document;
@@ -17,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is responsible for operation on xml file wich logs information about found books.
+ * This class is responsible for operation on xml file which logs information about found books.
  * It has only static methods, and no instance of this object is provided.
+ * It will read and write a file. Also it has Subscriber helper class {@link view.DBWriter}.
  */
 public class DBRW {
     private static final DBRW DBRW = new DBRW();
@@ -29,20 +31,47 @@ public class DBRW {
     static Document DB;
     private static List<Library> libraries;
     private static File dbFile = new File("DB.xml");
+    private static final Logger logger = Logger.getLogger(DBRW.class);
 
     private DBRW() {
     }
 
-    static void initializeDB(){
+    /**
+     * This method will initialize reading and writing logs.
+     * In order to reset logs just invoke this method again.
+     * It will then read a log file and eventually, when no file
+     * is found, it will create a new one.
+     */
+    public static void initializeDB(){
         libraries = new ArrayList<>();
+        if (!dbFile.exists()) InitializeDBFile();
+        else readDBFile();
+        new DBWriter();
+    }
+
+    private static void readDBFile() {
         try(InputStream stream = new FileInputStream(dbFile)) {
             DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
             loadDB();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-        new DBWriter();
     }
+
+    private static void InitializeDBFile() {
+        try {
+            dbFile.createNewFile();
+            DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            DB.appendChild(DB.createElement("DB"));
+        } catch (IOException e) {
+            logger.error("Cannot create new DB.xml file at " +dbFile.getPath());
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            logger.error("Cannot initialize new DB xml document in " + DBRW.class.toString());
+            e.printStackTrace();
+        }
+    }
+
     private static void loadDB(){
         NodeList listOfLibraries = DB.getDocumentElement().getElementsByTagName(LIBRARY_ELEMENT);
         for (int i=0; i<listOfLibraries.getLength(); i++){

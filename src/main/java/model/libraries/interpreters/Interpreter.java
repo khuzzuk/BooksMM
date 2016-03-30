@@ -3,7 +3,8 @@ package model.libraries.interpreters;
 import model.libraries.Library;
 import org.jsoup.nodes.Document;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public abstract class Interpreter {
     protected static String name, attribute, titleAttribute, tagAttribute;
@@ -15,8 +16,8 @@ public abstract class Interpreter {
     }
 
     static String setDate() {
-        Date d = new Date(System.currentTimeMillis());
-        return d.getYear() + "/" + d.getMonth() + "/" + d.getDay();
+        GregorianCalendar c = new GregorianCalendar();
+        return (c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH));
     }
 
     /**

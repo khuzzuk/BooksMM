@@ -3,8 +3,6 @@ package model.libraries.interpreters;
 import model.libraries.BookFinder;
 import model.libraries.Library;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
