@@ -56,6 +56,15 @@ public class LibrariesList implements XMLWriter, XMLParser {
         return extractEntries(doc.getDocumentElement());
     }
 
+    /**
+     * Tihs method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
+     * libraries in xml file. It will extract only links from category provided in a parameter
+     * When called for the first time it will initialize connection to a file. Mind that
+     * this operation can throw {@link org.xml.sax.SAXParseException},
+     * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
+     * @param category {@link Categories} enum with category which can be found in xml file.
+     * @return {@link List}&lt;{@link String}&gt with ulr addresses.
+     */
     public List<String> getAddresses(Categories category){
         if (doc==null) initializeLibraries();
         Element categoryElement = (Element) doc.getElementsByTagName(category.category).item(0);
@@ -81,6 +90,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
      * @param category a {@link LibrariesList.Categories} enum that will match proper
      *                 category in xml file.
      * @param url      a {@link String} with complete url address (with "http://")
+     * @param name     a {@link String} with optional name of the library.
      * @return true when operation is successful.
      */
     public boolean addLibraryAddress(Categories category, String url, String name) {
