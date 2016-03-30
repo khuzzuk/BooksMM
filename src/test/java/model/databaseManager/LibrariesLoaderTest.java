@@ -9,7 +9,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LibrariesLoaderTest {
-    @Test
+    @Test(groups = "fast")
     public void testCorrectLibraryLoaded() throws IOException {
         String filePath = LibrariesLoaderTest.class.getResource("/LIBS").getFile();
         LibrariesLoader loader = new LibrariesLoader(filePath);

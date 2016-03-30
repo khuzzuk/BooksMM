@@ -1,7 +1,7 @@
 package model.databaseManager;
 
 import org.apache.log4j.Logger;
-import view.DBWriter;
+import messaging.subscribers.DBWriter;
 import model.libraries.Library;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * This class is responsible for operation on xml file which logs information about found books.
  * It has only static methods, and no instance of this object is provided.
- * It will read and write a file. Also it has Subscriber helper class {@link view.DBWriter}.
+ * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
 public class DBRW {
     private static final DBRW DBRW = new DBRW();

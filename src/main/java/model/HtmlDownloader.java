@@ -36,7 +36,7 @@ public class HtmlDownloader implements XMLParser {
     }
 
     /**
-     * Object method that will download page content and return it as a xml data.
+     * Object method that will download page content and return it as an xml data.
      * @param url simple String with URL address.
      * @return {@link org.w3c.dom.Document} with data found at URL address.
      */

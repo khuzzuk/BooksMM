@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GoodreadsInterpreterTest {
-    @Test
+    @Test(groups = "fast")
     public void testFindingTitles() {
         String url = GoodreadsInterpreterTest.class.getResource("/goodreadsExample.html").toString();
         GoodreadsInterpreter interpreter = new GoodreadsInterpreter(url);

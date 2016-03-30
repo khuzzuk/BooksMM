@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InterpreterTest {
-    @Test
+    @Test(groups = "fast")
     public void testGettingLibraryObject() {
         Interpreter interpreter = new Interpreter() {
             @Override

@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FreebookshubInterpreterTest {
-    @Test
+    @Test(groups = "fast")
     public void testQuery() {
         String url = FreebookshubInterpreterTest.class.getResource("/FreeBooksHubExample.html").toString();
         FreebookshubInterpreter interpreter = new FreebookshubInterpreter(url);

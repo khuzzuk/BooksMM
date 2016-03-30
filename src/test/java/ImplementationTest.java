@@ -6,12 +6,11 @@ import model.libraries.interpreters.BookrixInterpreter;
 import model.libraries.interpreters.FreebookshubInterpreter;
 import model.libraries.interpreters.GoodreadsInterpreter;
 import org.testng.annotations.Test;
-import view.DBWriter;
 
 import java.io.File;
 
 public class ImplementationTest {
-    @Test
+    @Test(groups = "slow")
     public void testQuery() throws InterruptedException {
         DBRW.setOutputDBFile(new File("TestDB.xml"));
         DBRW.initializeDB();
@@ -19,6 +18,6 @@ public class ImplementationTest {
         TaskChannel.putTask(task);
         TaskChannel.putTask(new Task(new GoodreadsInterpreter("http://www.goodreads.com/ebooks")));
         TaskChannel.putTask(new Task(new FreebookshubInterpreter("http://www.freebookshub.com/")));
-        Thread.sleep(1000000000);
+        Thread.sleep(10000);
     }
 }

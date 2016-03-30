@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FileReaderTest {
-    @Test
+    @Test(groups = "fast")
     public void testReadingFromDB() throws IOException {
         String testFile = FileReader.class.getResource("/DBTestFile.txt").getFile();
         ArrayList<String> libraries = new ArrayList<String>();

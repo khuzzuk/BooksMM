@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookFinderTest {
-    @Test
+    @Test(groups = "fast")
     public void testName() {
         String address = BookFinderTest.class.getResource("/www.example.library.site.com").toExternalForm();
         String pattern = "abc(.+?)abc";

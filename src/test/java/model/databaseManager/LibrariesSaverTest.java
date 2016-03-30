@@ -19,7 +19,7 @@ public class LibrariesSaverTest {
         url = "example.com";
     }
 
-    @Test
+    @Test(groups = "fast")
     public void testWritingToFile() throws IOException {
         new LibrariesSaver(url,"a", fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(fileName))));

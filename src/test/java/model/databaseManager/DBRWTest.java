@@ -14,7 +14,7 @@ public class DBRWTest {
     private File testFile = new File("testDB.xml");
     private String testElementName = "TestElement";
 
-    @Test
+    @Test(groups = "fast")
     public void testWriteToNewXml() {
         DBRW.initializeDB();
         DBRW.setOutputDBFile(testFile);
@@ -24,7 +24,7 @@ public class DBRWTest {
         assertThat(librariesInDB).isEqualTo(expectedNumber);
     }
 
-    @Test
+    @Test(groups = "fast")
     public void testWriteItemToXML() {
         DBRW.initializeDB();
         DBRW.setOutputDBFile(testFile);
