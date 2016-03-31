@@ -7,10 +7,10 @@
                 <include name="fast"/>
             </run>
         </groups>
+        <packages>
+            <package name="channels"/>
+            <package name="model"/>
+            <package name="model.databaseManager"/>
+        </packages>
     </test>
-    <packages>
-        <package name="channels"/>
-        <package name="model"/>
-        <package name="model.*"/>
-    </packages>
 </suite>

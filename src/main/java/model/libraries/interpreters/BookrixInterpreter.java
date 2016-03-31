@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
  * It will find all titles in the content and wrap them into the {@link model.libraries.Library}.
  */
 public class BookrixInterpreter extends Interpreter {
-    String attributeValue, titleAttributeValue;
+    String attributeValue, titleAttributeValue, tagAttribute, tagAttributeValue;
     public BookrixInterpreter(Document page) {
         super();
         this.page = page;
@@ -23,17 +23,23 @@ public class BookrixInterpreter extends Interpreter {
         attributeValue="item-content";
         titleAttribute = "item-title";
         titleAttributeValue = "word-break";
+        tagAttribute = "class";
+        tagAttributeValue = "item-details";
     }
 
     @Override
     public Library getQuery(){
         Library library = getLibraryInstace();
         Elements elements = page.getElementsByAttributeValue(attribute, attributeValue);
-        for (Element e : elements){
-            Elements title = e.getElementsByAttributeValue(attribute, titleAttribute);
-            title = title.get(0).getElementsByAttributeValue(attribute, titleAttributeValue);
-            library.add(title.get(0).ownText());
-        }
+        for (Element e : elements)
+            addTitleToLibrary(library, e);
         return library;
+    }
+
+    private void addTitleToLibrary(Library library, Element e) {
+        Elements title = e.getElementsByAttributeValue(attribute, titleAttribute);
+        title = title.get(0).getElementsByAttributeValue(attribute, titleAttributeValue);
+        String tag = title.get(0).getElementsByAttributeValue(tagAttribute, tagAttributeValue).get(0).ownText();
+        library.add(title.get(0).ownText(), tag);
     }
 }

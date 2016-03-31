@@ -12,11 +12,9 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,6 +28,8 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
     private static final String LIBRARY_NAME_ELEMENT = "name";
     private static final String LIBRARY_DATE_ELEMENT = "Date";
     private static final String LIBRARY_TITLE_ELEMENT = "Title";
+    private static final String LIBRARY_TITLE_VALUE = "TitleText";
+    private static final String LIBRARY_TAG_ELEMENT = "tag";
     static Document DB;
     private static List<Library> libraries;
     private static File dbFile = new File("DB.xml");
@@ -113,25 +113,39 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
     private static void createXMLContent() {
         Element root = DB.createElement("DB");
         DB.appendChild(root);
-        Element libraryElement, dateElement, title;
         for (Library l : libraries){
-            libraryElement = DB.createElement(LIBRARY_NAME_ELEMENT);
-            libraryElement.setAttribute(LIBRARY_NAME_ELEMENT, l.getName());
-            root.appendChild(libraryElement);
-            dateElement = DB.createElement(LIBRARY_DATE_ELEMENT);
-            dateElement.setTextContent(l.getDate());
-            libraryElement.appendChild(dateElement);
-            writeTitles(libraryElement, l);
+            appendLibraryElement(root, l);
         }
     }
 
-    private static void writeTitles(Element libraryElement, Library l) {
-        Element title;
-        for (String t : l.getTitles()){
-            title = DB.createElement(LIBRARY_TITLE_ELEMENT);
-            title.setTextContent(t);
-            libraryElement.appendChild(title);
+    private static void appendLibraryElement(Element root, Library l) {
+        Element libraryElement = DB.createElement(LIBRARY_NAME_ELEMENT);
+        libraryElement.setAttribute(LIBRARY_NAME_ELEMENT, l.getName());
+        root.appendChild(libraryElement);
+        appendElement(libraryElement, l.getDate(), LIBRARY_DATE_ELEMENT);
+        writeTitles(libraryElement, l);
+    }
+
+    private static void writeTitles(Element libraryElement, Library library) {
+        for (String t : library.getTitles()){
+            writeTitle(libraryElement, t, library);
         }
+    }
+
+    private static void writeTitle(Element libraryElement, String title, Library library) {
+        Element titleElement = DB.createElement(LIBRARY_TITLE_ELEMENT);
+        appendElement(titleElement, title, LIBRARY_TITLE_VALUE);
+        Collection<String> tags = library.getTags(title);
+        for (String tag : tags){
+            appendElement(titleElement, tag, LIBRARY_TAG_ELEMENT);
+        }
+        libraryElement.appendChild(titleElement);
+    }
+
+    private static void appendElement(Element rootElement, String newElementTextValue, String newElementName) {
+        Element newElement = DB.createElement(newElementName);
+        newElement.setTextContent(newElementTextValue);
+        rootElement.appendChild(newElement);
     }
 
     private static void newXML() {
