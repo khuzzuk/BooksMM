@@ -38,8 +38,10 @@ public class BookrixInterpreter extends Interpreter {
 
     private void addTitleToLibrary(Library library, Element e) {
         Elements title = e.getElementsByAttributeValue(attribute, titleAttribute);
-        title = title.get(0).getElementsByAttributeValue(attribute, titleAttributeValue);
-        String tag = title.get(0).getElementsByAttributeValue(tagAttribute, tagAttributeValue).get(0).ownText();
-        library.add(title.get(0).ownText(), tag);
+        Elements titleValue = title.get(0).getElementsByAttributeValue(attribute, titleAttributeValue);
+        Elements itemDetails = e.getElementsByAttributeValue(tagAttribute, tagAttributeValue);
+        Elements tags = itemDetails.get(0).getAllElements();
+        String tag = tags.get(1).ownText();
+        library.add(titleValue.get(0).ownText(), tag);
     }
 }
