@@ -25,7 +25,7 @@ public class DBRWTest {
         DBRW.writer = writer;
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testWriteToNewXml() {
         QueryMaker query = mock(QueryMaker.class);
         new FinishedTaskSubscriber(query);
@@ -37,7 +37,7 @@ public class DBRWTest {
         assertThat(librariesInDB).isEqualTo(expectedNumber);
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testWriteItemToXML() {
         DBRW.initializeDB();
         DBRW.setOutputDBFile(testFile);

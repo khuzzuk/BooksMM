@@ -24,21 +24,6 @@ public class LibrariesList implements XMLWriter, XMLParser {
     private static final String URL_ELEMENT = "url";
     private static final String NAME_ATTRIBUTE = "name";
 
-    private void startDB() {
-        doc = getDocument();
-        Element root = doc.createElement("root");
-        doc.appendChild(root);
-        Element romance = doc.createElement(Categories.ROMANCE.category);
-        Element it = doc.createElement(Categories.IT.category);
-        Element history = doc.createElement(Categories.HISTORY.category);
-        Element noCategory = doc.createElement(Categories.NO_CATEGORY.category);
-        root.appendChild(romance);
-        root.appendChild(it);
-        root.appendChild(history);
-        root.appendChild(noCategory);
-        updateDBFile(libFile, doc);
-    }
-
     /**
      * This method will alternate an external xml file with links to the libraries.
      * @param libFile {@link File} that don't have to exist.
@@ -116,6 +101,21 @@ public class LibrariesList implements XMLWriter, XMLParser {
                 e.printStackTrace();
             }
         } else startDB();
+    }
+
+    private void startDB() {
+        doc = getDocument();
+        Element root = doc.createElement("root");
+        doc.appendChild(root);
+        Element romance = doc.createElement(Categories.ROMANCE.category);
+        Element it = doc.createElement(Categories.IT.category);
+        Element history = doc.createElement(Categories.HISTORY.category);
+        Element noCategory = doc.createElement(Categories.NO_CATEGORY.category);
+        root.appendChild(romance);
+        root.appendChild(it);
+        root.appendChild(history);
+        root.appendChild(noCategory);
+        updateDBFile(libFile, doc);
     }
 
     /**

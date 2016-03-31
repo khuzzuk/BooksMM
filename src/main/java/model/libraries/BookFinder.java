@@ -45,7 +45,7 @@ public class BookFinder {
 
 
     @Override
-    public String toString(){
+    public final String toString(){
         try {
             Matcher m = Pattern.compile("www.(.+?).com")
                     .matcher(url);

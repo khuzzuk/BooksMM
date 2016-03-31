@@ -16,11 +16,17 @@
 
                 <ListView fx:id="availableLibraries"/>
 
-                <VBox>
+                <VBox spacing="20">
                     <children>
-                        <Button/>
-                        <Button/>
-                        <Button/>
+                        <Button fx:id="toRightButton"
+                                disable="true"
+                                text="&gt;&gt;"/>
+                        <Button fx:id="toLeftButton"
+                                disable="true"
+                                text="&lt;&lt;"/>
+                        <Button fx:id="addButton"
+                                disable="true"
+                                text="add"/>
                         <ComboBox fx:id="categoriesElement">
                             <items>
                                 <FXCollections fx:factory="observableArrayList"/>
