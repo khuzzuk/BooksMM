@@ -102,7 +102,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
         Element address = doc.createElement(URL_ELEMENT);
         address.setTextContent(url);
         address.setAttribute(NAME_ATTRIBUTE, name);
-        Element root = (Element) doc.getElementsByTagName(category.toString()).item(0);
+        Element root = (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
         root.appendChild(address);
         updateDBFile(libFile, doc);
         return true;
@@ -123,11 +123,13 @@ public class LibrariesList implements XMLWriter, XMLParser {
      * writing ulr in proper category in xml file with libraries urls.
      */
     public enum Categories {
-        ROMANCE("Romance"), IT("IT"), HISTORY("History"), NO_CATEGORY("noCategory");
+        ROMANCE("Romance", "Romance"), IT("Information technologies", "IT"), HISTORY("History", "History"), NO_CATEGORY("any category", "noCategory");
         private String category;
+        String xmlCategory;
 
-        Categories(String category) {
+        Categories(String category, String xmlCategory) {
             this.category = category;
+            this.xmlCategory = xmlCategory;
         }
 
         @Override

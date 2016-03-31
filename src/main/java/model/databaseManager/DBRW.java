@@ -22,8 +22,10 @@ import java.util.List;
  * It has only static methods, and no instance of this object is provided.
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
-public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
+public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final DBRW DBRW = new DBRW();
+    static Writer writer = new Writer();
+    static Reader reader = new Reader();
     public static final String LIBRARY_ELEMENT = "Library";
     private static final String LIBRARY_NAME_ELEMENT = "name";
     private static final String LIBRARY_DATE_ELEMENT = "Date";
@@ -49,42 +51,18 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
     public static void initializeDB(){
         libraries = new ArrayList<>();
         if (!dbFile.exists()) InitializeDBFile();
-        else readDBFile();
+        else reader.readDBFile();
         new DBWriter();
-    }
-
-    private static void readDBFile() {
-        try(InputStream stream = new FileInputStream(dbFile)) {
-            DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
-            loadDB();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private static void InitializeDBFile() {
         try {
-            dbFile.createNewFile();
+            writer.createFile(dbFile);
             DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
             DB.appendChild(DB.createElement("DB"));
-        } catch (IOException e) {
-            logger.error("Cannot create new DB.xml file at " +dbFile.getPath());
-            e.printStackTrace();
         } catch (ParserConfigurationException e) {
             logger.error("Cannot initialize new DB xml document in " + DBRW.class.toString());
             e.printStackTrace();
-        }
-    }
-
-    private static void loadDB(){
-        NodeList listOfLibraries = DB.getDocumentElement().getElementsByTagName(LIBRARY_ELEMENT);
-        for (int i=0; i<listOfLibraries.getLength(); i++){
-            Element lib = (Element) listOfLibraries.item(i);
-            String name = lib.getAttribute(LIBRARY_NAME_ELEMENT);
-            String date = lib.getElementsByTagName(LIBRARY_DATE_ELEMENT).item(0).getTextContent();
-            Library library = new Library(name,date);
-            library.addAll(lib.getElementsByTagName(LIBRARY_TITLE_ELEMENT));
-            libraries.add(library);
         }
     }
 
@@ -96,7 +74,7 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
         libraries.add(library);
         newXML();
         createXMLContent();
-        DBRW.updateDBFile(dbFile, DB);
+        writer.updateDBFile(dbFile, DB);
         DBRW.send(new FinishedTaskMessage());
     }
 
@@ -107,7 +85,7 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
      */
     public static void write(Element item){
         DB.getDocumentElement().appendChild(item);
-        DBRW.updateDBFile(dbFile,DB);
+        writer.updateDBFile(dbFile, DB);
     }
 
     private static void createXMLContent() {
@@ -170,7 +148,7 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
      * This method extract all entries for expected libraries.
      * Be aware that libraries will be compared by name.
      * @param name name of the library resided in log file.
-     * @return
+     * @return {@link List} of {@link Library} objects.
      */
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
@@ -179,5 +157,39 @@ public class DBRW implements XMLWriter, MessageProducer<FinishedTaskMessage> {
             if (l.getName().equals(name)) librariesByName.add(l);
         }
         return librariesByName;
+    }
+    static class Writer implements XMLWriter {
+        public void createFile(File dbFile) {
+            try {
+                dbFile.createNewFile();
+            } catch (IOException e) {
+                logger.error("Cannot create new DB.xml file at " +dbFile.getPath());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static class Reader {
+
+        private void readDBFile() {
+            try(InputStream stream = new FileInputStream(dbFile)) {
+                DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
+                loadDB();
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void loadDB(){
+            NodeList listOfLibraries = DB.getDocumentElement().getElementsByTagName(LIBRARY_ELEMENT);
+            for (int i=0; i<listOfLibraries.getLength(); i++){
+                Element lib = (Element) listOfLibraries.item(i);
+                String name = lib.getAttribute(LIBRARY_NAME_ELEMENT);
+                String date = lib.getElementsByTagName(LIBRARY_DATE_ELEMENT).item(0).getTextContent();
+                Library library = new Library(name,date);
+                library.addAll(lib.getElementsByTagName(LIBRARY_TITLE_ELEMENT));
+                libraries.add(library);
+            }
+        }
     }
 }
