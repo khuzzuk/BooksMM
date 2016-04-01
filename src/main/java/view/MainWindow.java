@@ -31,4 +31,8 @@ public class MainWindow extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        System.exit(0);
+    }
 }
