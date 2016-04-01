@@ -27,7 +27,7 @@ public class MainWindow extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
     }
 

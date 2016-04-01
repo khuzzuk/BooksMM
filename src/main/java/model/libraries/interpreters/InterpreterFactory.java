@@ -9,7 +9,7 @@ public class InterpreterFactory {
     public static Interpreter getInterpreter(String url){
         HtmlDownloader downloader = new HtmlDownloader();
         if (url.contains(bookrixTag))
-            return new BookrixInterpreter(downloader.getContentFromHTML(url));
+            return new BookrixInterpreter(url);
         else if (url.contains(freebookshub))
             return new FreebookshubInterpreter(url);
         else if (url.contains(goodreads))

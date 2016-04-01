@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LibrariesListTest {
     @Test(groups = "fast")
     public void testReadingFile() {
-        LibrariesList list = new LibrariesList();
+        LibrariesList list = LibrariesList.getInstance();
         list.setLibFile(new File(LibrariesLoaderTest.class.getResource("/exampleLibraries.xml").getFile()));
         int actualAddressesNumber = list.getAddresses().size();
         assertThat(actualAddressesNumber).isGreaterThan(1);
     }
     @Test(groups = "fast")
     public void testReadingFileByCategory() {
-        LibrariesList list = new LibrariesList();
+        LibrariesList list = LibrariesList.getInstance();
         list.setLibFile(new File(LibrariesLoaderTest.class.getResource("/exampleLibraries.xml").getFile()));
         int actualAddressesNumber = list.getAddresses(LibrariesList.Categories.ROMANCE).size();
         assertThat(actualAddressesNumber).isGreaterThan(0);
@@ -26,7 +26,7 @@ public class LibrariesListTest {
     @Test(groups = "fast")
     public void testWritingToFile() {
         File testFile = new File("testLibraries.xml");
-        LibrariesList list = new LibrariesList();
+        LibrariesList list = LibrariesList.getInstance();
         list.setLibFile(testFile);
         list.addLibraryAddress(LibrariesList.Categories.NO_CATEGORY, "a", "a");
         int actualAddressesNumber = list.getAddresses().size();

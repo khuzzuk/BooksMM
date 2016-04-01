@@ -25,7 +25,7 @@ public class QueryMaker implements MessageProducer<FinishedQueryMessage>{
 
     public void startQuery(LibrariesList.Categories category) {
         isInQueryMode=true;
-        LibrariesList list = new LibrariesList();
+        LibrariesList list = LibrariesList.getInstance();
         DBRW.initializeDB();
         List<String> urls = list.getAddresses(category);
         for (String a : urls){

@@ -4,6 +4,7 @@ import model.XMLParser;
 import model.databaseManager.XMLWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
@@ -18,11 +19,18 @@ import java.util.List;
  * "libraries.xml". When no file is found, new one will be created.
  */
 public class LibrariesList implements XMLWriter, XMLParser {
-
+    private static final LibrariesList instance = new LibrariesList();
     private Document doc;
     private File libFile = new File("libraries.xml");
     private static final String URL_ELEMENT = "url";
     private static final String NAME_ATTRIBUTE = "name";
+
+    private LibrariesList() {
+    }
+
+    public static LibrariesList getInstance() {
+        return instance;
+    }
 
     /**
      * This method will alternate an external xml file with links to the libraries.
@@ -33,7 +41,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
     }
 
     /**
-     * Tihs method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
+     * This method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
      * libraries in xml file.
      * When called for the first time it will initialize connection to a file. Mind that
      * this operation can throw {@link org.xml.sax.SAXParseException},
@@ -42,31 +50,74 @@ public class LibrariesList implements XMLWriter, XMLParser {
      */
     public List<String> getAddresses(){
         if (doc==null) initializeLibraries();
-        return extractEntries(doc.getDocumentElement());
+        return extractAddresses(doc.getDocumentElement());
     }
 
     /**
-     * Tihs method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
+     * This method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
      * libraries in xml file. It will extract only links from category provided in a parameter
      * When called for the first time it will initialize connection to a file. Mind that
      * this operation can throw {@link org.xml.sax.SAXParseException},
      * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
      * @param category {@link Categories} enum with category which can be found in xml file.
-     * @return {@link List}&lt;{@link String}&gt with ulr addresses.
+     * @return {@link List}&lt;{@link String}&gt; with ulr addresses.
      */
     public List<String> getAddresses(Categories category){
         if (doc==null) initializeLibraries();
-        Element categoryElement = (Element) doc.getElementsByTagName(category.category).item(0);
-        return extractEntries(categoryElement);
+        Element categoryElement = getCategoryElement(category);
+        return extractAddresses(categoryElement);
     }
 
-    private List<String> extractEntries(Element element) {
+    /**
+     * This method will return libraries names stored in category element in provided xml file.
+     * It may be used for gui related stuff.
+     * When called for the first time it will initialize connection to a file. Mind that
+     * this operation can throw {@link org.xml.sax.SAXParseException},
+     * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
+     * @param category {@link Categories} object by which names will be extracted.
+     * @return {@link List}&lt;{@link String}&gt; with libraries names.
+     */
+    public List<String> getLibrariesNames(Categories category){
+        if (doc==null) initializeLibraries();
+        Element categoryElement = getCategoryElement(category);
+        categoryElement = (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
+        categoryElement.getChildNodes();
+        return extractNames(categoryElement);
+    }
+    public String getLibraryAddress(String name, Categories category){
+        if (doc==null) initializeLibraries();
+        Element element = getCategoryElement(category);
+        NodeList libraries = element.getElementsByTagName(URL_ELEMENT);
+        for (int i=0; i<libraries.getLength(); i++){
+            if (getNameAttribute(libraries.item(i)).equals(name)){
+                return libraries.item(i).getTextContent();
+            }
+        }
+        return null;
+    }
+
+    private Element getCategoryElement(Categories category) {
+        return  (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
+    }
+    private String getNameAttribute(Node element){
+        return element.getAttributes().getNamedItem(NAME_ATTRIBUTE).getTextContent();
+    }
+
+    private List<String> extractAddresses(Element element) {
         NodeList nodes = element.getElementsByTagName(URL_ELEMENT);
         List<String> addresses = new ArrayList<>();
         for (int i = 0; i < nodes.getLength(); i++) {
             addresses.add(nodes.item(i).getTextContent());
         }
         return addresses;
+    }
+    private List<String> extractNames(Element element) {
+        NodeList nodes = element.getElementsByTagName(URL_ELEMENT);
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            names.add(getNameAttribute(nodes.item(i)));
+        }
+        return names;
     }
 
     /**

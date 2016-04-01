@@ -1,5 +1,6 @@
 package model.libraries.interpreters;
 
+import model.HtmlDownloader;
 import model.libraries.Library;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +12,14 @@ import org.jsoup.select.Elements;
  */
 public class BookrixInterpreter extends Interpreter {
     String attributeValue, titleAttributeValue, tagAttribute, tagAttributeValue;
+    String address;
+
+    public BookrixInterpreter(String address) {
+        super();
+        setConstants();
+        this.address = address;
+    }
+
     public BookrixInterpreter(Document page) {
         super();
         this.page = page;
@@ -29,6 +38,7 @@ public class BookrixInterpreter extends Interpreter {
 
     @Override
     public Library getQuery(){
+        page = new HtmlDownloader().getContentFromHTML(address);
         Library library = getLibraryInstace();
         Elements elements = page.getElementsByAttributeValue(attribute, attributeValue);
         for (Element e : elements)

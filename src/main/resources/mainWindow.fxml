@@ -14,19 +14,24 @@
         <HBox spacing="10">
             <children>
 
-                <ListView fx:id="availableLibraries"/>
+                <ListView fx:id="availableLibraries"
+                          onMouseClicked="#chooseFromLeftList"/>
 
                 <VBox spacing="20">
                     <children>
                         <Button fx:id="toRightButton"
                                 disable="true"
-                                text="&gt;&gt;"/>
+                                text="&gt;&gt;"
+                                onMouseClicked="#moveToRightAction"/>
+
                         <Button fx:id="toLeftButton"
                                 disable="true"
-                                text="&lt;&lt;"/>
+                                text="&lt;&lt;" onMouseClicked="#moveToLeftAction"/>
+
                         <Button fx:id="addButton"
                                 disable="true"
                                 text="add"/>
+
                         <ComboBox fx:id="categoriesElement">
                             <items>
                                 <FXCollections fx:factory="observableArrayList"/>
@@ -35,12 +40,12 @@
                     </children>
                 </VBox>
 
-                <ListView fx:id="chosenLibraries"/>
+                <ListView fx:id="chosenLibraries" onMouseClicked="#chooseFromRightList"/>
 
             </children>
         </HBox>
 
-        <TextArea/>
+        <TextArea fx:id="queryResults"/>
 
     </children>
 </VBox>
