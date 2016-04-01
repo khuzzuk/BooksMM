@@ -6,6 +6,7 @@ import model.databaseManager.DBRW;
 
 import java.io.File;
 
+
 public class Start implements Subscriber<FinishedQueryMessage>{
     public Start() {
         subscribe(FinishedQueryMessage.class);
@@ -17,6 +18,14 @@ public class Start implements Subscriber<FinishedQueryMessage>{
         if (args.length>0 && args[0].equals("-b")){
             QueryMaker query = new QueryMaker();
             query.startQuery();
+        }
+        else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    javafx.application.Application.launch(MainWindow.class);
+                }
+            }).start();
         }
     }
 
