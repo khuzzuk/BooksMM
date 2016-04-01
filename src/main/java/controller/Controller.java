@@ -20,7 +20,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Controller{
+class Controller{
 
     AvailableLibraries availableLibraries = new AvailableLibraries();
     FollowedLibraries followedLibraries = new FollowedLibraries();

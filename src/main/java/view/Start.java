@@ -20,11 +20,8 @@ public class Start implements Subscriber<FinishedQueryMessage>{
             query.startQuery();
         }
         else {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    javafx.application.Application.launch(MainWindow.class);
-                }
+            new Thread(() -> {
+                javafx.application.Application.launch(MainWindow.class);
             }).start();
         }
     }

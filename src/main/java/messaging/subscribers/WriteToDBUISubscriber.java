@@ -6,7 +6,6 @@ import messaging.messages.WriteToDBMessage;
 import model.libraries.Library;
 
 import java.util.Collection;
-import java.util.List;
 
 public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
     MainWindowController controller;

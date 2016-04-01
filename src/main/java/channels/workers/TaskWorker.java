@@ -3,11 +3,8 @@ package channels.workers;
 import channels.Task;
 import channels.TaskChannel;
 import messaging.MessageProducer;
-import messaging.messages.FinishedTaskMessage;
 import messaging.messages.WriteToDBMessage;
 import model.libraries.Library;
-
-import java.util.concurrent.BlockingDeque;
 
 public class TaskWorker {
 
@@ -20,6 +17,7 @@ public class TaskWorker {
         @Override
         public void run() {
             Task task;
+            //noinspection InfiniteLoopStatement
             while (true){
                 task = TaskChannel.poll();
                 if (task==null) try {

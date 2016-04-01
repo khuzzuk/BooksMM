@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public abstract class Interpreter {
-    protected String name, attribute, titleAttribute, tagAttribute;
+    protected String name;
+    protected String attribute;
+    protected String titleAttribute;
     protected String date;
     protected Document page;
 

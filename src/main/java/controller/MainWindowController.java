@@ -36,8 +36,6 @@ public class MainWindowController implements Initializable {
     @FXML
     TextArea queryResults;
 
-    private LibrariesList.Categories category;
-
     @Override
     public void initialize(URL url, ResourceBundle resource) {
         new WriteToDBUISubscriber(this);
@@ -46,7 +44,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void populateAvailableLibraries() {
-        category = (LibrariesList.Categories) categoriesElement.getSelectionModel().getSelectedItem();
+        LibrariesList.Categories category = (LibrariesList.Categories) categoriesElement.getSelectionModel().getSelectedItem();
         ObservableList<String> rightList = FXCollections.observableArrayList(LibrariesList.getInstance().getLibrariesNames(category));
         availableLibraries.getItems().clear();
         availableLibraries.getItems().addAll(rightList);
@@ -56,6 +54,7 @@ public class MainWindowController implements Initializable {
         setCategories();
         ObservableList<LibrariesList.Categories> categoriesList = FXCollections.observableArrayList(categories);
         categoriesElement.getItems().clear();
+        //noinspection unchecked
         categoriesElement.getItems().addAll(categoriesList);
         categoriesElement.getSelectionModel().select(0);
         categoriesElement.valueProperty().addListener(c -> populateAvailableLibraries());

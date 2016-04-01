@@ -40,7 +40,7 @@ public class Library {
      */
     public void add(String title, String... tags){
         List<String> tagList = new ArrayList<>();
-        for (String t : tags) tagList.add(t);
+        Collections.addAll(tagList, tags);
         titles.put(title, tagList);
     }
 

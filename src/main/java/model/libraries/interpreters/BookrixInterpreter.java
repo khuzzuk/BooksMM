@@ -11,8 +11,11 @@ import org.jsoup.select.Elements;
  * It will find all titles in the content and wrap them into the {@link model.libraries.Library}.
  */
 public class BookrixInterpreter extends Interpreter {
-    String attributeValue, titleAttributeValue, tagAttribute, tagAttributeValue;
-    String address;
+    private String attributeValue;
+    private String titleAttributeValue;
+    private String tagAttribute;
+    private String tagAttributeValue;
+    private String address;
 
     public BookrixInterpreter(String address) {
         super();
