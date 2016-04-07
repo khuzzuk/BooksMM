@@ -1,5 +1,6 @@
 package model.libraries.interpreters;
 
+import model.libraries.HtmlElement;
 import model.libraries.Library;
 import org.jsoup.nodes.Document;
 
@@ -11,7 +12,7 @@ public abstract class Interpreter {
     protected String attribute;
     protected String titleAttribute;
     protected String date;
-    protected Document page;
+    protected HtmlElement page;
 
     public Interpreter() {
         date = setDate();

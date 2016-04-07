@@ -1,12 +1,11 @@
 package model;
 
+import model.libraries.HtmlElement;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
-import org.w3c.dom.Document;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -36,38 +35,19 @@ public class HtmlDownloader implements XMLParser {
     }
 
     /**
-     * Object method that will download page content and return it as an xml data.
-     * @param url simple String with URL address.
-     * @return {@link org.w3c.dom.Document} with data found at URL address.
-     */
-    public Document getContentFromURL(String url){
-        Document document = null;
-        try (InputStream stream = new URL(url).openStream()){
-            document = getDocument(stream);
-        } catch (MalformedURLException e) {
-            logger.error("Wrong URL: " + url);
-            e.printStackTrace();
-        } catch (IOException e) {
-            logger.error("File process interrupted.");
-            e.printStackTrace();
-        }
-        return document;
-    }
-
-    /**
      * Object method that will download page content and return it as a {@link org.jsoup.nodes.Document}
      * object.
      * @param url simple String with URL address.
      * @return {@link org.jsoup.nodes.Document} with data found at URL address.
      */
-    public org.jsoup.nodes.Document getContentFromHTML(String url){
-        org.jsoup.nodes.Document document = null;
+    public HtmlElement getContentFromHTML(String url){
+        Document document = null;
         try {
             document = Jsoup.connect(url).get();
         } catch (IOException e) {
             logger.error("Iterruption during reading an url: "+url);
             e.printStackTrace();
         }
-        return document;
+        return new HtmlContent(document);
     }
 }

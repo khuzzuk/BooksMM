@@ -1,8 +1,8 @@
 package model.libraries.interpreters;
 
 import model.HtmlDownloader;
+import model.libraries.HtmlElement;
 import model.libraries.Library;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -23,7 +23,7 @@ public class BookrixInterpreter extends Interpreter {
         this.address = address;
     }
 
-    public BookrixInterpreter(Document page) {
+    public BookrixInterpreter(HtmlElement page) {
         super();
         this.page = page;
         setConstants();
@@ -43,18 +43,18 @@ public class BookrixInterpreter extends Interpreter {
     public Library getQuery(){
         page = new HtmlDownloader().getContentFromHTML(address);
         Library library = getLibraryInstace();
-        Elements elements = page.getElementsByAttributeValue(attribute, attributeValue);
-        for (Element e : elements)
+        HtmlElement elements = page.getElementsByAttribute(attribute, attributeValue);
+        for (HtmlElement e : elements)
             addTitleToLibrary(library, e);
         return library;
     }
 
-    private void addTitleToLibrary(Library library, Element e) {
-        Elements title = e.getElementsByAttributeValue(attribute, titleAttribute);
-        Elements titleValue = title.get(0).getElementsByAttributeValue(attribute, titleAttributeValue);
-        Elements itemDetails = e.getElementsByAttributeValue(tagAttribute, tagAttributeValue);
-        Elements tags = itemDetails.get(0).getAllElements();
-        String tag = tags.get(1).ownText();
-        library.add(titleValue.get(0).ownText(), tag);
+    private void addTitleToLibrary(Library library, HtmlElement e) {
+        HtmlElement title = e.getElementsByAttribute(attribute, titleAttribute);
+        HtmlElement titleValue = title.getElementsByAttribute(attribute, titleAttributeValue);
+        HtmlElement itemDetails = e.getElementsByAttribute(tagAttribute, tagAttributeValue);
+        HtmlElement tags = itemDetails.getAllElements();
+        String tag = tags.getText(1);
+        library.add(titleValue.getText(0), tag);
     }
 }
