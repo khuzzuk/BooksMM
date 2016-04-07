@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HtmlDownloaderTest {
     @Test(groups = "fast")
     public void testDownloadedPageIsEqual() {
-        String actualString = HtmlDownloader.downloadPage(HtmlDownloaderTest.class.getResource("/test.txt").toString());
-        String expectedString = "test";
-        assertThat(actualString).isEqualTo(expectedString);
+        String readFromResource = HtmlDownloader.downloadPage(HtmlDownloaderTest.class.getResource("/test.txt").toString());
+        String test = "test";
+        assertThat(readFromResource).isEqualTo(test);
     }
     @Test(groups = "fast")
     public void testDownloadedPageIsNotEqual() {
@@ -25,6 +25,7 @@ public class HtmlDownloaderTest {
 
     @Test(groups = "fast")
     public void testDownloadingPageToXML() throws MalformedURLException {
+        // gwt ??
         String url = HtmlDownloaderTest.class.getResource("/test.xml").toString();
         HtmlDownloader downloader = new HtmlDownloader();
         Document document = downloader.getContentFromURL(url);

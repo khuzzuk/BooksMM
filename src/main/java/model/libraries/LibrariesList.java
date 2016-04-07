@@ -158,10 +158,10 @@ public class LibrariesList implements XMLWriter, XMLParser {
         doc = getDocument();
         Element root = doc.createElement("root");
         doc.appendChild(root);
-        Element romance = doc.createElement(Categories.ROMANCE.category);
-        Element it = doc.createElement(Categories.IT.category);
-        Element history = doc.createElement(Categories.HISTORY.category);
-        Element noCategory = doc.createElement(Categories.NO_CATEGORY.category);
+        Element romance = doc.createElement(Categories.ROMANCE.xmlCategory);
+        Element it = doc.createElement(Categories.IT.xmlCategory);
+        Element history = doc.createElement(Categories.HISTORY.xmlCategory);
+        Element noCategory = doc.createElement(Categories.NO_CATEGORY.xmlCategory);
         root.appendChild(romance);
         root.appendChild(it);
         root.appendChild(history);

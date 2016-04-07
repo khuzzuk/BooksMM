@@ -11,6 +11,8 @@
             <package name="channels"/>
             <package name="model"/>
             <package name="model.databaseManager"/>
+            <package name="model.libraries"/>
+            <package name="model.libraries.interpreters"/>
         </packages>
     </test>
 </suite>

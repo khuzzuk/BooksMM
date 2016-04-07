@@ -17,7 +17,7 @@ public class FileSaverTest {
         fileName = "exampleDB.txt";
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testCorrectLibraryNameInDB() throws IOException {
         String libraryName = "JBC";
         String content = "example content";

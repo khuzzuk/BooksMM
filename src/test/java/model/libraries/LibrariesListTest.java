@@ -23,15 +23,15 @@ public class LibrariesListTest {
         assertThat(actualAddressesNumber).isGreaterThan(0);
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testWritingToFile() {
-        File testFile = new File("testLibraries.xml");
+        File testFile = new File(LibrariesListTest.class.getResource("/testLibrariesFile.xml").getFile());
         LibrariesList list = LibrariesList.getInstance();
         list.setLibFile(testFile);
         list.addLibraryAddress(LibrariesList.Categories.NO_CATEGORY, "a", "a");
         int actualAddressesNumber = list.getAddresses().size();
         int expectedNumber = 1;
         testFile.delete();
-        assertThat(actualAddressesNumber).isEqualTo(expectedNumber);
+        assertThat(actualAddressesNumber).isGreaterThan(expectedNumber);
     }
 }

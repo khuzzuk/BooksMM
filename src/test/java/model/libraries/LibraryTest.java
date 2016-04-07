@@ -14,7 +14,7 @@ public class LibraryTest {
         library = new Library("name", "date");
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testAddTitle() {
         library.add("title");
         int actualTitlesNumber = library.getTitles().size();
@@ -22,7 +22,7 @@ public class LibraryTest {
         assertThat(actualTitlesNumber).isEqualTo(expectedNumber);
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testAddArrayOfTitles() {
         library.addAll("title1","title2");
         int actualTitlesNumber = library.getTitles().size();

@@ -16,7 +16,7 @@ public class FollowedLibrariesTest {
         when(finder.toString()).thenReturn("example");
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testAddLibrary() {
         int expectedSize = 1;
         FollowedLibraries libraries = new FollowedLibraries();
@@ -26,7 +26,7 @@ public class FollowedLibrariesTest {
         actualLibrariesSize = libraries.stringListForGUI.size();
         assertThat(actualLibrariesSize).isEqualTo(expectedSize);
     }
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testRemoveLibrary() {
         int expectedSize = 0;
         FollowedLibraries libraries = new FollowedLibraries();

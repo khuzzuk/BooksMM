@@ -25,7 +25,7 @@ public class AvailableLibrariesTest {
         when(loader.loadLibraries()).thenReturn(list);
     }
 
-    @Test(groups = "fast")
+    @Test(groups = "integration")
     public void testCorrectBookFinderInLibraries() {
         AvailableLibraries libraries = new AvailableLibraries(loader);
         String actualFinder = libraries.removeAction(libraryName).toString();
