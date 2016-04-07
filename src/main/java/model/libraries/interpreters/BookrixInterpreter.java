@@ -1,10 +1,8 @@
 package model.libraries.interpreters;
 
 import model.HtmlDownloader;
-import model.libraries.HtmlElement;
+import model.HtmlElement;
 import model.libraries.Library;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * This class is responsible for computing a {@link org.jsoup.nodes.Document} object with content from Bookrix.

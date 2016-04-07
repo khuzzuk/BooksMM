@@ -1,8 +1,7 @@
 package model.libraries.interpreters;
 
-import model.libraries.HtmlElement;
+import model.HtmlElement;
 import model.libraries.Library;
-import org.jsoup.nodes.Document;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

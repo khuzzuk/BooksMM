@@ -1,6 +1,5 @@
 package model;
 
-import model.libraries.HtmlElement;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -45,7 +44,7 @@ public class HtmlContent implements HtmlElement {
         return new HtmlContentList(page.getAllElements());
     }
 
-    public class HtmlContentList implements HtmlElement{
+    public static class HtmlContentList implements HtmlElement{
         Elements elements;
 
         public HtmlContentList(Elements elements) {

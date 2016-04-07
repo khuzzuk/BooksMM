@@ -1,10 +1,7 @@
 package model;
 
 
-import model.databaseManager.DBRW;
-import model.libraries.HtmlElement;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 
 import java.net.MalformedURLException;
 
