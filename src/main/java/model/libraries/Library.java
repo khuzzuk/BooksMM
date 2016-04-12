@@ -2,15 +2,25 @@ package model.libraries;
 
 import org.w3c.dom.NodeList;
 
+import javax.persistence.*;
 import java.util.*;
 
 /**
  * This class is a container for a result of a query in particular library. Library is specified by
  * library's page name and date. It contains a map with title and list of its tags.
  */
+@Entity
+@Table(name = "Books")
 public class Library {
+    @Id @GeneratedValue
+    @Column(name = "id")
+    private int id;
+    @javax.persistence.OneToMany(cascade = CascadeType.ALL)
+    @javax.persistence.MapKey(name = "title")
     private final Map<String, List<String>> titles;
+    @Column(name = "name")
     private final String name;
+    @Column(name = "date")
     private final String date;
 
     /**
@@ -53,6 +63,14 @@ public class Library {
         for (String t : titles){
             this.titles.put(t, new ArrayList<>());
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
