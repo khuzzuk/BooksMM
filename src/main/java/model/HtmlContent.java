@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class HtmlContent implements HtmlElement {
+class HtmlContent implements HtmlElement {
     Element page;
 
     public HtmlContent(Element page) {
@@ -44,7 +44,7 @@ public class HtmlContent implements HtmlElement {
         return new HtmlContentList(page.getAllElements());
     }
 
-    public static class HtmlContentList implements HtmlElement{
+    static class HtmlContentList implements HtmlElement{
         Elements elements;
 
         public HtmlContentList(Elements elements) {
