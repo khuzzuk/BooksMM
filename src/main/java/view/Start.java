@@ -28,6 +28,7 @@ public class Start implements Subscriber<FinishedQueryMessage>{
 
     @Override
     public void receive(FinishedQueryMessage message) {
+        DBRW.shutDown();
         System.exit(0);
     }
 }

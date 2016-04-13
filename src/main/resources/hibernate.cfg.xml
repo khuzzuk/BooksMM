@@ -8,10 +8,11 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">password</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Library</property>
-        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.username">robot</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <mapping class="com.mkyong.user.DBUser"></mapping>
+        <mapping class="model.libraries.Library"></mapping>
+        <mapping class="model.libraries.Title"></mapping>
     </session-factory>
 </hibernate-configuration>

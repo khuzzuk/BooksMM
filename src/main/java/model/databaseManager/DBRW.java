@@ -5,11 +5,14 @@ import messaging.messages.FinishedTaskMessage;
 import org.apache.log4j.Logger;
 import messaging.subscribers.DBWriter;
 import model.libraries.Library;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import org.hibernate.cfg.Configuration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
@@ -23,6 +26,7 @@ import java.util.List;
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
 public class DBRW implements MessageProducer<FinishedTaskMessage> {
+    private static SessionFactory factory;
     private static final DBRW DBRW = new DBRW();
     static Writer writer = new Writer();
     static Reader reader = new Reader();
@@ -36,6 +40,11 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static List<Library> libraries;
     private static File dbFile = new File("DB.xml");
     private static final Logger logger = Logger.getLogger(DBRW.class);
+    private static Session session;
+
+    public static SessionFactory getFactory() {
+        return factory;
+    }
 
     private DBRW() {
     }
@@ -49,6 +58,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * since there is no auto-initialization with first use.
      */
     public static void initializeDB(){
+        factory = new Configuration().configure().buildSessionFactory();
+        session = factory.openSession();
         libraries = new ArrayList<>();
         if (!dbFile.exists()) InitializeDBFile();
         else reader.readDBFile();
@@ -75,7 +86,19 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         newXML();
         createXMLContent();
         writer.updateDBFile(dbFile, DB);
+        addToDatabase(library);
         DBRW.send(new FinishedTaskMessage());
+
+    }
+
+    private static void addToDatabase(Library library){
+        session.beginTransaction();
+        session.save(library);
+        session.getTransaction().commit();
+    }
+
+    public static void shutDown(){
+        getFactory().close();
     }
 
     /**
@@ -113,10 +136,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static void writeTitle(Element libraryElement, String title, Library library) {
         Element titleElement = DB.createElement(LIBRARY_TITLE_ELEMENT);
         appendElement(titleElement, title, LIBRARY_TITLE_VALUE);
-        Collection<String> tags = library.getTags(title);
-        for (String tag : tags){
-            appendElement(titleElement, tag, LIBRARY_TAG_ELEMENT);
-        }
+        String tags = library.getTags(title);
+            appendElement(titleElement, tags, LIBRARY_TAG_ELEMENT);
         libraryElement.appendChild(titleElement);
     }
 

@@ -10,14 +10,19 @@ import java.util.*;
  * library's page name and date. It contains a map with title and list of its tags.
  */
 @Entity
-@Table(name = "Books")
+@Table(name = "Queries")
 public class Library {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name = "id")
     private int id;
-    @javax.persistence.OneToMany(cascade = CascadeType.ALL)
-    @javax.persistence.MapKey(name = "title")
-    private final Map<String, List<String>> titles;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @ElementCollection(fetch=FetchType.EAGER)
+    //@CollectionTable(name = "Titles", joinColumns = @JoinColumn(name = "titlesId"))
+    //@MapKeyColumn(name="title")
+    @Column  (name = "category")
+    private final Map<Title, String> titles;
+
     @Column(name = "name")
     private final String name;
     @Column(name = "date")
@@ -40,7 +45,7 @@ public class Library {
      * @param title {@link String} with a title of the book.
      */
     public void add(String title){
-        titles.put(title, new ArrayList<>());
+        titles.put(new Title(title), "");
     }
 
     /**
@@ -49,19 +54,20 @@ public class Library {
      * @param tags {@link String}s with tags describing the title. It can be empty.
      */
     public void add(String title, String... tags){
-        List<String> tagList = new ArrayList<>();
-        Collections.addAll(tagList, tags);
-        titles.put(title, tagList);
+        if(tags.length == 0)add(title);
+        for (String t:tags) {
+            titles.put(new Title(title),t);
+        }
     }
 
     public void addAll(NodeList titleList) {
         for (int i=0; i<titleList.getLength(); i++){
-            titles.put(titleList.item(i).getTextContent(), new ArrayList<>());
+            titles.put(new Title(titleList.item(i).getTextContent()), "");
         }
     }
     public void addAll(String... titles){
         for (String t : titles){
-            this.titles.put(t, new ArrayList<>());
+            this.titles.put(new Title(t), "");
         }
     }
 
@@ -82,10 +88,14 @@ public class Library {
     }
 
     public Collection<String> getTitles() {
-        return titles.keySet();
+        Collection<String> titles = new ArrayList<>();
+        for (Title t: this.titles.keySet()){
+            titles.add(t.getTitle());
+        }
+        return titles;
     }
 
-    public Collection<String> getTags(String title) {
+    public String getTags(String title) {
         return titles.get(title);
     }
 }
