@@ -13,7 +13,7 @@ public class TaskWorker {
             new Thread(new Worker()).start();
         }
     }
-    private class Worker implements Runnable, MessageProducer {
+    private static class Worker implements Runnable, MessageProducer {
         @Override
         public void run() {
             Task task;
