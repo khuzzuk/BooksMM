@@ -3,7 +3,9 @@ package model.libraries;
 import org.w3c.dom.NodeList;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This class is a container for a result of a query in particular library. Library is specified by
@@ -12,16 +14,13 @@ import java.util.*;
 @Entity
 @Table(name = "Queries")
 public class Library {
-    @Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    @ElementCollection(fetch=FetchType.EAGER)
-    //@CollectionTable(name = "Titles", joinColumns = @JoinColumn(name = "titlesId"))
-    //@MapKeyColumn(name="title")
-    @Column  (name = "category")
-    private final Map<Title, String> titles;
+    @OneToMany(cascade = CascadeType.ALL)
+    private final List<Title> titles;
 
     @Column(name = "name")
     private final String name;
@@ -31,43 +30,47 @@ public class Library {
     /**
      * Constructor creates new instance of a {@link Library} object. It will be an
      * empty container for further query.
+     *
      * @param name {@link String} with a name o the library's page.
      * @param date {@link String} with a date of the query in YYYY/MM/DD format.
      */
     public Library(String name, String date) {
         this.name = name;
         this.date = date;
-        titles = new HashMap<>();
+        titles = new ArrayList<>();
     }
 
     /**
      * This method will add a title to a container with empty tag list.
+     *
      * @param title {@link String} with a title of the book.
      */
-    public void add(String title){
-        titles.put(new Title(title), "");
+    public void add(String title) {
+        titles.add(new Title(title,this));
     }
 
     /**
      * This method will add the title the container with list of provided tags.
+     *
      * @param title {@link String} with the title of the book.
-     * @param tags {@link String}s with tags describing the title. It can be empty.
+     * @param tags  {@link String}s with tags describing the title. It can be empty.
      */
-    public void add(String title, String... tags){
-        if(tags.length == 0)add(title);
-        for (String t:tags) {
-            titles.put(new Title(title),t);
+    public void add(String title, String... tags) {
+        if (tags.length == 0) add(title);
+        for (String t : tags) {
+            titles.add(new Title(this,title, t));
         }
     }
 
     public void addAll(NodeList titleList) {
-        for (int i=0; i<titleList.getLength(); i++){
-            titles.put(new Title(titleList.item(i).getTextContent()), "");
+        for (int i = 0; i < titleList.getLength(); i++) {
+            titles.add(new Title(titleList.item(i).getTextContent(),this));
         }
     }
-    public void addAll(String... titles){
-        for (String t : titles){
-            this.titles.put(new Title(t), "");
+
+    public void addAll(String... titles) {
+        for (String t : titles) {
+            this.titles.add(new Title(t,this));
         }
     }
 
@@ -88,14 +91,20 @@ public class Library {
     }
 
     public Collection<String> getTitles() {
-        Collection<String> titles = new ArrayList<>();
-        for (Title t: this.titles.keySet()){
-            titles.add(t.getTitle());
+        Collection<String> outputTitles = new ArrayList<>();
+        for (Title t : titles) {
+            outputTitles.add(t.getTitle());
         }
-        return titles;
+        return outputTitles;
     }
 
     public String getTags(String title) {
-        return titles.get(title);
+        String tag = "", titleFromList;
+        for (Title t : titles) {
+            titleFromList = t.getTitle();
+            if (titleFromList.equals(title))
+                tag = t.getTag();
+        }
+        return tag;
     }
 }
