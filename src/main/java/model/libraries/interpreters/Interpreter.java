@@ -33,6 +33,8 @@ public abstract class Interpreter {
     /**
      * This method should return new {@link model.libraries.Library} object
      * with all titles it could find in the provided sources.
+     * @param url {@link String} with library address.
+     * @param pattern {@link String} with pattern for title query.
      * @return {@link model.libraries.Library} with titles.
      */
     public Library getQuery(String url, String pattern){

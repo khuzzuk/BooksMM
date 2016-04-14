@@ -58,12 +58,12 @@ public class LibrariesList implements XMLParser {
     }
 
     /**
-     * This method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
+     * This method will provide a {@link List}&lt;{@link String}&gt; with ulr addresses to
      * libraries in xml file.
      * When called for the first time it will initialize connection to a file. Mind that
      * this operation can throw {@link org.xml.sax.SAXParseException},
      * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
-     * @return {@link List}&lt;{@link String}&gt with ulr addresses.
+     * @return {@link List}&lt;{@link String}&gt; with ulr addresses.
      */
     public List<String> getAddresses(){
         if (doc==null) initializeLibraries();
@@ -71,7 +71,7 @@ public class LibrariesList implements XMLParser {
     }
 
     /**
-     * This method will provide a {@link List}&lt;{@link String}&gt with ulr addresses to
+     * This method will provide a {@link List}&lt;{@link String}&gt; with ulr addresses to
      * libraries in xml file. It will extract only links from category provided in a parameter
      * When called for the first time it will initialize connection to a file. Mind that
      * this operation can throw {@link org.xml.sax.SAXParseException},
@@ -92,6 +92,7 @@ public class LibrariesList implements XMLParser {
      * this operation can throw {@link org.xml.sax.SAXParseException},
      * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
      * @param category {@link Categories} object by which names will be extracted.
+     * @param name {@link String} with library name.
      * @return {@link List}&lt;{@link String}&gt; with libraries names.
      */
     public String getLibraryAddress(String name, Categories category){

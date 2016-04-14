@@ -32,6 +32,7 @@ public interface XMLParser {
      * provided stream, and when it be unsuccessful it will throw {@link IOException}.
      * @param stream {@link java.io.InputStream} object which should contain xml data structure.
      * @return {@link org.w3c.dom.Document} with data provided in stream.
+     * @throws IOException
      */
     default Document getDocument(InputStream stream) throws IOException {
         Document doc = null;
