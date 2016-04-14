@@ -17,8 +17,9 @@ public interface XMLWriter {
      * This method will write provided {@link org.w3c.dom.Document} to pointed {@link java.io.File}
      * @param dbFile {@link java.io.File} where method will write data.
      * @param doc {@link org.w3c.dom.Document} which contains data.
+     * @return true when operation is succesfull.
      */
-    default void updateDBFile(File dbFile, Document doc) {
+    default boolean updateDBFile(File dbFile, Document doc) {
         try (FileOutputStream outputStream = new FileOutputStream(dbFile)) {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -27,7 +28,8 @@ public interface XMLWriter {
             transformer.transform(new DOMSource(doc), new StreamResult(outputStream));
         } catch (TransformerException | IOException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
 }

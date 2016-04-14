@@ -91,7 +91,7 @@ public class MainWindowController implements Initializable {
         populateTextArea("loading...");
         String address = LibrariesList.getInstance().getLibraryAddress(selectedLeftItem,
                 (LibrariesList.Categories) categoriesElement.getSelectionModel().getSelectedItem());
-        TaskChannel.putTask(new Task(InterpreterFactory.getInterpreter(address)));
+        TaskChannel.channel.putTask(new Task(InterpreterFactory.getInterpreter(address)));
     }
     @FXML
     private void moveToLeftAction(){

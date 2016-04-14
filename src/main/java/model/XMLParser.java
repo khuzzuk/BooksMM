@@ -28,13 +28,15 @@ public interface XMLParser {
 
     /**
      * This method will parse content from stream into xml data. Successful operation
-     * will return {@link org.w3c.dom.Document} object with proper structure.
+     * will return {@link org.w3c.dom.Document} object with proper structure. It will try to close
+     * provided stream, and when it be unsuccessful it will throw {@link IOException}.
      * @param stream {@link java.io.InputStream} object which should contain xml data structure.
      * @return {@link org.w3c.dom.Document} with data provided in stream.
      */
-    default Document getDocument(InputStream stream){
+    default Document getDocument(InputStream stream) throws IOException {
+        Document doc = null;
         try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
+            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
         } catch (ParserConfigurationException e) {
             logger.error("Failed to provide new instance of Document class object. Examine XMLParser class from source code.");
             e.printStackTrace();
@@ -44,7 +46,9 @@ public interface XMLParser {
         } catch (IOException e) {
             logger.error("Failed to connect with url whn parsing xml data.");
             e.printStackTrace();
+        } finally {
+            stream.close();
         }
-        return null;
+        return doc;
     }
 }

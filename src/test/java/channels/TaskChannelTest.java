@@ -31,7 +31,7 @@ public class TaskChannelTest {
         new FinishedTaskSubscriber(query);
         Task task = mock(Task.class);
         when(task.getLibrary()).thenReturn(new Library("a", "a"));
-        TaskChannel.putTask(task);
+        TaskChannel.channel.putTask(task);
         Thread.sleep(100);
         Task currentTask = TaskChannel.poll();
         assertThat(currentTask).isNull();
