@@ -2,6 +2,7 @@ package model.libraries;
 
 import model.XMLParser;
 import model.databaseManager.XMLWriter;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,6 +11,7 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,11 @@ import java.util.List;
  * All information is linked to xml file (by default it is located in execution path with name
  * "libraries.xml". When no file is found, new one will be created.
  */
-public class LibrariesList implements XMLWriter, XMLParser {
+public class LibrariesList implements XMLParser {
     private static final LibrariesList instance = new LibrariesList();
-    private Document doc;
+    private static final Logger logger = Logger.getLogger(LibrariesList.class);
+    ListWriter writer;
+    Document doc;
     private File libFile = new File("libraries.xml");
     private static final String URL_ELEMENT = "url";
     private static final String NAME_ATTRIBUTE = "name";
@@ -38,6 +42,22 @@ public class LibrariesList implements XMLWriter, XMLParser {
      */
     public void setLibFile(File libFile) {
         this.libFile = libFile;
+    }
+
+    /**
+     * This method will return libraries names stored in category element in provided xml file.
+     * It may be used for gui related stuff.
+     * When called for the first time it will initialize connection to a file. Mind that
+     * this operation can throw {@link org.xml.sax.SAXParseException},
+     * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
+     * @param category {@link Categories} object by which names will be extracted.
+     * @return {@link List}&lt;{@link String}&gt; with libraries names.
+     */
+    public List<String> getLibrariesNames(Categories category){
+        if (doc==null) initializeLibraries();
+        Element categoryElement = getCategoryElement(category);
+        categoryElement.getChildNodes();
+        return extractNames(categoryElement);
     }
 
     /**
@@ -67,23 +87,16 @@ public class LibrariesList implements XMLWriter, XMLParser {
         Element categoryElement = getCategoryElement(category);
         return extractAddresses(categoryElement);
     }
-
     /**
      * This method will return libraries names stored in category element in provided xml file.
-     * It may be used for gui related stuff.
+     * It may be used for gui related stuff. It will extract only those libraries that have the same
+     * name as provided in {@link String} parameter.
      * When called for the first time it will initialize connection to a file. Mind that
      * this operation can throw {@link org.xml.sax.SAXParseException},
      * {@link java.io.IOException} and other {@link org.w3c.dom.DOMException}.
      * @param category {@link Categories} object by which names will be extracted.
      * @return {@link List}&lt;{@link String}&gt; with libraries names.
      */
-    public List<String> getLibrariesNames(Categories category){
-        if (doc==null) initializeLibraries();
-        Element categoryElement = getCategoryElement(category);
-        categoryElement = (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
-        categoryElement.getChildNodes();
-        return extractNames(categoryElement);
-    }
     public String getLibraryAddress(String name, Categories category){
         if (doc==null) initializeLibraries();
         Element element = getCategoryElement(category);
@@ -140,15 +153,20 @@ public class LibrariesList implements XMLWriter, XMLParser {
         address.setAttribute(NAME_ATTRIBUTE, name);
         Element root = (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
         root.appendChild(address);
-        updateDBFile(libFile, doc);
+        writer.writeFile();
         return true;
     }
 
-    private void initializeLibraries() {
+    void initializeLibraries() {
+        writer = new ListWriter();
         if (libFile.exists()) {
             try {
                 doc = getDocument(new FileInputStream(libFile));
             } catch (FileNotFoundException e) {
+                logger.error("Interrupted file reading at " + libFile.getPath());
+                e.printStackTrace();
+            } catch (IOException e) {
+                logger.error("Cannot close stream with " + libFile.getPath());
                 e.printStackTrace();
             }
         } else startDB();
@@ -166,7 +184,6 @@ public class LibrariesList implements XMLWriter, XMLParser {
         root.appendChild(it);
         root.appendChild(history);
         root.appendChild(noCategory);
-        updateDBFile(libFile, doc);
     }
 
     /**
@@ -198,7 +215,9 @@ public class LibrariesList implements XMLWriter, XMLParser {
         list.addLibraryAddress(Categories.HISTORY, "http://www.bookrix.com/books;history,id:21,sort:1.html", "bookrix");
         list.addLibraryAddress(Categories.IT, "http://www.bookrix.com/books;technology-engineering,id:48,sort:1.html", "bookrix");
     }
-    static class listWriter{
-
+    class ListWriter implements XMLWriter{
+        boolean writeFile(){
+            return updateDBFile(libFile, doc);
+        }
     }
 }

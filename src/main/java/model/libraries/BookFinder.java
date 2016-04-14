@@ -14,7 +14,7 @@ public class BookFinder {
 
     String url;
     String pattern;
-    private Logger logger = Logger.getLogger(BookFinder.class);
+    private static final Logger logger = Logger.getLogger(BookFinder.class);
 
     public String listOfBooks() {
         StringBuilder result = new StringBuilder(2000);
