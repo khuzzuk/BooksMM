@@ -1,6 +1,5 @@
 package model.libraries;
 
-import model.databaseManager.LibrariesLoaderTest;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -11,14 +10,14 @@ public class LibrariesListTest {
     @Test(groups = "fast")
     public void testReadingFile() {
         LibrariesList list = LibrariesList.getInstance();
-        list.setLibFile(new File(LibrariesLoaderTest.class.getResource("/exampleLibraries.xml").getFile()));
+        list.setLibFile(new File(LibrariesListTest.class.getResource("/exampleLibraries.xml").getFile()));
         int actualAddressesNumber = list.getAddresses().size();
         assertThat(actualAddressesNumber).isGreaterThan(1);
     }
     @Test(groups = "fast")
     public void testReadingFileByCategory() {
         LibrariesList list = LibrariesList.getInstance();
-        list.setLibFile(new File(LibrariesLoaderTest.class.getResource("/exampleLibraries.xml").getFile()));
+        list.setLibFile(new File(LibrariesListTest.class.getResource("/exampleLibraries.xml").getFile()));
         int actualAddressesNumber = list.getAddresses(LibrariesList.Categories.ROMANCE).size();
         assertThat(actualAddressesNumber).isGreaterThan(0);
     }

@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by mmaczka on 21.03.16.
- */
 public class BookFinder {
 
     String url;
