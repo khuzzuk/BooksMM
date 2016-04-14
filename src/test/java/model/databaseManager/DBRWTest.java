@@ -1,53 +1,67 @@
 package model.databaseManager;
 
-import messaging.subscribers.FinishedTaskSubscriber;
 import model.libraries.Library;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import view.QueryMaker;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class DBRWTest {
 
-    private File testFile = new File("testDB.xml");
-    private String testElementName = "TestElement";
+    private File testFile;
+    private String testElementName;
+    private Library testLibrary;
+    private DBRW.Writer writer;
+    private DBRW.DAOWriter dao;
+    private DBRW.MessageSender sender;
+
+    @BeforeTest
+    public void setConstants() throws Exception {
+        testFile = new File("testDB.xml");
+        testElementName = "TestElement";
+        testLibrary = new Library(testElementName, "1");
+    }
 
     @BeforeMethod
     public void setUp() throws Exception {
-        DBRW.Writer writer = mock(DBRW.Writer.class);
+        DBRW.initializeDB();
+        writer = mock(DBRW.Writer.class);
         DBRW.writer = writer;
+        dao = mock(DBRW.DAOWriter.class);
+        DBRW.daoWriter = dao;
+        sender = mock(DBRW.MessageSender.class);
+        DBRW.sender = sender;
+        DBRW.setOutputDBFile(testFile);
+        DBRW.libraries = new ArrayList<>();
     }
 
-    @Test(groups = "integration")
+    @Test(groups = "fast")
     public void testWriteToNewXml() {
-        QueryMaker query = mock(QueryMaker.class);
-        new FinishedTaskSubscriber(query);
-        DBRW.initializeDB();
-        DBRW.setOutputDBFile(testFile);
-        DBRW.write(new Library(testElementName, "1"));
+        DBRW.write(testLibrary);
         int librariesInDB = DBRW.getLibraryByName(testElementName).size();
         int expectedNumber = 1;
         assertThat(librariesInDB).isEqualTo(expectedNumber);
+        verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
+        verify(dao, times(1)).commitTransaction(testLibrary);
     }
 
-    @Test(groups = "integration")
+    @Test(groups = "fast")
     public void testWriteItemToXML() {
-        DBRW.initializeDB();
-        DBRW.setOutputDBFile(testFile);
         Element testElement = DBRW.DB.createElement(testElementName);
-        testElement.setTextContent("test");
         DBRW.write(testElement);
         NodeList e = DBRW.DB.getDocumentElement().getElementsByTagName(testElementName);
         int testElementsInFile = e.getLength();
         int expectedCount = 1;
         assertThat(testElementsInFile).isEqualTo(expectedCount);
+        verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
     }
 
     @AfterMethod

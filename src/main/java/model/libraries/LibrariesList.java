@@ -198,4 +198,7 @@ public class LibrariesList implements XMLWriter, XMLParser {
         list.addLibraryAddress(Categories.HISTORY, "http://www.bookrix.com/books;history,id:21,sort:1.html", "bookrix");
         list.addLibraryAddress(Categories.IT, "http://www.bookrix.com/books;technology-engineering,id:48,sort:1.html", "bookrix");
     }
+    static class listWriter{
+
+    }
 }
