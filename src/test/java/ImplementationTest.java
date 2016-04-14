@@ -22,9 +22,9 @@ public class ImplementationTest {
         QueryMaker query = mock(QueryMaker.class);
         new FinishedTaskSubscriber(query);
         Task task = new Task(new BookrixInterpreter("http://www.bookrix.com/books;sort:1.html"));
-        TaskChannel.putTask(task);
-        TaskChannel.putTask(new Task(new GoodreadsInterpreter("http://www.goodreads.com/ebooks")));
-        TaskChannel.putTask(new Task(new FreebookshubInterpreter("http://www.freebookshub.com/")));
+        TaskChannel.channel.putTask(task);
+        TaskChannel.channel.putTask(new Task(new GoodreadsInterpreter("http://www.goodreads.com/ebooks")));
+        TaskChannel.channel.putTask(new Task(new FreebookshubInterpreter("http://www.freebookshub.com/")));
         Thread.sleep(2000);
         file.delete();
     }

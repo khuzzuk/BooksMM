@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class DBRW implements MessageProducer<FinishedTaskMessage> {
     public static final String LIBRARY_ELEMENT = "Library";
-    private static final DBRW DBRW = new DBRW();
+    public static final DBRW DBRW = new DBRW();
     private static final String LIBRARY_NAME_ELEMENT = "name";
     private static final String LIBRARY_DATE_ELEMENT = "Date";
     private static final String LIBRARY_TITLE_ELEMENT = "Title";

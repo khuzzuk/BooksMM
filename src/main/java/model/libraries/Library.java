@@ -27,6 +27,7 @@ public class Library {
     @Column(name = "date")
     private final String date;
 
+
     /**
      * Constructor creates new instance of a {@link Library} object. It will be an
      * empty container for further query.
@@ -38,6 +39,15 @@ public class Library {
         this.name = name;
         this.date = date;
         titles = new ArrayList<>();
+    }
+
+    /**
+     * This constructor is for Hibernate compatibility.
+     */
+    public Library() {
+        titles = new ArrayList<>();
+        name = null;
+        date = null;
     }
 
     /**
@@ -58,10 +68,16 @@ public class Library {
     public void add(String title, String... tags) {
         if (tags.length == 0) add(title);
         for (String t : tags) {
-            titles.add(new Title(this,title, t));
+            titles.add(new Title(this,t, title));
         }
     }
 
+    /**
+     * This method handles adding elements in {@link NodeList} provided with parameters.
+     * @param titleList {@link NodeList} with libraries elements.
+     * @deprecated
+     */
+    @Deprecated
     public void addAll(NodeList titleList) {
         for (int i = 0; i < titleList.getLength(); i++) {
             titles.add(new Title(titleList.item(i).getTextContent(),this));
