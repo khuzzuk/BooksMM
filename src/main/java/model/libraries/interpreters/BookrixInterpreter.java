@@ -37,7 +37,6 @@ public class BookrixInterpreter extends Interpreter {
         tagAttributeValue = "item-details";
     }
 
-    @Override
     public Library getQuery(){
         page = new HtmlDownloader().getContentFromHTML(address);
         Library library = getLibraryInstace();

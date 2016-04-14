@@ -102,7 +102,6 @@ public class MainWindowController implements Initializable {
     }
 
     public synchronized void populateTextArea(String s) {
-        /* TODO implementation of multiple threads accessing populateTextArea*/
         queryResults.setText(s);
     }
 }

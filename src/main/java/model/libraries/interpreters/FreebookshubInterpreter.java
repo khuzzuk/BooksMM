@@ -1,14 +1,14 @@
 package model.libraries.interpreters;
 
-import model.libraries.BookFinder;
 import model.libraries.Library;
 
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class FreebookshubInterpreter extends Interpreter {
-    String url;
     private static String pattern = getPattern();
+    String url;
 
     public FreebookshubInterpreter(String url) {
         super();
@@ -17,23 +17,21 @@ public class FreebookshubInterpreter extends Interpreter {
     }
 
     private static String getPattern() {
-        try (Scanner scanner = new Scanner(new InputStreamReader(GoodreadsInterpreter.class.getResourceAsStream("/LIBS")))) {
+        try (Scanner scanner = new Scanner(new InputStreamReader(GoodreadsInterpreter.class.getResourceAsStream("/LIBS"), "UTF-8"))) {
             String line;
             while ((line = scanner.nextLine()) != null) {
                 if (line.equals("http://www.freebookshub.com/")) {
                     return scanner.nextLine();
                 }
             }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
     public Library getQuery() {
-        Library library = getLibraryInstace();
-        BookFinder finder = new BookFinder(url, pattern);
-        String[] titles = finder.listOfBooks().split("\\n");
-        library.addAll(titles);
-        return library;
+        return getQuery(url, pattern);
     }
 }

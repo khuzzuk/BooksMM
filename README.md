@@ -7,6 +7,7 @@
 |  \   |_____| |____| |_____|    |       \/  .    | .   |
 
 version 1.1, last release 14.04.2016
+
 *************************************************************
 
 AUTHORS	Credits
@@ -28,6 +29,7 @@ work properly:
 mySQL Connector Driver - recommended version 5.1.38, not newer !
 
 For more information about dependencies take a look on About Page.
+
 *************************************************************
 
 THANKS	Acknowledgments
@@ -38,6 +40,13 @@ google, stackoverflow etc..
 INSTALL	Installation instructions
 
 To install this software just copy it into some catalog.
+You also need libraries.xml present in this catalog.
+
+*************************************************************
+
+TESTS
+Some tests are designed as integration tests. Please mind that
+those are excluded from Maven test lifecycle.
 
 *************************************************************
 

@@ -8,10 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,8 +157,8 @@ public class LibrariesList implements XMLParser {
     void initializeLibraries() {
         writer = new ListWriter();
         if (libFile.exists()) {
-            try {
-                doc = getDocument(new FileInputStream(libFile));
+            try (InputStream stream = new FileInputStream(libFile)) {
+                doc = getDocument(stream);
             } catch (FileNotFoundException e) {
                 logger.error("Interrupted file reading at " + libFile.getPath());
                 e.printStackTrace();

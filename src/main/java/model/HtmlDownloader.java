@@ -5,32 +5,35 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
 public class HtmlDownloader implements XMLParser {
     private static final Logger logger = Logger.getLogger(HtmlDownloader.class);
-    public static String downloadPage(String url)
-    {
+    public static String downloadPage(String url) {
+        URL pageURL = null;
         try
         {
-            URL pageURL = new URL(url);
-            StringBuilder text = new StringBuilder();
-            Scanner scanner = new Scanner(pageURL.openStream(), "utf-8");
-            try {
-                while (scanner.hasNextLine()){
-                    text.append(scanner.nextLine());
-                }
-            }
-            finally{
-                scanner.close();
-            }
-            return text.toString();
+            pageURL = new URL(url);
+        } catch (MalformedURLException e) {
+            logger.error("Wrong address: " + url);
+            e.printStackTrace();
         }
-        catch(Exception ex)
-        {
-            return null;
+        return download(pageURL);
+    }
+
+    private static String download(URL pageURL) {
+        StringBuilder text = new StringBuilder();
+        try (Scanner scanner = new Scanner(pageURL.openStream(), "utf-8");) {
+            while (scanner.hasNextLine()){
+                text.append(scanner.nextLine());
+            }
+        } catch (IOException e) {
+            logger.error("Cannot connect to " + pageURL.getPath());
+            e.printStackTrace();
         }
+        return text.toString();
     }
 
     /**

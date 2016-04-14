@@ -18,8 +18,13 @@ public class GoodreadsInterpreter extends Interpreter {
         name = "goodreads";
     }
 
+    @Override
+    public Library getQuery() {
+        return getQuery(url, pattern);
+    }
+
     private static String getPattern() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(GoodreadsInterpreter.class.getResourceAsStream("/LIBS")))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(GoodreadsInterpreter.class.getResourceAsStream("/LIBS"), "UTF-8"))) {
             String line;
             while ((line=reader.readLine())!=null){
                 if (line.equals("http://www.goodreads.com/ebooks")){
@@ -30,14 +35,5 @@ public class GoodreadsInterpreter extends Interpreter {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public Library getQuery() {
-        Library library = getLibraryInstace();
-        BookFinder finder = new BookFinder(url, pattern);
-        String[] titles = finder.listOfBooks().split("\\n");
-        library.addAll(titles);
-        return library;
     }
 }
