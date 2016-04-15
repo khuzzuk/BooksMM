@@ -10,7 +10,7 @@ public class LibraryTest {
     private Library library;
     private String title;
 
-    @BeforeMethod
+    @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         library = new Library("name", "date");
         title = "title";

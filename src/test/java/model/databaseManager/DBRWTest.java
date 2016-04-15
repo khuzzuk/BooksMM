@@ -23,14 +23,14 @@ public class DBRWTest {
     private DBRW.DAOWriter dao;
     private DBRW.MessageSender sender;
 
-    @BeforeTest
+    @BeforeTest(groups = "fast")
     public void setConstants() throws Exception {
         testFile = new File("testDB.xml");
         testElementName = "TestElement";
         testLibrary = new Library(testElementName, "1");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         DBRW.initializeDB();
         writer = mock(DBRW.Writer.class);
@@ -63,8 +63,4 @@ public class DBRWTest {
         assertThat(testElementsInFile).isEqualTo(expectedCount);
         verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
     }
-
-    @AfterMethod
-    public void tearDown() throws Exception {
-   }
 }

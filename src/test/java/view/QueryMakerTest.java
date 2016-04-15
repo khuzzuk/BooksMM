@@ -20,12 +20,12 @@ public class QueryMakerTest {
     private LibrariesList.Categories category;
     private QueryMaker maker;
 
-    @BeforeMethod
+    @BeforeMethod(groups = "fast")
     public void prepareConstants() throws Exception {
         category = LibrariesList.Categories.ROMANCE;
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         maker = new QueryMaker();
 

@@ -17,11 +17,11 @@ public class LibrariesListTest implements XMLParser {
     LibrariesList list = LibrariesList.getInstance();
     Document doc;
 
-    @BeforeTest
+    @BeforeTest(groups = "fast")
     public void prepareDocument() throws IOException {
         doc = getDocument(LibrariesListTest.class.getResource("/exampleLibraries.xml").openStream());
     }
-    @BeforeMethod
+    @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         File testFile = new File("test.file");
         writer = mock(LibrariesList.ListWriter.class);

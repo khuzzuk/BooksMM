@@ -23,7 +23,7 @@ public class HtmlContentTest {
         assertThat(returnedElement).isEqualTo(expectedElement);
     }
 
-    @Test
+    @Test(groups = "fast")
     public void testExtractElementsFromList() {
         //given
         Elements MockedElements = mock(Elements.class);
