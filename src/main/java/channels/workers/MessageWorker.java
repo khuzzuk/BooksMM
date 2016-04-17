@@ -2,6 +2,7 @@ package channels.workers;
 
 import messaging.Subscriber;
 import messaging.messages.Message;
+import messaging.subscribers.SubscribersList;
 
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,9 @@ import java.util.concurrent.BlockingDeque;
 
 public class MessageWorker {
     private final BlockingDeque<? extends Message> channel;
-    private final Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers;
 
-    public MessageWorker(BlockingDeque<? extends Message> channel, Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers) {
+    public MessageWorker(BlockingDeque<? extends Message> channel) {
         this.channel =channel;
-        this.subscribers = subscribers;
     }
 
     /**
@@ -41,7 +40,7 @@ public class MessageWorker {
                 }
                 else{
                     @SuppressWarnings("unchecked")
-                    List<Subscriber<? extends Message>> currentSubscribers = subscribers.get(message.getClass());
+                    List<Subscriber<? extends Message>> currentSubscribers = SubscribersList.get(message.getClass());
                     try {
                         if (currentSubscribers==null)
                         throw new NoSuchElementException("No subscriber for type of message: "+message.getClass());
