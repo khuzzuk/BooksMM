@@ -23,7 +23,7 @@ import messaging.messages.Message;
 public interface Subscriber<T extends Message> {
     /**
      * Every class that implements this interface have to provide this method. When a
-     * {@link Message} object are processed by {@link channels.MessageChannel.MessageWorker},
+     * {@link Message} object are processed by MessageWorker,
      * this method will be invoked. Every object implementing this interface should provide
      * in this method a logic for handling a message. Mind, that by default every invocation of
      * {@link Subscriber#receive(Message)} method will be processed by one thread. After processing
@@ -42,7 +42,7 @@ public interface Subscriber<T extends Message> {
      * differentiate coming messages. To make design simplerK, you may create
      * more {@link Subscriber} classes that will handle one listener.
      * @param messageClass {@link Class}lt;? extends {@link Message}gt;, which allows
-     *                                  {@link channels.workers.MessageWorker} to send a message
+     *                                  MessageWorker to send a message
      *                                  to this subscriber. It needs a type to be mapped, since it
      *                                  is the only criteria for sending a message.
      */

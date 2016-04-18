@@ -40,7 +40,8 @@ public class QueryMaker implements MessageProducer<FinishedQueryMessage>{
      * This method will start a query for specific categories in Libraries List xml file.
      * Throws {@link QueryInitializationException} when initialization file. No operation on file or database will be performed in such a case.
      * @param category {@link model.libraries.LibrariesList.Categories} that may be found in xml file.
-     * @throws QueryInitializationException
+     * @throws QueryInitializationException when lazy initialization fails, you may get this exception. It means, that installation of the program
+     * was done wrong in some way.
      */
 
     public void startQuery(LibrariesList.Categories category) throws QueryInitializationException {

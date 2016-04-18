@@ -28,8 +28,8 @@ public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
     /**
      * There object will receive a message from a {@link channels.MessageChannel} queue. It than will be passed as a {@link String}
      * to {@link MainWindowController} object passed as an argument in the constructor. Every invocation of this method has guarantee,
-     * that {@link channels.workers.MessageWorker} won't use null parameters, so by default there is no need to check for null parameter.
-     * @param message object that implements a {@link Message}. By default it won't be null.
+     * that MessageWorker won't use null parameters, so by default there is no need to check for null parameter.
+     * @param message object that implements a {@link messaging.messages.Message}. By default it won't be null.
      */
     @Override
     public void receive(WriteToDBMessage message) {
