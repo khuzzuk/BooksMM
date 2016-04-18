@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Robot">
+    <bannerLeft>
+        <name>BooksMM</name>
+        <src>http://s3-us-west-2.amazonaws.com/insanerobot-website/Robot-icon.png</src>
+    </bannerLeft>
+    <body>
+        <menu ref="reports"/>
+    </body>
+</project>

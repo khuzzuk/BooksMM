@@ -22,6 +22,7 @@
         <maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
         <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
     </properties>
+
     <description>
         Thank you Tomasz for supporting us! Here you have your first completed project. For more information go to the Readme file.
     </description>
