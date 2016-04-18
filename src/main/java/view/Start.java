@@ -1,6 +1,6 @@
 package view;
 
-import messaging.Subscriber;
+import messaging.subscribers.Subscriber;
 import messaging.messages.FinishedQueryMessage;
 import model.databaseManager.DBRW;
 

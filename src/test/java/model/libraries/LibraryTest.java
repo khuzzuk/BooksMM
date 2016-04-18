@@ -17,7 +17,7 @@ public class LibraryTest {
     }
 
     @Test(groups = "fast")
-    public void testAddTitle() {
+    public void addingTitleTest() {
         library.add(title);
         int actualTitlesNumber = library.getTitles().size();
         int expectedNumber = 1;

@@ -14,8 +14,6 @@ import static org.mockito.Mockito.*;
 
 public class QueryMakerTest {
 
-    private DBRW mockedDBRW;
-    private LibrariesList mockedList;
     private TaskChannel mockedChannel;
     private LibrariesList.Categories category;
     private QueryMaker maker;
@@ -29,14 +27,14 @@ public class QueryMakerTest {
     public void setUp() throws Exception {
         maker = new QueryMaker();
 
-        mockedDBRW = mock(DBRW.class);
+        DBRW mockedDBRW = mock(DBRW.class);
         maker.dbrw = mockedDBRW;
 
-        mockedList = mock(LibrariesList.class);
+        LibrariesList mockedList = mock(LibrariesList.class);
         List<String> urls = new ArrayList<>();
-        urls.add("quer1");
-        urls.add("quer2");
-        urls.add("quer3");
+        urls.add("bookrix");
+        urls.add("bookrix");
+        urls.add("bookrix");
         when(mockedList.getAddresses(category)).thenReturn(urls);
         maker.list = mockedList;
 

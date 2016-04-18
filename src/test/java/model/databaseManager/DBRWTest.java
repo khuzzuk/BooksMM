@@ -21,7 +21,6 @@ public class DBRWTest {
     private Library testLibrary;
     private DBRW.Writer writer;
     private DBRW.DAOWriter dao;
-    private DBRW.MessageSender sender;
 
     @BeforeTest(groups = "fast")
     public void setConstants() throws Exception {
@@ -37,7 +36,7 @@ public class DBRWTest {
         DBRW.writer = writer;
         dao = mock(DBRW.DAOWriter.class);
         DBRW.daoWriter = dao;
-        sender = mock(DBRW.MessageSender.class);
+        DBRW.MessageSender sender = mock(DBRW.MessageSender.class);
         DBRW.sender = sender;
         DBRW.setOutputDBFile(testFile);
         DBRW.libraries = new ArrayList<>();

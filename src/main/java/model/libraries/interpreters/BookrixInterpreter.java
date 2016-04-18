@@ -8,7 +8,7 @@ import model.libraries.Library;
  * This class is responsible for computing a {@link org.jsoup.nodes.Document} object with content from Bookrix.
  * It will find all titles in the content and wrap them into the {@link model.libraries.Library}.
  */
-public class BookrixInterpreter extends Interpreter {
+class BookrixInterpreter extends Interpreter {
     private String attributeValue;
     private String titleAttributeValue;
     private String tagAttribute;

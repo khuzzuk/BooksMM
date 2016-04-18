@@ -1,7 +1,6 @@
 package messaging.subscribers;
 
 import model.databaseManager.DBRW;
-import messaging.Subscriber;
 import messaging.messages.WriteToDBMessage;
 
 /**

@@ -1,7 +1,5 @@
 package model.libraries.interpreters;
 
-import model.HtmlDownloader;
-
 public class InterpreterFactory {
     private static final String bookrixTag = "bookrix";
     private static final String freebookshub = "freebookshub";

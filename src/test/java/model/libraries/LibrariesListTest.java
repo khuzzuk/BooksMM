@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class LibrariesListTest implements XMLParser {
-    private LibrariesList.ListWriter writer;
     LibrariesList list = LibrariesList.getInstance();
     Document doc;
 
@@ -24,7 +23,7 @@ public class LibrariesListTest implements XMLParser {
     @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         File testFile = new File("test.file");
-        writer = mock(LibrariesList.ListWriter.class);
+        LibrariesList.ListWriter writer = mock(LibrariesList.ListWriter.class);
         list.setLibFile(testFile);
         list.initializeLibraries();
         list.writer = writer;
@@ -32,7 +31,7 @@ public class LibrariesListTest implements XMLParser {
     }
 
     @Test(groups = "fast")
-    public void testGettingAddressees() {
+    public void checkContainedAddresses() {
         //given
         //when
         int actualAddressesNumber = list.getAddresses().size();
@@ -40,7 +39,7 @@ public class LibrariesListTest implements XMLParser {
         assertThat(actualAddressesNumber).isGreaterThan(1);
     }
     @Test(groups = "fast")
-    public void testGettingAddresseesByCategory() {
+    public void checkContainedAddressesByCategory() {
         //given
         //when
         int actualAddressesNumber = list.getAddresses(LibrariesList.Categories.ROMANCE).size();
@@ -48,7 +47,7 @@ public class LibrariesListTest implements XMLParser {
         assertThat(actualAddressesNumber).isGreaterThan(0);
     }
     @Test(groups = "fast")
-    public void testGettingAddresseesByNameAndCategory() {
+    public void checkContainedAddresseesByNameAndCategory() {
         //given
         String expectedAddress = "http://www.bookrix.com/books;romance,id:56,sort:1.html";
         //when
@@ -58,7 +57,7 @@ public class LibrariesListTest implements XMLParser {
     }
 
     @Test(groups = "fast")
-    public void testProperLibrariesNames() throws Exception {
+    public void testsProperLibrariesNames() throws Exception {
         //given
         int expectedCount = 1;
         //when
@@ -68,7 +67,7 @@ public class LibrariesListTest implements XMLParser {
     }
 
     @Test(groups = "fast")
-    public void testTrueStatementWhenWritingToFile() throws Exception {
+    public void trueStatementWhenWritingToFile() throws Exception {
         //given
         //when
         boolean statement = list.addLibraryAddress(LibrariesList.Categories.ROMANCE, "url", "name");
