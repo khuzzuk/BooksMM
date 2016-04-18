@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookFinderTest {
     @Test(groups = "fast")
-    public void testName() {
+    public void checkIfNameOfTheLibraryIsCorrect() {
         String address = BookFinderTest.class.getResource("/www.example.library.site.com").toExternalForm();
         String pattern = "abc(.+?)abc";
         BookFinder finder = new BookFinder(address,pattern);

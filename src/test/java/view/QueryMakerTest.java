@@ -32,9 +32,9 @@ public class QueryMakerTest {
 
         LibrariesList mockedList = mock(LibrariesList.class);
         List<String> urls = new ArrayList<>();
-        urls.add("quer1");
-        urls.add("quer2");
-        urls.add("quer3");
+        urls.add("bookrix");
+        urls.add("bookrix");
+        urls.add("bookrix");
         when(mockedList.getAddresses(category)).thenReturn(urls);
         maker.list = mockedList;
 

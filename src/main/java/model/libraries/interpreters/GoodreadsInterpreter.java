@@ -1,13 +1,12 @@
 package model.libraries.interpreters;
 
-import model.libraries.BookFinder;
 import model.libraries.Library;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class GoodreadsInterpreter extends Interpreter {
+class GoodreadsInterpreter extends Interpreter {
     private static String pattern = getPattern();
 
     private String url;
