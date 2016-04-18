@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class LibrariesListTest implements XMLParser {
-    private LibrariesList.ListWriter writer;
     LibrariesList list = LibrariesList.getInstance();
     Document doc;
 
@@ -24,7 +23,7 @@ public class LibrariesListTest implements XMLParser {
     @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
         File testFile = new File("test.file");
-        writer = mock(LibrariesList.ListWriter.class);
+        LibrariesList.ListWriter writer = mock(LibrariesList.ListWriter.class);
         list.setLibFile(testFile);
         list.initializeLibraries();
         list.writer = writer;
