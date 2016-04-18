@@ -30,6 +30,9 @@ mySQL Connector Driver - recommended version 5.1.38, not newer !
 
 For more information about dependencies take a look on About Page.
 
+Every library has unique ID in database. If any book has no tag
+there is a NULL in field.
+
 *************************************************************
 
 THANKS	Acknowledgments
@@ -39,8 +42,23 @@ google, stackoverflow etc..
 
 INSTALL	Installation instructions
 
+How to set-up MySQL database (in terminal):
+1. sudo apt-get install mysql-server
+2. mysql -u root -p
+3. create database name_of_database;
+4. show name_of_database;
+5. use name_of_database;
+6. show tables;
+You can also download MySQL Workbench from Seftware Center.
+
+
 To install this software just copy it into some catalog.
 You also need libraries.xml present in this catalog.
+
+In persistence.xml file you need to type the name of your database and password (example below):
+<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/name_of_database"/>
+<property name="javax.persistence.jdbc.password" value="password_to_database"/>
+
 
 *************************************************************
 

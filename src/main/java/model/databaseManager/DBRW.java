@@ -219,7 +219,6 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
          */
         public void close() {
             factory.close();
-            session.close();
             session = null;
         }
     }
