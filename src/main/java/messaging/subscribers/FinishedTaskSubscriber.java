@@ -1,6 +1,5 @@
 package messaging.subscribers;
 
-import messaging.Subscriber;
 import messaging.messages.FinishedTaskMessage;
 import view.QueryMaker;
 

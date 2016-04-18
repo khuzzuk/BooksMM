@@ -1,8 +1,7 @@
-package messaging;
+package messaging.subscribers;
 
 
 import messaging.messages.Message;
-import messaging.subscribers.SubscribersList;
 
 /**
  * When an object implements this interface, it can subscribe to receiving specified
@@ -24,9 +23,9 @@ import messaging.subscribers.SubscribersList;
 public interface Subscriber<T extends Message> {
     /**
      * Every class that implements this interface have to provide this method. When a
-     * {@link Message} object are processed by {@link channels.workers.MessageWorker},
+     * {@link Message} object are processed by {@link channels.MessageChannel.MessageWorker},
      * this method will be invoked. Every object implementing this interface should provide
-     * in this method a logic for hamdling a message. Mind, that by default every invocation of
+     * in this method a logic for handling a message. Mind, that by default every invocation of
      * {@link Subscriber#receive(Message)} method will be processed by one thread. After processing
      * a method, thread will start processing another message.
      * @param message object that implements a {@link Message}.
