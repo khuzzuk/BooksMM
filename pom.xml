@@ -18,6 +18,9 @@
         <jsoup.version>1.8.3</jsoup.version>
         <hibernate-core.version>5.1.0.Final</hibernate-core.version>
         <mySqlConnector.version>5.1.38</mySqlConnector.version>
+        <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
+        <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
     </properties>
     <build>
         <plugins>
@@ -33,7 +36,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${maven-surefire-plugin}</version>
                 <configuration>
                     <groups>fast</groups>
                     <includes>
@@ -45,7 +48,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.6.201602180812</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -77,19 +80,21 @@
             </plugin>
         </plugins>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
+                <version>${maven-javadoc-plugin}</version>
             </plugin>
         </plugins>
     </reporting>
-    <prerequisites>
-        <maven>3.3.9</maven>
-    </prerequisites>
-
 
     <dependencies>
         <dependency>
@@ -130,6 +135,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mySqlConnector.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.report</artifactId>
+            <version>${jacoco.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
