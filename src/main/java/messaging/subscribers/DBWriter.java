@@ -8,9 +8,10 @@ import messaging.messages.WriteToDBMessage;
  * Please remember to not instantiate object explicitly, because proper object will be created
  * with {@link DBRW#initializeDB()} method.
  */
+@SubscriptionType(type = WriteToDBMessage.class)
 public class DBWriter implements Subscriber<WriteToDBMessage> {
     public DBWriter() {
-        subscribe(WriteToDBMessage.class);
+        subscribe();
     }
 
     @Override

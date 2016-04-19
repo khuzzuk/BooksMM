@@ -2,14 +2,15 @@ package view;
 
 import messaging.subscribers.Subscriber;
 import messaging.messages.FinishedQueryMessage;
+import messaging.subscribers.SubscriptionType;
 import model.databaseManager.DBRW;
 
 import java.io.File;
 
-
+@SubscriptionType(type = FinishedQueryMessage.class)
 public class Start implements Subscriber<FinishedQueryMessage>{
     public Start() {
-        subscribe(FinishedQueryMessage.class);
+        subscribe();
     }
 
     public static void main(String[] args) {

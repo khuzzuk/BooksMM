@@ -11,6 +11,7 @@ import java.util.Collection;
  * actual handler. It is provided in order to provide a possibility of accepting more than one type
  * of {@link messaging.messages.Message} objects by {@link MainWindowController} class.
  */
+@SubscriptionType(type = WriteToDBMessage.class)
 public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
     MainWindowController controller;
 
@@ -22,7 +23,7 @@ public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
     public WriteToDBUISubscriber(MainWindowController controller) {
         if (controller==null) throw new NullPointerException();
         this.controller = controller;
-        subscribe(WriteToDBMessage.class);
+        subscribe();
     }
 
     /**

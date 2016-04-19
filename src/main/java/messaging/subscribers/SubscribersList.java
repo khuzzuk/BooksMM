@@ -23,7 +23,7 @@ public class SubscribersList {
         subscribers = new HashMap<>();
     }
 
-    static void subscribe(Class<? extends Message> messageClass, Subscriber<? extends Message> subscriber) {
+    static void subscribe(Class messageClass, Subscriber<? extends Message> subscriber) {
         List<Subscriber<? extends Message>> list = subscribers.get(messageClass);
         if (list==null) list = new ArrayList<>();
         list.add(subscriber);

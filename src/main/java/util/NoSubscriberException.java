@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * {@link messaging.messages.Message}&gt; in a {@link messaging.subscribers.SubscribersList}.
  * @since 16.04.16.
  */
-public class NoSubscriberException extends NoSuchElementException {
+public class NoSubscriberException extends Exception {
     public NoSubscriberException() {
         super();
     }

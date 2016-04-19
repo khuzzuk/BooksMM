@@ -11,7 +11,8 @@ import messaging.messages.Message;
  * as a generic type, instead of raw interface implementation. It is applicable due to fact, that
  * by default {@link MessageChannel} will accept only objects that implements {@link Message} interface.
  * Also note, that you cant send objects that don't implement this interface.
- * @param <T> object that should implement {@link Message} interface (it is mandatory requirement).
+ * @param <T> object that should implement {@link Message} interface (it is mandatory requirement). Enclosing types
+ *           are the same as in {@link MessageChannel}, so generally it is better to not use raw generic type.
  */
 public interface MessageProducer<T extends Message> {
     /**

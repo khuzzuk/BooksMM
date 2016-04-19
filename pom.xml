@@ -6,6 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>Books</artifactId>
+	<!-- don't change manually, use IDE plugin as it also modifies version in README.md -->
     <version>1.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,7 +25,7 @@
     </properties>
 
     <description>
-        Thank you Tomasz for supporting us! Here you have your first completed project. For more information go to the Readme file.
+        Thank you Tomasz for supporting us! Here you have your first completed project. For more information go to the README.md file.
     </description>
     <build>
         <plugins>

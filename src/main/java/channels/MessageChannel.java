@@ -11,39 +11,46 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
- * MessageChannel is responsible for storing objects that implements {@link Message} interface.
+ * Responsible for storing objects that implements {@link Message} interface.
  * All messages can be retrieved by internal worker with lazy initialization.
  * When first message is offered to a channel, then it will initialize mechanism
  * for processing messages.
+ *
  * Messages are ordered in simple fifo queue. and adding message to a channel is
  * synchronized.
+ *
  * All tasks in message channel are designed to be
- * handled by one thread. When you offer a message to a channel, you are assured, that
+ * handled by one thread, since there is only one worker by default.
+ *
+ * When you offer a message to a channel, you are assured, that
  * one thread will process a task in subscriber method. Also note, that another message
- * will be processed after {@link MessageWorker} will finished its current task.
+ * will be processed after {@link MessageWorker} will finish its current task.
  * Mind that when you have two {@link Subscriber}s for one {@link Message} type, message
  * will be received by every subscriber.
- * Another concern is that you mey put a message to a channel that will have no subscriber.
- * In that case {@link MessageWorker} supports fail fast and will stop working with . It is due to
- * bad implementation of messaging bus infrastructure.
+ * Another concern is that you may put a message to a channel that will have no subscriber.
+ * In that case {@link MessageWorker} supports fail fast and will throw {@link util.NoSubscriberException}.
+ * When you find that exception, probably it is due to
+ * bad implementation of messaging bus infrastructure, like missing proper {@link Subscriber} or sending a {@link Message}
+ * before subscribing a receiver.
  */
 public class MessageChannel {
     public static final MessageChannel channel = new MessageChannel();
     BlockingDeque<Message> channelQueue;
     private MessageWorker worker;
 
+    //XXX: czemu tak a nie przez pole?
     private MessageChannel() {
         channelQueue = new LinkedBlockingDeque<>();
     }
 
     /**
-     * Here you may put a {@link Message} to queue. When {@link MessageWorker} will be free
+     * Here you may put a {@link Message} to a queue. When {@link MessageWorker} will be free
      * it will poll a {@link Message} and process {@link Subscriber#receive(Message)} method.
-     * Mind that only one thred is active to process every message. {@link MessageWorker} will
-     * continue processing another message after it finish its current task.
+     * Mind that only one thread is active to process every message. {@link MessageWorker} will
+     * continue processing another message after it finishes its current task.
      * Also notice that due to lazy initialization when you offer first task to a channel,
      * it will initialize message infrastructure, which could be costly.
-     * @param message object that implements a {@link Message} class.
+     * @param message object that implements a {@link Message} interface.
      */
     public static void publish(Message message) {
         if (channel.worker==null) activateWorker();
