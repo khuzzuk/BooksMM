@@ -1,7 +1,7 @@
 package channels;
 
-import model.libraries.Library;
-import model.libraries.interpreters.Interpreter;
+import libraries.Library;
+import libraries.interpreters.Interpreter;
 
 /**
  * Object that can be the element of a {@link TaskChannel} queue. It may be processed with

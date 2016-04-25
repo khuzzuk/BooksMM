@@ -1,6 +1,6 @@
 package messaging.messages;
 
-import model.libraries.Library;
+import libraries.Library;
 
 public class WriteToDBMessage implements Message {
     private final Library item;

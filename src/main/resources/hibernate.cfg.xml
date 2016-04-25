@@ -14,7 +14,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <property name="hibernate.connection.useUnicode">true</property>
-        <mapping class="model.libraries.Library"></mapping>
-        <mapping class="model.libraries.Title"></mapping>
+        <mapping class="libraries.Library"></mapping>
+        <mapping class="libraries.Title"></mapping>
     </session-factory>
 </hibernate-configuration>

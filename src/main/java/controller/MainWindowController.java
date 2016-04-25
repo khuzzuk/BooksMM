@@ -11,8 +11,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import messaging.subscribers.WriteToDBUISubscriber;
-import model.libraries.LibrariesList;
-import model.libraries.interpreters.InterpreterFactory;
+import libraries.LibrariesList;
+import libraries.interpreters.InterpreterFactory;
 
 import java.net.URL;
 import java.util.*;

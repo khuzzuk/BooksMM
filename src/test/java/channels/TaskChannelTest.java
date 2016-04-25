@@ -1,12 +1,12 @@
 package channels;
 
 import messaging.subscribers.FinishedTaskSubscriber;
-import model.databaseManager.DBRW;
-import model.libraries.Library;
+import databaseManager.DBRW;
+import libraries.Library;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import view.QueryMaker;
+import manager.QueryMaker;
 
 import java.io.File;
 

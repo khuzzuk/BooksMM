@@ -2,7 +2,7 @@ package channels;
 
 import messaging.MessageProducer;
 import messaging.messages.WriteToDBMessage;
-import model.libraries.Library;
+import libraries.Library;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;

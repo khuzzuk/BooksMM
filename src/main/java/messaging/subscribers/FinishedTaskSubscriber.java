@@ -1,7 +1,7 @@
 package messaging.subscribers;
 
 import messaging.messages.FinishedTaskMessage;
-import view.QueryMaker;
+import manager.QueryMaker;
 
 @SubscriptionType(type = FinishedTaskMessage.class)
 public class FinishedTaskSubscriber implements Subscriber<FinishedTaskMessage>{

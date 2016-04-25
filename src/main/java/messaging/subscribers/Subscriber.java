@@ -7,12 +7,12 @@ import util.NoTypeChooseBySubscriber;
 /**
  * When an object implements this interface, it can subscribe to receive a specified
  * object of class that implements {@link Message} interface. Subscription is made
- * through {@link Subscriber#subscribe(Class)} method which adds this object to a
+ * through {@link Subscriber#subscribe()} method which adds this object to a
  * subscription list. {@link Class} type parameter becomes the a key for differentiate {@link Subscriber}s.
  * In order to create object that may subscribe to specific message,
  * just implement this interface and override {@link Subscriber#receive(Message)} method. Another requirement is
  * to provide your class with {@link SubscriptionType} annotation in order to actually receive a message.
- * Also you must invoke {@link Subscriber#subscribe(Class)} method before sending a {@link Message} to a channel.
+ * Also you must invoke {@link Subscriber#subscribe()} method before sending a {@link Message} to a channel.
  * {@link Subscriber#receive(Message)} is not default because you need to provide a logic for receiving a messages.
  * When your object needs to receive more than one message type, it is generally better
  * to provide subscribers helper object for every message type that should be received.

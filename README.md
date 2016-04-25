@@ -64,7 +64,8 @@ In persistence.xml file you need to type the name of your database and password 
 
 TESTS
 Some tests are designed as integration tests. Please mind that
-those are excluded from Maven test lifecycle.
+those are excluded from Maven test phase. In order to run them
+you must delete "<groups>" element in maven-surefire-plugin.
 
 *************************************************************
 

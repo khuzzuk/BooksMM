@@ -1,10 +1,10 @@
 package messaging.subscribers;
 
-import model.databaseManager.DBRW;
+import databaseManager.DBRW;
 import messaging.messages.WriteToDBMessage;
 
 /**
- * This class is a helper Subscriber for {@link model.databaseManager.DBRW} class.
+ * This class is a helper Subscriber for {@link databaseManager.DBRW} class.
  * Please remember to not instantiate object explicitly, because proper object will be created
  * with {@link DBRW#initializeDB()} method.
  */

@@ -1,10 +1,10 @@
 import channels.Task;
 import channels.TaskChannel;
 import messaging.subscribers.FinishedTaskSubscriber;
-import model.databaseManager.DBRW;
-import model.libraries.interpreters.InterpreterFactory;
+import databaseManager.DBRW;
+import libraries.interpreters.InterpreterFactory;
 import org.testng.annotations.Test;
-import view.QueryMaker;
+import manager.QueryMaker;
 
 import java.io.File;
 

@@ -2,7 +2,7 @@ package messaging.subscribers;
 
 import controller.MainWindowController;
 import messaging.messages.WriteToDBMessage;
-import model.libraries.Library;
+import libraries.Library;
 
 import java.util.Collection;
 
