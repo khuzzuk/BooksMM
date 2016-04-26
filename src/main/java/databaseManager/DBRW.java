@@ -36,6 +36,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final String LIBRARY_TITLE_ELEMENT = "Title";
     private static final String LIBRARY_TITLE_VALUE = "TitleText";
     private static final String LIBRARY_TAG_ELEMENT = "tag";
+    private static final String LIBRARY_AUTHOR_ELEMENT = "author";
     private static final Logger logger = Logger.getLogger(DBRW.class);
     static DAOWriter daoWriter;
     static Writer writer = new Writer();
@@ -152,6 +153,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         appendElement(titleElement, title, LIBRARY_TITLE_VALUE);
         String tags = library.getTags(title);
         appendElement(titleElement, tags, LIBRARY_TAG_ELEMENT);
+        String author = library.getAuthor(title);
+        appendElement(titleElement, author, LIBRARY_AUTHOR_ELEMENT);
         libraryElement.appendChild(titleElement);
     }
 

@@ -73,6 +73,14 @@ public class Library {
     }
 
     /**
+     * Will add a {@link Title} object to a {@link Library} for further operations.
+     * @param title {@link Title} object.
+     */
+    public void add(Title title){
+        titles.add(title);
+    }
+
+    /**
      * This method handles adding elements in {@link NodeList} provided with parameters.
      * @param titleList {@link NodeList} with libraries elements.
      * @deprecated
@@ -115,14 +123,25 @@ public class Library {
     }
 
     public String getTags(String title) {
-        String tag = "", titleFromList;
+        String titleFromList;
         for (Title t : titles) {
             titleFromList = t.getTitle();
             if (titleFromList.equals(title))
-                tag = t.getTag();
+                return t.getTag();
         }
-        return tag;
+        return "";
     }
+
+    public String getAuthor(String title) {
+        String titleFromList;
+        for (Title t : titles) {
+            titleFromList = t.getTitle();
+            if (titleFromList.equals(title))
+                return t.getAuthor();
+        }
+        return "";
+    }
+
     public int size(){
         return titles.size();
     }

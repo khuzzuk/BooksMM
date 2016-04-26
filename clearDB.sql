@@ -1,1 +1,1 @@
-DROP TABLE Titles, Queries;
+DROP TABLE Titles, Queries, Queries_Titles, hibernate_sequence;

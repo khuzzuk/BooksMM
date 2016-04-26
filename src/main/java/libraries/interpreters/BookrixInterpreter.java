@@ -3,6 +3,8 @@ package libraries.interpreters;
 import html.HtmlDownloader;
 import html.HtmlElement;
 import libraries.Library;
+import libraries.Title;
+import libraries.TitleFactory;
 
 /**
  * This class is responsible for computing a {@link org.jsoup.nodes.Document} object with content from Bookrix.
@@ -14,6 +16,7 @@ class BookrixInterpreter extends Interpreter {
     private String tagAttribute;
     private String tagAttributeValue;
     private String address;
+    private String authorAttribute;
 
     public BookrixInterpreter(String address) {
         super();
@@ -35,6 +38,7 @@ class BookrixInterpreter extends Interpreter {
         titleAttributeValue = "word-break";
         tagAttribute = "class";
         tagAttributeValue = "item-details";
+        authorAttribute = "item-author";
     }
 
     public Library getQuery(){
@@ -51,7 +55,18 @@ class BookrixInterpreter extends Interpreter {
         HtmlElement titleValue = title.getElementsByAttribute(attribute, titleAttributeValue);
         HtmlElement itemDetails = e.getElementsByAttribute(tagAttribute, tagAttributeValue);
         HtmlElement tags = itemDetails.getAllElements();
+        HtmlElement author = e.getElementsByAttribute(attribute, authorAttribute);
         String tag = tags.getText(1);
-        library.add(titleValue.getText(0), tag);
+        library.add(createTitle(library,titleValue.getText(0),tag,author.getText(0)));
+    }
+
+    private Title createTitle(Library library, String title, String tag, String author){
+        Title titleObject = TitleFactory.getInstance()
+                .setTitle(title)
+                .setLibrary(library)
+                .setAuthor(author)
+                .setTag(tag)
+                .build();
+        return titleObject;
     }
 }
