@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is responsible for operation on xml file which logs information about found books.
@@ -29,7 +30,7 @@ import java.util.List;
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
 public class DBRW implements MessageProducer<FinishedTaskMessage> {
-    public static final String LIBRARY_ELEMENT = "Library";
+    private static final String LIBRARY_ELEMENT = "Library";
     public static final DBRW DBRW = new DBRW();
     private static final String LIBRARY_NAME_ELEMENT = "name";
     private static final String LIBRARY_DATE_ELEMENT = "Date";
@@ -193,9 +194,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
         if (libraries == null) return librariesByName;
-        for (Library l : libraries) {
-            if (l.getName().equals(name)) librariesByName.add(l);
-        }
+        librariesByName.addAll(libraries.stream().filter(l -> l.getName().equals(name)).collect(Collectors.toList()));
         return librariesByName;
     }
 
@@ -220,10 +219,6 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static class DAOWriter {
         private static SessionFactory factory;
         private static Session session;
-
-        public static SessionFactory getFactory() {
-            return factory;
-        }
 
         public void commitTransaction(final Library library) {
             if (session == null) initialize();

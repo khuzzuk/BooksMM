@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class BookFinder {
 
-    String url;
-    String pattern;
+    final String url;
+    final String pattern;
 
     public String listOfBooks() {
         StringBuilder result = new StringBuilder(2048);
@@ -18,7 +18,8 @@ public class BookFinder {
         Matcher m = Pattern.compile(pattern)
                 .matcher(site);
         while (m.find()) {
-            result.append(m.group(1)+"\n");
+            result.append(m.group(1));
+            result.append("\n");
         }
 
         return result.toString();

@@ -17,12 +17,11 @@ import java.util.Map;
  */
 public class SubscribersList {
     static SubscribersList list = new SubscribersList();
-    static Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers;
+    static Map<Class<? extends Message>, List<Subscriber<? extends Message>>> subscribers = new HashMap<>();
 
-    private SubscribersList() {
-        subscribers = new HashMap<>();
-    }
+    private SubscribersList() {}
 
+    @SuppressWarnings("unchecked")
     static void subscribe(Class messageClass, Subscriber<? extends Message> subscriber) {
         List<Subscriber<? extends Message>> list = subscribers.get(messageClass);
         if (list==null) list = new ArrayList<>();

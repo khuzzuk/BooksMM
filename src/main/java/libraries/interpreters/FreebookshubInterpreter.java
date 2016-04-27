@@ -7,8 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 class FreebookshubInterpreter extends Interpreter {
-    private static String pattern = getPattern();
-    String url;
+    private static final String pattern = getPattern();
+    final String url;
 
     public FreebookshubInterpreter(String url) {
         super();

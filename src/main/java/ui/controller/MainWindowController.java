@@ -15,6 +15,7 @@ import ui.MessageReader;
 import java.net.URL;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class MainWindowController implements Initializable {
     private Collection<LibrariesList.Categories> categories;
     @FXML
@@ -102,7 +103,8 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void addDialogAction(){
-        Dialog<String> dialog = new Dialog();
+        @SuppressWarnings("unchecked")
+        Dialog dialog = new Dialog();
         ButtonType okButton = new ButtonType("ok", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButton);
         if (reader==null) reader = new MessageReader();

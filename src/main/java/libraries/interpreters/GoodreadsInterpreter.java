@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class GoodreadsInterpreter extends Interpreter {
-    private static String pattern = getPattern();
+    private static final String pattern = getPattern();
 
-    private String url;
+    private final String url;
 
     public GoodreadsInterpreter(String url) {
         super();

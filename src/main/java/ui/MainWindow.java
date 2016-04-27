@@ -5,14 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import libraries.LibrariesList;
 
 import java.io.IOException;
-import java.util.Set;
 
 public class MainWindow extends Application {
-
-    private Set<LibrariesList.Categories> categories;
 
     public static void main(String[] args) {
         launch(args);

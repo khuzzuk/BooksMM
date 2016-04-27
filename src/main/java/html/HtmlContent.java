@@ -34,6 +34,7 @@ class HtmlContent implements HtmlElement {
         return page.getAllElements().size();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator iterator() {
         return page.getAllElements().iterator();

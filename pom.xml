@@ -7,7 +7,7 @@
     <groupId>groupId</groupId>
     <artifactId>Books</artifactId>
 	<!-- don't change manually, use IDE plugin as it also modifies version in README.md -->
-    <version>1.1</version>
+    <version>1.2</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler.version>3.5.1</compiler.version>

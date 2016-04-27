@@ -2,8 +2,6 @@ package util;
 
 import messaging.subscribers.Subscriber;
 
-import java.util.NoSuchElementException;
-
 /**
  * When there will be bad synchronization with {@link messaging.subscribers.SubscribersList}
  * and {@link channels.MessageChannel}, this exception may be thrown. When you want to find a

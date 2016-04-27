@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is a container for a result of a query in particular library. Library is specified by
@@ -98,10 +99,12 @@ public class Library {
         }
     }
 
+    @SuppressWarnings("unused")
     public int getId() {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(int id) {
         this.id = id;
     }
@@ -115,11 +118,7 @@ public class Library {
     }
 
     public Collection<String> getTitles() {
-        Collection<String> outputTitles = new ArrayList<>();
-        for (Title t : titles) {
-            outputTitles.add(t.getTitle());
-        }
-        return outputTitles;
+        return titles.stream().map(Title::getTitle).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public String getTags(String title) {
