@@ -2,13 +2,6 @@
 <root>
   <Romance>
     <url name="bookrix">http://www.bookrix.com/books;romance,id:56,sort:1.html</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
-  <url name="name">url</url>
   </Romance>
   <IT>
     <url name="bookrix">http://www.bookrix.com/books;technology-engineering,id:48,sort:1.html</url>

@@ -20,13 +20,13 @@
 2016-03-24 11:52:49 ERROR FollowedLibraries:43 - tried to extract library from null
 2016-03-24 12:47:43 ERROR AvailableLibraries:52 - tried to extract library from null
 2016-03-24 12:47:43 ERROR FollowedLibraries:43 - tried to extract library from null
-2016-03-24 12:48:00 ERROR controller:107 - wrong adress inputed
-2016-03-24 12:49:00 ERROR controller:107 - wrong adress inputed
-2016-03-24 13:00:09 INFO  controller:100 - wrong adress inputed
-2016-03-24 13:00:17 INFO  controller:100 - wrong adress inputed
-2016-03-24 13:01:14 INFO  controller:100 - wrong adress inputed
+2016-03-24 12:48:00 ERROR ui.controller:107 - wrong adress inputed
+2016-03-24 12:49:00 ERROR ui.controller:107 - wrong adress inputed
+2016-03-24 13:00:09 INFO  ui.controller:100 - wrong adress inputed
+2016-03-24 13:00:17 INFO  ui.controller:100 - wrong adress inputed
+2016-03-24 13:01:14 INFO  ui.controller:100 - wrong adress inputed
 2016-03-24 13:01:20 ERROR AvailableLibraries:52 - tried to extract library from null
 2016-03-24 13:01:20 ERROR FollowedLibraries:43 - tried to extract library from null
 2016-03-24 13:16:46 ERROR AvailableLibraries:52 - tried to extract library from null
 2016-03-24 13:16:46 ERROR FollowedLibraries:43 - tried to extract library from null
-2016-03-24 13:19:58 INFO  controller:100 - wrong adress inputed
+2016-03-24 13:19:58 INFO  ui.controller:100 - wrong adress inputed

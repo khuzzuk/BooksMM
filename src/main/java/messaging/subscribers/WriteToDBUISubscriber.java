@@ -1,6 +1,6 @@
 package messaging.subscribers;
 
-import controller.MainWindowController;
+import ui.controller.MainWindowController;
 import messaging.messages.WriteToDBMessage;
 import libraries.Library;
 

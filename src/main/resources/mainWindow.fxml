@@ -7,7 +7,7 @@
 <VBox prefHeight="400"
       prefWidth="600"
       xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.MainWindowController">
     <children>
 
         <HBox spacing="10">
@@ -28,8 +28,8 @@
                                 text="&lt;&lt;" onMouseClicked="#moveToLeftAction"/>
 
                         <Button fx:id="addButton"
-                                disable="true"
-                                text="add"/>
+                                disable="false"
+                                text="add" onMouseClicked="#addDialogAction"/>
 
                         <ComboBox fx:id="categoriesElement">
                             <items>

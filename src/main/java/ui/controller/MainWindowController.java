@@ -1,4 +1,4 @@
-package controller;
+package ui.controller;
 
 import channels.Task;
 import channels.TaskChannel;
@@ -6,13 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import messaging.subscribers.WriteToDBUISubscriber;
 import libraries.LibrariesList;
 import libraries.interpreters.InterpreterFactory;
+import ui.MessageReader;
 
 import java.net.URL;
 import java.util.*;
@@ -35,6 +33,7 @@ public class MainWindowController implements Initializable {
     Button addButton;
     @FXML
     TextArea queryResults;
+    private MessageReader reader;
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
@@ -99,6 +98,18 @@ public class MainWindowController implements Initializable {
         chosenLibraries.getItems().remove(selectedRightItem);
         toLeftButton.setDisable(true);
         populateTextArea("");
+    }
+
+    @FXML
+    private void addDialogAction(){
+        Dialog<String> dialog = new Dialog();
+        ButtonType okButton = new ButtonType("ok", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButton);
+        if (reader==null) reader = new MessageReader();
+        System.out.println(reader.getEmailDialog());
+        dialog.setTitle("Add website");
+        dialog.setContentText(reader.getEmailDialog());
+        dialog.showAndWait();
     }
 
     public synchronized void populateTextArea(String s) {
