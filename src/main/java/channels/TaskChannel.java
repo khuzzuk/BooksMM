@@ -48,12 +48,13 @@ public class TaskChannel {
 
     private static class TaskWorker {
 
-        void activate(int i) {
+        void activate(@SuppressWarnings("SameParameterValue") int i) {
             for (int j = 0; j < i; j++) {
                 new Thread(new Worker()).start();
             }
         }
         private static class Worker implements Runnable, MessageProducer {
+            @SuppressWarnings("unchecked")
             @Override
             public void run() {
                 Task task;

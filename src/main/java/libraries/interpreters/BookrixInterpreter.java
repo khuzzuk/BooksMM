@@ -61,12 +61,11 @@ class BookrixInterpreter extends Interpreter {
     }
 
     private Title createTitle(Library library, String title, String tag, String author){
-        Title titleObject = TitleFactory.getInstance()
+        return TitleFactory.getInstance()
                 .setTitle(title)
                 .setLibrary(library)
                 .setAuthor(author)
                 .setTag(tag)
                 .build();
-        return titleObject;
     }
 }

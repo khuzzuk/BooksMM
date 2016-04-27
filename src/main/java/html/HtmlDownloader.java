@@ -25,7 +25,7 @@ public class HtmlDownloader implements XMLParser {
 
     private static String download(URL pageURL) {
         StringBuilder text = new StringBuilder();
-        try (Scanner scanner = new Scanner(pageURL.openStream(), "utf-8");) {
+        try (Scanner scanner = new Scanner(pageURL.openStream(), "utf-8")) {
             while (scanner.hasNextLine()){
                 text.append(scanner.nextLine());
             }

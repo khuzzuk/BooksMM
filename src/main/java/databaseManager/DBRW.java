@@ -29,7 +29,7 @@ import java.util.List;
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
 public class DBRW implements MessageProducer<FinishedTaskMessage> {
-    public static final String LIBRARY_ELEMENT = "Library";
+    private static final String LIBRARY_ELEMENT = "Library";
     public static final DBRW DBRW = new DBRW();
     private static final String LIBRARY_NAME_ELEMENT = "name";
     private static final String LIBRARY_DATE_ELEMENT = "Date";
