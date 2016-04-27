@@ -16,19 +16,19 @@ import static org.mockito.Mockito.*;
 public class TaskChannelTest {
 
     private File file;
-    private QueryMaker query;
+    private QueryMaker queryManager;
 
     @BeforeMethod
     public void setUp() throws Exception {
         file = new File("TestDB.xml");
         DBRW.setOutputDBFile(file);
-        query = mock(QueryMaker.class);
+        queryManager = mock(QueryMaker.class);
     }
 
     @Test(groups = "integration")
     public void testQueryFlow() throws InterruptedException {
         DBRW.initializeDB();
-        new FinishedTaskSubscriber(query);
+        new FinishedTaskSubscriber(queryManager);
         Task task = mock(Task.class);
         when(task.getLibrary()).thenReturn(new Library("a", "a"));
         TaskChannel.channel.putTask(task);

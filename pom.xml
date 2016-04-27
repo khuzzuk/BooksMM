@@ -7,7 +7,7 @@
     <groupId>groupId</groupId>
     <artifactId>Books</artifactId>
 	<!-- don't change manually, use IDE plugin as it also modifies version in README.md -->
-    <version>1.2</version>
+    <version>1.3</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler.version>3.5.1</compiler.version>
@@ -22,6 +22,7 @@
         <jacoco.version>0.7.6.201602180812</jacoco.version>
         <maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
         <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
+        <maven-assembly-plugin-version>2.6</maven-assembly-plugin-version>
     </properties>
 
     <description>
@@ -84,7 +85,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>${maven-assembly-plugin-version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -97,8 +98,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>

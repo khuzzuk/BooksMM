@@ -1,6 +1,7 @@
 package databaseManager;
 
 import libraries.Library;
+import org.mockito.MockitoAnnotations;
 import org.testng.annotations.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

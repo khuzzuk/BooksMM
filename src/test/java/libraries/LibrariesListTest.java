@@ -49,11 +49,11 @@ public class LibrariesListTest implements XMLParser {
     @Test(groups = "fast")
     public void checkContainedAddresseesByNameAndCategory() {
         //given
-        String expectedAddress = "http://www.bookrix.com/books;romance,id:56,sort:1.html";
+        String bookrixURL = "http://www.bookrix.com/books;romance,id:56,sort:1.html";
         //when
         String address = list.getLibraryAddress("bookrix", LibrariesList.Categories.ROMANCE);
         //then
-        assertThat(address).isEqualTo(expectedAddress);
+        assertThat(address).isEqualTo(bookrixURL);
     }
 
     @Test(groups = "fast")
