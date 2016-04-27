@@ -3,13 +3,16 @@ package channels;
 import messaging.subscribers.FinishedTaskSubscriber;
 import databaseManager.DBRW;
 import libraries.Library;
+import org.hamcrest.core.Is;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import manager.QueryMaker;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import static com.jayway.awaitility.Awaitility.await;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -25,16 +28,17 @@ public class TaskChannelTest {
         queryManager = mock(QueryMaker.class);
     }
 
+    /**
+     * Test if when you put a task in a channel and some time will pass, there is no any more tasks.
+     */
     @Test(groups = "integration")
-    public void testQueryFlow() throws InterruptedException {
+    public void testQueryFlow() {
         DBRW.initializeDB();
         new FinishedTaskSubscriber(queryManager);
         Task task = mock(Task.class);
         when(task.getLibrary()).thenReturn(new Library("a", "a"));
         TaskChannel.channel.putTask(task);
-        Thread.sleep(100);
-        Task currentTask = TaskChannel.poll();
-        assertThat(currentTask).isNull();
+        await().atMost(150, TimeUnit.MILLISECONDS).until(TaskChannel::currentSize, Is.is(0));
     }
 
     @AfterMethod

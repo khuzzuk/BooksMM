@@ -42,6 +42,11 @@ public class TaskChannel {
         worker = new TaskWorker();
         worker.activate(3);
     }
+
+    public static int currentSize(){
+        return channelQueue.size();
+    }
+
     static Task poll(){
         return channelQueue.poll();
     }

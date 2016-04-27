@@ -23,6 +23,7 @@
         <maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
         <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
         <maven-assembly-plugin-version>2.6</maven-assembly-plugin-version>
+        <awaitility.version>1.7.0</awaitility.version>
     </properties>
 
     <description>
@@ -83,6 +84,9 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--We use assembly plugin in order to define proper packagin of jar with application.
+                It needs to add external libraries for logging and specify main class to start application
+                in one of two modes.-->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin-version}</version>
@@ -168,7 +172,11 @@
             <artifactId>org.jacoco.report</artifactId>
             <version>${jacoco.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
