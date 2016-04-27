@@ -5,11 +5,11 @@ public class InterpreterFactory {
     private static final String freebookshub = "freebookshub";
     private static final String goodreads = "goodreads";
     public static Interpreter getInterpreter(String url){
-        if (url.contains(bookrixTag))
+        if (url.toLowerCase().contains(bookrixTag))
             return new BookrixInterpreter(url);
-        else if (url.contains(freebookshub))
+        else if (url.toLowerCase().contains(freebookshub))
             return new FreebookshubInterpreter(url);
-        else if (url.contains(goodreads))
+        else if (url.toLowerCase().contains(goodreads))
             return new GoodreadsInterpreter(url);
         return null;
     }
