@@ -12,16 +12,10 @@ public class HtmlDownloaderTest {
      * Checks if downloading mechanism works.
      */
     @Test(groups = "fast")
-    public void validateDownloadingMechanism() {
+    public void checkIfDownloadMechanismWorks() {
         String readFromResource = HtmlDownloader.downloadPage(HtmlDownloaderTest.class.getResource("/test.txt").toString());
-        String test = "test";
-        assertThat(readFromResource).isEqualTo(test);
-    }
-    @Test(groups = "fast")
-    public void testDownloadedPageIsNotEqual() {
-        String actualString = HtmlDownloader.downloadPage(HtmlDownloaderTest.class.getResource("/test.txt").toString());
-        String expectedString = "test-fail";
-        assertThat(actualString).isNotEqualTo(expectedString);
+        String exampleString = "test";
+        assertThat(readFromResource).contains(exampleString);
     }
 
     /**
