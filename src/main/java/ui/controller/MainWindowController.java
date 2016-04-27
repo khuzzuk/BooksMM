@@ -106,7 +106,6 @@ public class MainWindowController implements Initializable {
         ButtonType okButton = new ButtonType("ok", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButton);
         if (reader==null) reader = new MessageReader();
-        System.out.println(reader.getEmailDialog());
         dialog.setTitle("Add website");
         dialog.setContentText(reader.getEmailDialog());
         dialog.showAndWait();
