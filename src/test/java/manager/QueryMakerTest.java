@@ -42,10 +42,6 @@ public class QueryMakerTest {
         maker.channel = mockedChannel;
     }
 
-    /**
-     *
-     * @throws Exception its check for {@link QueryInitializationException}.
-     */
     @Test(groups = "fast", expectedExceptions = QueryInitializationException.class)
     public void testWrongCaseScenarios() throws Exception {
         //given
@@ -57,13 +53,8 @@ public class QueryMakerTest {
         //then
     }
 
-    /**
-     * checks that {@link QueryMaker} can handle finishing messages properly.
-     * @throws Exception relax, it shouldn't.
-     */
     @Test(groups = "fast")
-    public void testNumberOfQueriesAsAReceiver() throws Exception {
-        //given
+    public void checkThatQueryManagerCanHandleFinishingMessagesProperly() throws Exception {
         //when
         maker.startQuery(category);
         //then

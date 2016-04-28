@@ -70,26 +70,16 @@ public class DBRWTest {
         DBRW.libraries = new ArrayList<>();
     }
 
-    /**
-     * Here are covered scenarios with {@link WrongLibraryException}.
-     * @param library invalid objects.
-     * @throws Exception {@link WrongLibraryException}
-     */
     @Test(groups = "fast", dataProvider = "invalidLibraries")
-    public void shouldThrowWLException(Library library) throws Exception {
-        //given
+    public void testIfWrongLibraryThrowAnException(Library library) throws Exception {
         //when
         boolean operationStatusCorrectness = DBRW.write(library);
         //then
         assertThat(operationStatusCorrectness).isFalse();
     }
 
-    /**
-     * Here are covered scenarios with valid {@link Library} objects.
-     * @param library valid {@link Library}.
-     */
     @Test(groups = "fast", dataProvider = "exampleLibraries")
-    public void testWriteToNewXml(Library library) {
+    public void testIfWriteToNewXmlWithValidLibraryObjectIsWorkingCorrectly(Library library) {
         DBRW.write(library);
         int librariesInDB = DBRW.getLibraryByName(library.getName()).size();
         int expectedNumber = 1;
@@ -98,11 +88,8 @@ public class DBRWTest {
         verify(dao, times(1)).commitTransaction(library);
     }
 
-    /**
-     * Tests of deprecated method. It just add DOM element to {@link DBRW}.
-     */
     @Test(groups = "fast")
-    public void testWriteItemToExistingXML() {
+    public void testIfWriteItemToExistingXMLIsWorkingProperly() {
         Element testElement = DBRW.DB.createElement(testElementName);
         DBRW.write(testElement);
         NodeList e = DBRW.DB.getDocumentElement().getElementsByTagName(testElementName);

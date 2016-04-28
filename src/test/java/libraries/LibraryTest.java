@@ -17,7 +17,7 @@ public class LibraryTest {
     }
 
     @Test(groups = "fast")
-    public void addingTitleTest() {
+    public void testIfAddingLibraryIsCorrect() {
         library.add(title);
         int actualTitlesNumber = library.getTitles().size();
         int expectedNumber = 1;
@@ -25,7 +25,7 @@ public class LibraryTest {
     }
 
     @Test(groups = "fast")
-    public void testAddArrayOfTitles() {
+    public void testIfAddingArrayOfTitlesIsWorkingCorrectly() {
         library.addAll("title1","title2");
         int actualTitlesNumber = library.getTitles().size();
         int expectedNumber = 2;
@@ -33,7 +33,7 @@ public class LibraryTest {
     }
 
     @Test(groups = "fast")
-    public void testProperTagWritingsToList() throws Exception {
+    public void testIfTagIsCorrectlyWritten() throws Exception {
         //given
         String expectedTag = "tag";
         library.add(title,expectedTag);
