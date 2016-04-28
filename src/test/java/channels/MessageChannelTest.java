@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 
 public class MessageChannelTest {
     @Test
-    public void testAddingMessageToChannel() {
+    public void verifyAddingMessageToChannel() {
         //given
         BlockingDeque<Message> channel = mock(BlockingDeque.class);
         MessageChannel.channel.channelQueue = channel;

@@ -84,9 +84,7 @@ public class Library {
     /**
      * This method handles adding elements in {@link NodeList} provided with parameters.
      * @param titleList {@link NodeList} with libraries elements.
-     * @deprecated
      */
-    @Deprecated
     public void addAll(NodeList titleList) {
         for (int i = 0; i < titleList.getLength(); i++) {
             titles.add(new Title(titleList.item(i).getTextContent(),this));

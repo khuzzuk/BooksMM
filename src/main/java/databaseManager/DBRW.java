@@ -39,13 +39,13 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final String LIBRARY_TAG_ELEMENT = "tag";
     private static final String LIBRARY_AUTHOR_ELEMENT = "author";
     private static final Logger logger = Logger.getLogger(DBRW.class);
-    static DAOWriter daoWriter;
-    static Writer writer = new Writer();
-    static Reader reader = new Reader();
-    static MessageSender sender = new MessageSender();
+    private DAOWriter daoWriter;
+    private Writer writer = new Writer();
+    private Reader reader = new Reader();
+    private MessageSender sender = new MessageSender();
     static Document DB;
     static List<Library> libraries;
-    private static File dbFile = new File("DB.xml");
+    private File dbFile = new File("DB.xml");
 
 
     private DBRW() {
@@ -60,16 +60,16 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * since there is no lazy-initialization with first use.
      */
     public static void initializeDB() {
-        daoWriter = new DAOWriter();
+        DBRW.daoWriter = new DAOWriter();
         libraries = new ArrayList<>();
-        if (!dbFile.exists()) InitializeDBFile();
-        else reader.readDBFile();
+        if (!DBRW.dbFile.exists()) InitializeDBFile();
+        else DBRW.reader.readDBFile();
         new DBWriter();
     }
 
     private static void InitializeDBFile() {
         try {
-            writer.createFile(dbFile);
+            DBRW.writer.createFile(DBRW.dbFile);
             DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
             DB.appendChild(DB.createElement("DB"));
         } catch (ParserConfigurationException e) {
@@ -91,9 +91,9 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             libraries.add(library);
             newXML();
             createXMLContent();
-            writer.updateDBFile(dbFile, DB);
-            daoWriter.commitTransaction(library);
-            sender.finishedTask();
+            DBRW.writer.updateDBFile(DBRW.dbFile, DB);
+            DBRW.daoWriter.commitTransaction(library);
+            DBRW.sender.finishedTask();
         } catch (WrongLibraryException e) {
             System.err.println(e.getMessage());
             return false;
@@ -110,21 +110,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     public static void shutDown() {
-        daoWriter.close();
-    }
-
-    /**
-     * This method will write an {@link org.w3c.dom.Element} object to the log file.
-     * Be aware that the {@link org.w3c.dom.Element} will be added to the root element of a document.
-     *
-     * @param item {@link org.w3c.dom.Element} that will be added.
-     * @deprecated Use {@link DBRW#write(Library)} instead.
-     */
-    @Deprecated
-    public static boolean write(Element item) {
-        DB.getDocumentElement().appendChild(item);
-        writer.updateDBFile(dbFile, DB);
-        return true;
+        DBRW.daoWriter.close();
     }
 
     private static void createXMLContent() {
@@ -181,7 +167,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * @param file - new destination file.
      */
     public static void setOutputDBFile(File file) {
-        dbFile = file;
+        DBRW.dbFile = file;
     }
 
     /**
@@ -244,7 +230,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static class Reader {
 
         private void readDBFile() {
-            try (InputStream stream = new FileInputStream(dbFile)) {
+            try (InputStream stream = new FileInputStream(DBRW.dbFile)) {
                 DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
                 loadDB();
             } catch (ParserConfigurationException | SAXException | IOException e) {

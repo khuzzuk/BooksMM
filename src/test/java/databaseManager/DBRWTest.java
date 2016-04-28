@@ -1,10 +1,10 @@
 package databaseManager;
 
 import libraries.Library;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.*;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import util.WrongLibraryException;
 
 import java.io.File;
@@ -15,18 +15,23 @@ import static org.mockito.Mockito.*;
 
 public class DBRWTest {
 
+    @Mock
     private File testFile;
-    private String testElementName;
-    private Library testLibrary;
+    @Mock
     private DBRW.Writer writer;
-    private DBRW.DAOWriter dao;
+    @Mock
+    private DBRW.DAOWriter daoWriter;
+    @Mock
+    private DBRW.MessageSender sender;
+    @InjectMocks
+    private DBRW dbrw = DBRW.DBRW;
 
     /**
      * Example proper {@link Library} objects to test.
      * @return Array of {@link Library} objects;
      */
     @DataProvider
-    public Object[][] exampleLibraries(){
+    public Object[][] validLibraries(){
         Library library1 = new Library("MyLibrary", "1/1/1999");
         library1.add("1");
         Library library2 = new Library("MyOtherLibrary", "1/12/2015");
@@ -50,23 +55,9 @@ public class DBRWTest {
         return new Object[][]{{library1},{library2},{library3},{library4},{library5}};
     }
 
-    @BeforeTest(groups = "fast")
-    public void setConstants() throws Exception {
-        testFile = new File("testDB.xml");
-        testElementName = "TestElement";
-        testLibrary = new Library(testElementName, "1");
-    }
-
     @BeforeMethod(groups = "fast")
     public void setUp() throws Exception {
-        DBRW.initializeDB();
-        writer = mock(DBRW.Writer.class);
-        DBRW.writer = writer;
-        dao = mock(DBRW.DAOWriter.class);
-        DBRW.daoWriter = dao;
-        DBRW.MessageSender sender = mock(DBRW.MessageSender.class);
-        DBRW.sender = sender;
-        DBRW.setOutputDBFile(testFile);
+        MockitoAnnotations.initMocks(this);
         DBRW.libraries = new ArrayList<>();
     }
 
@@ -88,27 +79,13 @@ public class DBRWTest {
      * Here are covered scenarios with valid {@link Library} objects.
      * @param library valid {@link Library}.
      */
-    @Test(groups = "fast", dataProvider = "exampleLibraries")
+    @Test(groups = "fast", dataProvider = "validLibraries")
     public void testWriteToNewXml(Library library) {
         DBRW.write(library);
         int librariesInDB = DBRW.getLibraryByName(library.getName()).size();
         int expectedNumber = 1;
         assertThat(librariesInDB).isEqualTo(expectedNumber);
         verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
-        verify(dao, times(1)).commitTransaction(library);
-    }
-
-    /**
-     * Tests of deprecated method. It just add DOM element to {@link DBRW}.
-     */
-    @Test(groups = "fast")
-    public void testWriteItemToExistingXML() {
-        Element testElement = DBRW.DB.createElement(testElementName);
-        DBRW.write(testElement);
-        NodeList e = DBRW.DB.getDocumentElement().getElementsByTagName(testElementName);
-        int testElementsInFile = e.getLength();
-        int expectedCount = 1;
-        assertThat(testElementsInFile).isEqualTo(expectedCount);
-        verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
+        verify(daoWriter, times(1)).commitTransaction(library);
     }
 }
