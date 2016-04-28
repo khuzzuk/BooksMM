@@ -5,6 +5,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import util.WrongLibraryException;
 
 import java.io.File;
@@ -67,25 +69,31 @@ public class DBRWTest {
      * @throws Exception {@link WrongLibraryException}
      */
     @Test(groups = "fast", dataProvider = "invalidLibraries")
-    public void shouldThrowWLException(Library library) throws Exception {
-        //given
+    public void testIfWrongLibraryThrowAnException(Library library) throws Exception {
         //when
         boolean operationStatusCorrectness = DBRW.write(library);
         //then
         assertThat(operationStatusCorrectness).isFalse();
     }
 
-    /**
-     * Here are covered scenarios with valid {@link Library} objects.
-     * @param library valid {@link Library}.
-     */
-    @Test(groups = "fast", dataProvider = "validLibraries")
-    public void testWriteToNewXml(Library library) {
+    @Test(groups = "fast", dataProvider = "exampleLibraries")
+    public void testIfWriteToNewXmlWithValidLibraryObjectIsWorkingCorrectly(Library library) {
         DBRW.write(library);
         int librariesInDB = DBRW.getLibraryByName(library.getName()).size();
         int expectedNumber = 1;
         assertThat(librariesInDB).isEqualTo(expectedNumber);
         verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
-        verify(daoWriter, times(1)).commitTransaction(library);
+        verify(dao, times(1)).commitTransaction(library);
+    }
+
+    @Test(groups = "fast")
+    public void testIfWriteItemToExistingXMLIsWorkingProperly() {
+        Element testElement = DBRW.DB.createElement(testElementName);
+        DBRW.write(testElement);
+        NodeList e = DBRW.DB.getDocumentElement().getElementsByTagName(testElementName);
+        int testElementsInFile = e.getLength();
+        int expectedCount = 1;
+        assertThat(testElementsInFile).isEqualTo(expectedCount);
+        verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
     }
 }

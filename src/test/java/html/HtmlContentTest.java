@@ -11,11 +11,8 @@ public class HtmlContentTest {
     String attributeName = "name";
     String attributeValue = "value";
 
-    /**
-     * Check if Container for the {@link HtmlElement} has child.
-     */
     @Test(groups = "fast")
-    public void checkElementsAttributes() {
+    public void checkIfContainerHasChildForHTMLElement() {
         //given
         Element mockedPage = mock(Element.class);
         Elements expectedElement = mock(Elements.class);
@@ -27,11 +24,8 @@ public class HtmlContentTest {
         assertThat(returnedElement).isEqualTo(expectedElement);
     }
 
-    /**
-     * Check if graph structure is constructed properly.
-     */
     @Test(groups = "fast")
-    public void validateProperListStructure() {
+    public void checkIfGraphStructureIsConstructedProperly() {
         //given
         Elements MockedElements = mock(Elements.class);
         Elements expectedMockedElements = mock(Elements.class);

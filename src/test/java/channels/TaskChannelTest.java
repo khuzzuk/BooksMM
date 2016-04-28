@@ -28,11 +28,8 @@ public class TaskChannelTest {
         queryManager = mock(QueryMaker.class);
     }
 
-    /**
-     * Test if when you put a task in a channel and some time will pass, there is no any more tasks.
-     */
     @Test(groups = "integration")
-    public void testQueryFlow() {
+    public void testIfQueryFlowIsWorkingProperly() {
         DBRW.initializeDB();
         new FinishedTaskSubscriber(queryManager);
         Task task = mock(Task.class);

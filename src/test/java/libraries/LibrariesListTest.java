@@ -31,44 +31,41 @@ public class LibrariesListTest implements XMLParser {
     }
 
     @Test(groups = "fast")
-    public void checkContainedAddresses() {
-        //given
+    public void checkIfLibrariesListContainedAddresses() {
         //when
         int actualAddressesNumber = list.getAddresses().size();
         //then
         assertThat(actualAddressesNumber).isGreaterThan(1);
     }
     @Test(groups = "fast")
-    public void checkContainedAddressesByCategory() {
-        //given
+    public void checkIfLibrariesListContainedAddressesByCategory() {
         //when
         int actualAddressesNumber = list.getAddresses(LibrariesList.Categories.ROMANCE).size();
         //then
         assertThat(actualAddressesNumber).isGreaterThan(0);
     }
     @Test(groups = "fast")
-    public void checkContainedAddresseesByNameAndCategory() {
+    public void checkIfLibrariesListContainedAddresseesByNameAndCategory() {
         //given
-        String bookrixURL = "http://www.bookrix.com/books;romance,id:56,sort:1.html";
+        String expectedAddress = "http://www.bookrix.com/books;romance,id:56,sort:1.html";
         //when
-        String address = list.getLibraryAddress("bookrix", LibrariesList.Categories.ROMANCE);
+        String URLAddress = list.getLibraryAddress("bookrix", LibrariesList.Categories.ROMANCE);
         //then
-        assertThat(address).isEqualTo(bookrixURL);
+        assertThat(URLAddress).isEqualTo(expectedAddress);
     }
 
     @Test(groups = "fast")
-    public void testsProperLibrariesNames() throws Exception {
+    public void testIfNamesOfLibrariesAreCountedCorrectly() throws Exception {
         //given
-        int expectedCount = 1;
+        int expectedNumber = 1;
         //when
         int actualLibrariesNumber = list.getLibrariesNames(LibrariesList.Categories.ROMANCE).size();
         //then
-        assertThat(actualLibrariesNumber).isEqualTo(expectedCount);
+        assertThat(actualLibrariesNumber).isEqualTo(expectedNumber);
     }
 
     @Test(groups = "fast")
-    public void trueStatementWhenWritingToFile() throws Exception {
-        //given
+    public void testIfWritingToFileIsCorrect() throws Exception {
         //when
         boolean statement = list.addLibraryAddress(LibrariesList.Categories.ROMANCE, "url", "name");
         //then
