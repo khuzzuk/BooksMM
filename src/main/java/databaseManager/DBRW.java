@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private Reader reader = new Reader();
     private MessageSender sender = new MessageSender();
     static Document DB;
-    static List<Library> libraries;
+    List<Library> libraries;
     private File dbFile = new File("DB.xml");
 
 
@@ -61,7 +62,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      */
     public static void initializeDB() {
         DBRW.daoWriter = new DAOWriter();
-        libraries = new ArrayList<>();
+        DBRW.libraries = new ArrayList<>();
         if (!DBRW.dbFile.exists()) InitializeDBFile();
         else DBRW.reader.readDBFile();
         new DBWriter();
@@ -88,7 +89,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     public static boolean write(Library library) {
         try {
             isLibraryValid(library);
-            libraries.add(library);
+            DBRW.libraries.add(library);
             newXML();
             createXMLContent();
             DBRW.writer.updateDBFile(DBRW.dbFile, DB);
@@ -101,11 +102,16 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         return true;
     }
 
-    private static boolean isLibraryValid(Library library) throws WrongLibraryException {
+    static boolean isLibraryValid(Library library) throws WrongLibraryException {
         if (library == null) throw new WrongLibraryException("Library was null. Operation failed during writing to database.");
         if (library.getName() == null) throw new WrongLibraryException("Library has no name. Operation failed during writing to database.");
         if (library.getDate() == null) throw new WrongLibraryException("Library has no date set. Operation failed during writing to database.");
         if (library.size() == 0) throw new WrongLibraryException("Library has no titles to log. Operation failed during writing to database.");
+        String[] date = library.getDate().split("/");
+        if (date.length!=3) throw new WrongLibraryException("Inapropriate date format in a Library object.");
+        int year = Integer.parseInt(date[2]);
+        if (year<1900 || year> Calendar.getInstance().get(Calendar.YEAR))
+            throw new WrongLibraryException("Inapropriate year in Library Object.");
         return true;
     }
 
@@ -116,7 +122,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static void createXMLContent() {
         Element root = DB.createElement("DB");
         DB.appendChild(root);
-        for (Library l : libraries) {
+        for (Library l : DBRW.libraries) {
             appendLibraryElement(root, l);
         }
     }
@@ -179,8 +185,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      */
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
-        if (libraries == null) return librariesByName;
-        librariesByName.addAll(libraries.stream().filter(l -> l.getName().equals(name)).collect(Collectors.toList()));
+        if (DBRW.libraries == null) return librariesByName;
+        librariesByName.addAll(DBRW.libraries.stream().filter(l -> l.getName().equals(name)).collect(Collectors.toList()));
         return librariesByName;
     }
 
@@ -251,7 +257,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             String date = lib.getElementsByTagName(LIBRARY_DATE_ELEMENT).item(0).getTextContent();
             Library library = new Library(name, date);
             library.addAll(lib.getElementsByTagName(LIBRARY_TITLE_ELEMENT));
-            libraries.add(library);
+            DBRW.libraries.add(library);
         }
     }
 
