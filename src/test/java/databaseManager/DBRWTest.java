@@ -30,8 +30,7 @@ public class DBRWTest {
     private DBRW dbrw = DBRW.DBRW;
 
     /**
-     * Example proper {@link Library} objects to test.
-     * @return Array of {@link Library} objects;
+     * @return Examples of proper {@link Library} objects to test.
      */
     @DataProvider
     public Object[][] validLibraries(){
@@ -45,8 +44,7 @@ public class DBRWTest {
     }
 
     /**
-     * Examples of invalid {@link Library} objects to test.
-     * @return Array of {@link Library} objects;
+     * @return Examples of invalid {@link Library} objects to test.
      */
     @DataProvider
     public Object[][] invalidLibraries(){
@@ -92,5 +90,11 @@ public class DBRWTest {
         assertThat(librariesInDB).isEqualTo(expectedNumber);
         verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
         verify(daoWriter, times(1)).commitTransaction(library);
+    }
+
+    @Test(groups = "integration")
+    public void checkIfHarvestingObjectFromDAOWorks() throws Exception {
+        List fetches = DBRW.getLibrariesFromDB();
+        assertThat(fetches.size()).isGreaterThan(0);
     }
 }

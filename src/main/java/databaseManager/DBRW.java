@@ -1,12 +1,17 @@
 package databaseManager;
 
 import messaging.MessageProducer;
+import messaging.messages.QueryFromDBMessage;
 import messaging.messages.FinishedTaskMessage;
+import messaging.messages.ReadLibraryFromDBMessage;
 import messaging.subscribers.DBWriter;
 import libraries.Library;
+import messaging.subscribers.Subscriber;
+import messaging.subscribers.SubscriptionType;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -44,9 +49,11 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private Writer writer = new Writer();
     private Reader reader = new Reader();
     private MessageSender sender = new MessageSender();
+    private QueryFromDBChanneler subscriber = new QueryFromDBChanneler();
     static Document DB;
     List<Library> libraries;
     private File dbFile = new File("DB.xml");
+    private static DAOReader daoReader;
 
 
     private DBRW() {
@@ -116,7 +123,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     public static void shutDown() {
-        DBRW.daoWriter.close();
+        DAOInitializer.close();
     }
 
     private static void createXMLContent() {
@@ -185,9 +192,33 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      */
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
-        if (DBRW.libraries == null) return librariesByName;
+        if (DBRW.libraries == null) DBRW.libraries = getLibrariesFromDB();
         librariesByName.addAll(DBRW.libraries.stream().filter(l -> l.getName().equals(name)).collect(Collectors.toList()));
         return librariesByName;
+    }
+
+    /**
+     * Will make a query from database and when finished it will send a new {@link QueryFromDBMessage}.
+     */
+    public static void QueryLibraries(String libraryName){
+        new Thread(() -> {DBRW.subscriber.send(new ReadLibraryFromDBMessage(getLibraryByName(libraryName)));}).start();
+    }
+
+    static List getLibrariesFromDB(){
+        if (daoReader==null) daoReader = new DAOReader();
+        return daoReader.getLibraries();
+    }
+
+    @SubscriptionType(type = QueryFromDBMessage.class)
+    public static class QueryFromDBChanneler implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
+        public QueryFromDBChanneler() {
+            subscribe();
+        }
+
+        @Override
+        public void receive(QueryFromDBMessage message) {
+            DBRW.QueryLibraries(message.getLibraryName());
+        }
     }
 
     /**
@@ -209,25 +240,35 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * when first transaction begins.
      */
     static class DAOWriter {
-        private static SessionFactory factory;
-        private static Session session;
 
         public void commitTransaction(final Library library) {
-            if (session == null) initialize();
-            session.beginTransaction();
-            session.save(library);
-            session.getTransaction().commit();
+            if (DAOInitializer.session == null) DAOInitializer.initialize();
+            DAOInitializer.session.beginTransaction();
+            DAOInitializer.session.save(library);
+            DAOInitializer.session.getTransaction().commit();
         }
 
-        private void initialize() {
+
+    }
+    static class DAOReader {
+        public List getLibraries(){
+            if (DAOInitializer.session==null) DAOInitializer.initialize();
+            Transaction tx = DAOInitializer.session.beginTransaction();
+            List libraries = DAOInitializer.session.createQuery("FROM Library").list();
+            return libraries;
+        }
+    }
+    static class DAOInitializer{
+        private static SessionFactory factory;
+        private static Session session;
+        private static void initialize() {
             factory = new Configuration().configure().buildSessionFactory();
             session = factory.openSession();
         }
-
         /**
          * This method will close current database connection.
          */
-        public void close() {
+        private static void close() {
             factory.close();
             session = null;
         }

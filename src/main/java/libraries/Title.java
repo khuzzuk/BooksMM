@@ -13,7 +13,7 @@ public class Title {
     @Column
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "libID", referencedColumnName = "id")
     private Library library;
 
@@ -97,5 +97,11 @@ public class Title {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+    public boolean hasTags(){
+        return tag!=null;
+    }
+    public boolean hasAuthors(){
+        return author!=null;
     }
 }

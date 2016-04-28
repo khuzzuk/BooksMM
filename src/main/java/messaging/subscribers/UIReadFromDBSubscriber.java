@@ -1,18 +1,20 @@
 package messaging.subscribers;
 
+import libraries.Title;
+import messaging.messages.ReadLibraryFromDBMessage;
 import ui.controller.MainWindowController;
-import messaging.messages.WriteToDBMessage;
 import libraries.Library;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * It is a helper class for {@link MainWindowController} that will receive messages and forward them to
- * actual handler. It is provided in order to provide a possibility of accepting more than one type
+ * actual handler. It is here in order to provide a possibility of accepting more than one type
  * of {@link messaging.messages.Message} objects by {@link MainWindowController} class.
  */
-@SubscriptionType(type = WriteToDBMessage.class)
-public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
+@SubscriptionType(type = ReadLibraryFromDBMessage.class)
+public class UIReadFromDBSubscriber implements Subscriber<ReadLibraryFromDBMessage>{
     MainWindowController controller;
 
     /**
@@ -20,7 +22,7 @@ public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
      * be cooperating with this helper. It supports fail fast for null arguments.
      * @param controller {@link MainWindowController} object that will be cooperating in receiving a message through this helper class.
      */
-    public WriteToDBUISubscriber(MainWindowController controller) {
+    public UIReadFromDBSubscriber(MainWindowController controller) {
         if (controller==null) throw new NullPointerException();
         this.controller = controller;
         subscribe();
@@ -33,14 +35,27 @@ public class WriteToDBUISubscriber implements Subscriber<WriteToDBMessage>{
      * @param message object that implements a {@link messaging.messages.Message}. By default it won't be null.
      */
     @Override
-    public void receive(WriteToDBMessage message) {
-        Library library = message.getItem();
+    public void receive(ReadLibraryFromDBMessage message) {
+        List<Library> libraries = message.getLibraries();
         StringBuilder builder = new StringBuilder();
-        Collection<String> titles = library.getTitles();
-        for (String t : titles) {
-            builder.append(t);
+        for (Library l : libraries)
+            appendRecords(builder, l);
+        controller.populateTextArea(builder.toString());
+    }
+
+    private void appendRecords(StringBuilder builder, Library library) {
+        Collection<Title> titles = library.getQuery();
+        for (Title t : titles) {
+            builder.append(t.getTitle());
+            if (t.hasTags()){
+                builder.append(", TAG: ");
+                builder.append(t.getTag());
+            }
+            if (t.hasAuthors()){
+                builder.append(", author: ");
+                builder.append(t.getAuthor());
+            }
             builder.append("\n");
         }
-        controller.populateTextArea(builder.toString());
     }
 }

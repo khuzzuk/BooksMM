@@ -5,6 +5,7 @@ import org.w3c.dom.NodeList;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class Library {
     @Column(name = "id")
     private int id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<Title> titles;
 
     @Column(name = "name")
@@ -117,6 +118,10 @@ public class Library {
 
     public Collection<String> getTitles() {
         return titles.stream().map(Title::getTitle).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public Collection<Title> getQuery(){
+        return titles;
     }
 
     public String getTags(String title) {

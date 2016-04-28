@@ -7,7 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import messaging.subscribers.WriteToDBUISubscriber;
+import messaging.MessageProducer;
+import messaging.messages.QueryFromDBMessage;
+import messaging.subscribers.UIReadFromDBSubscriber;
 import libraries.LibrariesList;
 import libraries.interpreters.InterpreterFactory;
 import ui.MessageReader;
@@ -16,7 +18,7 @@ import java.net.URL;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable, MessageProducer<QueryFromDBMessage> {
     private Collection<LibrariesList.Categories> categories;
     @FXML
     ListView<String> availableLibraries;
@@ -38,7 +40,7 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-        new WriteToDBUISubscriber(this);
+        new UIReadFromDBSubscriber(this);
         populateComboBox();
         populateAvailableLibraries();
     }
@@ -89,9 +91,7 @@ public class MainWindowController implements Initializable {
         availableLibraries.getItems().remove(selectedLeftItem);
         toRightButton.setDisable(true);
         populateTextArea("loading...");
-        String address = LibrariesList.getInstance().getLibraryAddress(selectedLeftItem,
-                (LibrariesList.Categories) categoriesElement.getSelectionModel().getSelectedItem());
-        TaskChannel.channel.putTask(new Task(InterpreterFactory.getInterpreter(address)));
+        send(new QueryFromDBMessage(selectedLeftItem));
     }
     @FXML
     private void moveToLeftAction(){
