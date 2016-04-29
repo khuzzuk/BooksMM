@@ -1,6 +1,7 @@
 package databaseManager;
 
 import libraries.Library;
+import libraries.interpreters.Interpreter;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -11,6 +12,8 @@ import util.WrongLibraryException;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +29,8 @@ public class DBRWTest {
     private DBRW.DAOWriter daoWriter;
     @Mock
     private DBRW.MessageSender sender;
+    @Mock
+    private DBRW.DAOReader daoReader;
     @InjectMocks
     private DBRW dbrw = DBRW.DBRW;
 
@@ -34,13 +39,16 @@ public class DBRWTest {
      */
     @DataProvider
     public Object[][] validLibraries(){
-        Library library1 = new Library("MyLibrary", "1/1/1999");
+        Library library1 = new Library("MyLibrary", "1999/1/1");
         library1.add("1");
-        Library library2 = new Library("MyOtherLibrary", "1/12/2015");
+        Library library2 = new Library("MyOtherLibrary", "2015/12/1");
         library2.add("2");
-        Library library3 = new Library("AnotherLibrary", "31/12/2015");
+        Library library3 = new Library("AnotherLibrary", "2015/12/31");
         library3.add("3");
-        return new Object[][]{{library1},{library2},{library3}};
+        GregorianCalendar c = new GregorianCalendar();
+        Library library4 = new Library("AnotherLibrary", c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH));
+        library4.add("4");
+        return new Object[][]{{library1},{library2},{library3},{library4}};
     }
 
     /**
@@ -92,9 +100,9 @@ public class DBRWTest {
         verify(daoWriter, times(1)).commitTransaction(library);
     }
 
-    @Test(groups = "integration")
+    @Test(groups = "fast")
     public void checkIfHarvestingObjectFromDAOWorks() throws Exception {
         List fetches = DBRW.getLibrariesFromDB();
-        assertThat(fetches.size()).isGreaterThan(0);
+        verify(daoReader, times(1)).getLibraries();
     }
 }

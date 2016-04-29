@@ -24,6 +24,8 @@
         <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
         <maven-assembly-plugin-version>2.6</maven-assembly-plugin-version>
         <awaitility.version>1.7.0</awaitility.version>
+        <dbunit.version>2.5.2</dbunit.version>
+        <h2.version>1.4.191</h2.version>
     </properties>
 
     <description>
@@ -176,6 +178,16 @@
             <groupId>com.jayway.awaitility</groupId>
             <artifactId>awaitility</artifactId>
             <version>${awaitility.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${dbunit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
         </dependency>
     </dependencies>
 

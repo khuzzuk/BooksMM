@@ -1,0 +1,7 @@
+<dataset>
+    <Titles titleId="1" author="author1" tag="tag1" title="title1" libID="3"/>
+    <Titles titleId="2" author="author1" tag="tag2" title="title2" libID="3"/>
+    <Queries id="3" date="123" name="bookrix"/>
+    <Queries_Titles Library_id="3" titles_titleId="1"/>
+    <Queries_Titles Library_id="3" titles_titleId="2"/>
+</dataset>

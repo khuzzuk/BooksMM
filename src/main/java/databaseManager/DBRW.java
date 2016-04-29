@@ -46,6 +46,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final String LIBRARY_AUTHOR_ELEMENT = "author";
     private static final Logger logger = Logger.getLogger(DBRW.class);
     private DAOWriter daoWriter;
+    private DAOReader daoReader;
     private Writer writer = new Writer();
     private Reader reader = new Reader();
     private MessageSender sender = new MessageSender();
@@ -53,7 +54,6 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static Document DB;
     List<Library> libraries;
     private File dbFile = new File("DB.xml");
-    private static DAOReader daoReader;
 
 
     private DBRW() {
@@ -116,7 +116,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         if (library.size() == 0) throw new WrongLibraryException("Library has no titles to log. Operation failed during writing to database.");
         String[] date = library.getDate().split("/");
         if (date.length!=3) throw new WrongLibraryException("Inapropriate date format in a Library object.");
-        int year = Integer.parseInt(date[2]);
+        int year = Integer.parseInt(date[0]);
         if (year<1900 || year> Calendar.getInstance().get(Calendar.YEAR))
             throw new WrongLibraryException("Inapropriate year in Library Object.");
         return true;
@@ -205,8 +205,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     static List getLibrariesFromDB(){
-        if (daoReader==null) daoReader = new DAOReader();
-        return daoReader.getLibraries();
+        if (DBRW.daoReader==null) DBRW.daoReader = new DAOReader();
+        return DBRW.daoReader.getLibraries();
     }
 
     @SubscriptionType(type = QueryFromDBMessage.class)
@@ -263,6 +263,10 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         private static Session session;
         private static void initialize() {
             factory = new Configuration().configure().buildSessionFactory();
+            session = factory.openSession();
+        }
+        static void changeConfiguration(String pathToXml){
+            factory = new Configuration().configure(pathToXml).buildSessionFactory();
             session = factory.openSession();
         }
         /**
