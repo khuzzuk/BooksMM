@@ -31,7 +31,7 @@ public interface Subscriber<T extends Message> {
      * {@link Message} object are processed by MessageWorker,
      * this method will be invoked. Every object implementing this interface should provide
      * in this method a logic for handling a message. Mind, that by default every invocation of
-     * {@link (Message)} method will be processed by one thread. After processing
+     * this method will be processed by one thread. After processing
      * a method, thread will start processing another message. It is then prone to deadlock when you
      * do all the work with a thread started in this method.
      *

@@ -46,12 +46,12 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final Logger logger = Logger.getLogger(DBRW.class);
     private DAOWriter daoWriter;
     private DAOReader daoReader;
-    private final Writer writer = new Writer();
-    private final Reader reader = new Reader();
-    private final MessageSender sender = new MessageSender();
-    private final QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
+    private Writer writer = new Writer();
+    private Reader reader = new Reader();
+    private MessageSender sender = new MessageSender();
+    private QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
     static Document DB;
-    List<Library> libraries;
+    @SuppressWarnings("unchecked") List<Library> libraries;
     private File dbFile = new File("DB.xml");
 
     private DBRW() {
@@ -188,6 +188,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * @param name name of the library resided in log file.
      * @return {@link List} of {@link Library} objects.
      */
+    @SuppressWarnings("unchecked")
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
         if (DBRW.libraries == null) DBRW.libraries = getLibrariesFromDB();
