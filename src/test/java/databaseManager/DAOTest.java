@@ -34,11 +34,13 @@ public class DAOTest {
     @Test(groups = "integration")
     public void extractFromDataSet() throws Exception {
         ResultSet results = dataSource().getConnection().createStatement().executeQuery("SELECT * FROM Titles");
+        //FIXME: bug 2
         while (results.next())
             System.out.println(results.getString("title"));
     }
 
-    public void DAOReadsProperlyFromDatabase() throws Exception {
+    //FIXME: I'm never used!
+    public void DAOReadsProperlyFromDatabase() {
         DBRW.DAOInitializer.changeConfiguration("/hibernateTestConfiguration/hibernate.cfg.xml");
         assertThat(DBRW.getLibrariesFromDB().size()).isGreaterThan(0);
     }

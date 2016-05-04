@@ -103,6 +103,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             DBRW.daoWriter.commitTransaction(library);
             DBRW.sender.finishedTask();
         } catch (WrongLibraryException e) {
+            //FIXME: bug 1
             System.err.println(e.getMessage());
             return false;
         }
@@ -115,10 +116,11 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         if (library.getDate() == null) throw new WrongLibraryException("Library has no date set. Operation failed during writing to database.");
         if (library.size() == 0) throw new WrongLibraryException("Library has no titles to log. Operation failed during writing to database.");
         String[] date = library.getDate().split("/");
-        if (date.length!=3) throw new WrongLibraryException("Inapropriate date format in a Library object.");
+        if (date.length!=3) throw new WrongLibraryException("Inappropriate date format in a Library object.");
         int year = Integer.parseInt(date[0]);
         if (year<1900 || year> Calendar.getInstance().get(Calendar.YEAR))
-            throw new WrongLibraryException("Inapropriate year in Library Object.");
+            throw new WrongLibraryException("Inappropriate year in Library Object.");
+        //FIXME: always trueeeee! (only you)
         return true;
     }
 
@@ -253,6 +255,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static class DAOReader {
         public List getLibraries(){
             if (DAOInitializer.session==null) DAOInitializer.initialize();
+            //XXX: get rid of unused var
             Transaction tx = DAOInitializer.session.beginTransaction();
             List libraries = DAOInitializer.session.createQuery("FROM Library").list();
             return libraries;

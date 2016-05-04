@@ -59,6 +59,7 @@ In persistence.xml file you need to type the name of your database and password 
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/name_of_database"/>
 <property name="javax.persistence.jdbc.password" value="password_to_database"/>
 
+//FIXME: what comes after?
 
 *************************************************************
 

@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 class HtmlContent implements HtmlElement {
     Element page;
@@ -53,10 +54,7 @@ class HtmlContent implements HtmlElement {
         }
         @Override
         public Iterator<HtmlElement> iterator() {
-            Collection<HtmlElement> iterable = new ArrayList<>();
-            for (Element e : elements){
-                iterable.add(new HtmlContent(e));
-            }
+            Collection<HtmlElement> iterable = elements.stream().map(HtmlContent::new).collect(Collectors.toCollection(ArrayList::new));
             return iterable.iterator();
         }
 
