@@ -11,7 +11,6 @@ import messaging.subscribers.SubscriptionType;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,14 +46,13 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private static final Logger logger = Logger.getLogger(DBRW.class);
     private DAOWriter daoWriter;
     private DAOReader daoReader;
-    private Writer writer = new Writer();
-    private Reader reader = new Reader();
-    private MessageSender sender = new MessageSender();
-    private QueryFromDBChanneler subscriber = new QueryFromDBChanneler();
+    private final Writer writer = new Writer();
+    private final Reader reader = new Reader();
+    private final MessageSender sender = new MessageSender();
+    private final QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
     static Document DB;
     List<Library> libraries;
     private File dbFile = new File("DB.xml");
-
 
     private DBRW() {
     }
@@ -103,8 +101,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             DBRW.daoWriter.commitTransaction(library);
             DBRW.sender.finishedTask();
         } catch (WrongLibraryException e) {
-            //FIXME: bug 1
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
             return false;
         }
         return true;
@@ -120,8 +117,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         int year = Integer.parseInt(date[0]);
         if (year<1900 || year> Calendar.getInstance().get(Calendar.YEAR))
             throw new WrongLibraryException("Inappropriate year in Library Object.");
-        //FIXME: always trueeeee! (only you)
-        return true;
+        return (Integer.parseInt(date[1])<0 || Integer.parseInt(date[2])<0);
     }
 
     public static void shutDown() {
@@ -212,8 +208,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     @SubscriptionType(type = QueryFromDBMessage.class)
-    public static class QueryFromDBChanneler implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
-        public QueryFromDBChanneler() {
+    public static class QueryFromDBChanneller implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
+        public QueryFromDBChanneller() {
             subscribe();
         }
 
@@ -255,10 +251,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static class DAOReader {
         public List getLibraries(){
             if (DAOInitializer.session==null) DAOInitializer.initialize();
-            //XXX: get rid of unused var
-            Transaction tx = DAOInitializer.session.beginTransaction();
-            List libraries = DAOInitializer.session.createQuery("FROM Library").list();
-            return libraries;
+            return DAOInitializer.session.createQuery("FROM Library").list();
         }
     }
     static class DAOInitializer{

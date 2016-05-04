@@ -1,7 +1,5 @@
 package ui.controller;
 
-import channels.Task;
-import channels.TaskChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +9,6 @@ import messaging.MessageProducer;
 import messaging.messages.QueryFromDBMessage;
 import messaging.subscribers.UIReadFromDBSubscriber;
 import libraries.LibrariesList;
-import libraries.interpreters.InterpreterFactory;
 import ui.MessageReader;
 
 import java.net.URL;

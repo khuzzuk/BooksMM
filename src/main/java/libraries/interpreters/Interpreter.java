@@ -38,13 +38,13 @@ public abstract class Interpreter {
      * @return {@link libraries.Library} with titles.
      */
     public Library getQuery(String url, String pattern){
-        Library library = getLibraryInstace();
+        Library library = getLibraryInstance();
         BookFinder finder = new BookFinder(url, pattern);
         String[] titles = finder.listOfBooks().split("\\n");
         library.addAll(titles);
         return library;
     }
-    public Library getLibraryInstace(){
+    public Library getLibraryInstance(){
         return new Library(name, date);
     }
 }

@@ -8,7 +8,7 @@ public class InterpreterFactory {
         if (url.toLowerCase().contains(bookrixTag))
             return new BookrixInterpreter(url);
         else if (url.toLowerCase().contains(freebookshub))
-            return new FreebookshubInterpreter(url);
+            return new FreeBooksHubInterpreter(url);
         else if (url.toLowerCase().contains(goodreads))
             return new GoodreadsInterpreter(url);
         return null;

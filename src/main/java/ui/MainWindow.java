@@ -17,12 +17,14 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setScene(new Scene(root, 900, 600));
+            try {
+                root = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        if (root != null)
+            primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

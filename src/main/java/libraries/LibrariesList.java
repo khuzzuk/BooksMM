@@ -152,7 +152,7 @@ public class LibrariesList implements XMLParser {
         Element root = (Element) doc.getElementsByTagName(category.xmlCategory).item(0);
         root.appendChild(address);
         writer.writeFile();
-        //FIXME: operation always successful! :P
+
         return true;
     }
 

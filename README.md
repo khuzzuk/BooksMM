@@ -49,7 +49,7 @@ How to set-up MySQL database (in terminal):
 4. show name_of_database;
 5. use name_of_database;
 6. show tables;
-You can also download MySQL Workbench from Seftware Center.
+You can also download MySQL Workbench from Software Center.
 
 
 To install this software just copy it into some catalog.
@@ -59,7 +59,19 @@ In persistence.xml file you need to type the name of your database and password 
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/name_of_database"/>
 <property name="javax.persistence.jdbc.password" value="password_to_database"/>
 
-//FIXME: what comes after?
+*************************************************************
+
+RUNNING
+
+Robot has two modes. Background and User Interface.
+
+To start our application in GUI mode you may run java file.
+In this mode you can check your results.
+
+If you want to run in background you should add argument "-b".
+In this mode actual searching will happen. Results will be save
+to the database and you can check the results in graphical user
+interface mode.
 
 *************************************************************
 

@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-class FreebookshubInterpreter extends Interpreter {
+class FreeBooksHubInterpreter extends Interpreter {
     private static final String pattern = getPattern();
     final String url;
 
-    public FreebookshubInterpreter(String url) {
+    public FreeBooksHubInterpreter(String url) {
         super();
         this.url = url;
         name = "freebookshub";
