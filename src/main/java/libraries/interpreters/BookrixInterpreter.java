@@ -43,7 +43,7 @@ class BookrixInterpreter extends Interpreter {
 
     public Library getQuery(){
         page = new HtmlDownloader().getContentFromHTML(address);
-        Library library = getLibraryInstace();
+        Library library = getLibraryInstance();
         HtmlElement elements = page.getElementsByAttribute(attribute, attributeValue);
         for (HtmlElement e : elements)
             addTitleToLibrary(library, e);

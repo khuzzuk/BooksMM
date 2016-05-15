@@ -47,7 +47,7 @@ public class QueryMakerTest {
         //given
         QueryMaker.QueryInitializer mockedInitializer = mock(QueryMaker.QueryInitializer.class);
         when(mockedInitializer.initQueries()).thenReturn(false);
-        maker.initializator = mockedInitializer;
+        maker.initializer = mockedInitializer;
         //when
         maker.startQuery(category);
         //then

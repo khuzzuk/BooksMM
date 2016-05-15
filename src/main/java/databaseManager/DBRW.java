@@ -11,7 +11,6 @@ import messaging.subscribers.SubscriptionType;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -50,11 +49,10 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private Writer writer = new Writer();
     private Reader reader = new Reader();
     private MessageSender sender = new MessageSender();
-    private QueryFromDBChanneler subscriber = new QueryFromDBChanneler();
+    private QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
     static Document DB;
-    List<Library> libraries;
+    @SuppressWarnings("unchecked") List<Library> libraries;
     private File dbFile = new File("DB.xml");
-
 
     private DBRW() {
     }
@@ -103,7 +101,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             DBRW.daoWriter.commitTransaction(library);
             DBRW.sender.finishedTask();
         } catch (WrongLibraryException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
             return false;
         }
         return true;
@@ -115,11 +113,11 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         if (library.getDate() == null) throw new WrongLibraryException("Library has no date set. Operation failed during writing to database.");
         if (library.size() == 0) throw new WrongLibraryException("Library has no titles to log. Operation failed during writing to database.");
         String[] date = library.getDate().split("/");
-        if (date.length!=3) throw new WrongLibraryException("Inapropriate date format in a Library object.");
+        if (date.length!=3) throw new WrongLibraryException("Inappropriate date format in a Library object.");
         int year = Integer.parseInt(date[0]);
         if (year<1900 || year> Calendar.getInstance().get(Calendar.YEAR))
-            throw new WrongLibraryException("Inapropriate year in Library Object.");
-        return true;
+            throw new WrongLibraryException("Inappropriate year in Library Object.");
+        return (Integer.parseInt(date[1])<0 || Integer.parseInt(date[2])<0);
     }
 
     public static void shutDown() {
@@ -190,6 +188,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * @param name name of the library resided in log file.
      * @return {@link List} of {@link Library} objects.
      */
+    @SuppressWarnings("unchecked")
     public static List<Library> getLibraryByName(String name) {
         List<Library> librariesByName = new ArrayList<>();
         if (DBRW.libraries == null) DBRW.libraries = getLibrariesFromDB();
@@ -210,8 +209,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     @SubscriptionType(type = QueryFromDBMessage.class)
-    public static class QueryFromDBChanneler implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
-        public QueryFromDBChanneler() {
+    public static class QueryFromDBChanneller implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
+        public QueryFromDBChanneller() {
             subscribe();
         }
 
@@ -253,9 +252,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     static class DAOReader {
         public List getLibraries(){
             if (DAOInitializer.session==null) DAOInitializer.initialize();
-            Transaction tx = DAOInitializer.session.beginTransaction();
-            List libraries = DAOInitializer.session.createQuery("FROM Library").list();
-            return libraries;
+            return DAOInitializer.session.createQuery("FROM Library").list();
         }
     }
     static class DAOInitializer{

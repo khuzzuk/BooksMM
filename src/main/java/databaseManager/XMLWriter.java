@@ -17,7 +17,7 @@ public interface XMLWriter {
      * This method will write provided {@link org.w3c.dom.Document} to pointed {@link java.io.File}
      * @param dbFile {@link java.io.File} where method will write data.
      * @param doc {@link org.w3c.dom.Document} which contains data.
-     * @return true when operation is succesfull.
+     * @return true when operation is successful.
      */
     default boolean updateDBFile(File dbFile, Document doc) {
         try (FileOutputStream outputStream = new FileOutputStream(dbFile)) {

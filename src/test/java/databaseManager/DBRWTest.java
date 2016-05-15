@@ -101,8 +101,8 @@ public class DBRWTest {
     }
 
     @Test(groups = "fast")
-    public void checkIfHarvestingObjectFromDAOWorks() throws Exception {
-        List fetches = DBRW.getLibrariesFromDB();
+    public void checkIfHarvestingObjectFromDAOWorks() {
+        DBRW.getLibrariesFromDB();
         verify(daoReader, times(1)).getLibraries();
     }
 }

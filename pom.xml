@@ -73,12 +73,6 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>default-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>jacoco-site</id>
                         <phase>package</phase>
                         <goals>
@@ -87,7 +81,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--We use assembly plugin in order to define proper packagin of jar with application.
+            <!--We use assembly plugin in order to define proper packaging of jar with application.
                 It needs to add external libraries for logging and specify main class to start application
                 in one of two modes.-->
             <plugin>

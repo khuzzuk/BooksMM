@@ -16,7 +16,6 @@ public class HtmlDownloader implements XMLParser {
      * download whole content to {@link String} from provided url as {@link String}.
      * Here connection takes place, so it may be slow.
      * @param url {@link String} with full address (ie. with "http:\\").
-     * @return
      */
     public static String downloadPage(String url) {
         URL pageURL = null;
@@ -54,7 +53,7 @@ public class HtmlDownloader implements XMLParser {
         try {
             document = Jsoup.connect(url).get();
         } catch (IOException e) {
-            logger.error("Iterruption during reading an url: "+url);
+            logger.error("Interruption during reading an url: "+url);
             e.printStackTrace();
         }
         return new HtmlContent(document);

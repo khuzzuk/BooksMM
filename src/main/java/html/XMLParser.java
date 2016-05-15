@@ -35,19 +35,15 @@ public interface XMLParser {
      */
     default Document getDocument(InputStream stream) throws IOException {
         Document doc = null;
-        try {
-            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
+        //XXX: test after refactoring, add system.exit call if you wish to close the app or throw a runtime exception
+        try (InputStream is = stream){
+            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
         } catch (ParserConfigurationException e) {
-            logger.error("Failed to provide new instance of Document class object. Examine XMLParser class from source code.");
-            e.printStackTrace();
+            logger.error("Failed to provide new instance of Document class object. Examine XMLParser class from source code, exception says " + e.getMessage());
         } catch (SAXException e) {
-            logger.error("Found malformed content during xml parsing operation.");
-            e.printStackTrace();
+            logger.error("Found malformed content during xml parsing operation, exception says " + e.getMessage());
         } catch (IOException e) {
-            logger.error("Failed to connect with url whn parsing xml data.");
-            e.printStackTrace();
-        } finally {
-            stream.close();
+            logger.error("Failed to connect with url whn parsing xml data, exception says " + e.getMessage());
         }
         return doc;
     }

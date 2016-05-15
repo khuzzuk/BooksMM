@@ -15,7 +15,7 @@ public interface HtmlElement extends Iterable<HtmlElement> {
 
     /**
      * This method will return selected {@link HtmlElement} children of actual {@link HtmlElement}.
-     * There will be onle elements which have pointed attribute and the attribute must have specific value.
+     * There will be only elements which have pointed attribute and the attribute must have specific value.
      * @param attributeName {@link String} with attribute name.
      * @param attributeValue {@link String} with attribute value.
      * @return {@link HtmlElement} children elements which meet specified requirements.

@@ -23,7 +23,7 @@ public class InterpreterTest {
                 return null;
             }
         };
-        Library library = interpreter.getLibraryInstace();
+        Library library = interpreter.getLibraryInstance();
         assertThat(library).isNotNull();
     }
 

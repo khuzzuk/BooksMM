@@ -39,7 +39,7 @@ public class MessageChannel {
     /**
      * Here you may put a {@link Message} to queue. When {@link MessageWorker} will be free
      * it will poll a {@link Message} and process {@link Subscriber#receive(Message)} method.
-     * Mind that only one thred is active to process every message. {@link MessageWorker} will
+     * Mind that only one thread is active to process every message. {@link MessageWorker} will
      * continue processing another message after it finish its current task.
      * Also notice that due to lazy initialization when you offer first task to a channel,
      * it will initialize message infrastructure, which could be costly.

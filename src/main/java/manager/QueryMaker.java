@@ -19,12 +19,12 @@ public class QueryMaker implements MessageProducer<FinishedQueryMessage>{
     LibrariesList list;
     TaskChannel channel;
     DBRW dbrw;
-    QueryInitializer initializator;
+    QueryInitializer initializer;
     private static final Logger logger = Logger.getLogger(QueryMaker.class);
 
     public QueryMaker() {
         new FinishedTaskSubscriber(this);
-        initializator = new QueryInitializer();
+        initializer = new QueryInitializer();
     }
 
     public void startQuery(){
@@ -45,7 +45,7 @@ public class QueryMaker implements MessageProducer<FinishedQueryMessage>{
      */
 
     public void startQuery(LibrariesList.Categories category) throws QueryInitializationException {
-        if (!initializator.initQueries()) throw new QueryInitializationException();
+        if (!initializer.initQueries()) throw new QueryInitializationException();
         isInQueryMode=true;
         List<String> urls = list.getAddresses(category);
         for (String a : urls){
