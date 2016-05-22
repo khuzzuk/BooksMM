@@ -58,7 +58,7 @@ public class TaskChannel {
                 new Thread(new Worker()).start();
             }
         }
-        private static class Worker implements Runnable, MessageProducer {
+        private static class Worker implements Runnable {
             @SuppressWarnings("unchecked")
             @Override
             public void run() {
@@ -72,8 +72,8 @@ public class TaskChannel {
                         e.printStackTrace();
                     }
                     else {
-                        Library library = task.getLibrary();
-                        send(new WriteToDBMessage(library));
+                        task.getLibrary();
+                        //send(new WriteToDBMessage(library));
                     }
                 }
             }
