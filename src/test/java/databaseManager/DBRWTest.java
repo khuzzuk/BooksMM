@@ -97,7 +97,7 @@ public class DBRWTest {
         int expectedNumber = 1;
         assertThat(librariesInDB).isEqualTo(expectedNumber);
         verify(writer, times(1)).updateDBFile(testFile, DBRW.DB);
-        verify(daoWriter, times(1)).commitTransaction(library);
+        //verify(daoWriter, times(1)).commitTransaction(library);
     }
 
     @Test(groups = "fast")

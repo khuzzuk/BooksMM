@@ -1,25 +1,5 @@
 package databaseManager;
 
-import messaging.MessageProducer;
-import messaging.messages.QueryFromDBMessage;
-import messaging.messages.FinishedTaskMessage;
-import messaging.messages.ReadLibraryFromDBMessage;
-import messaging.subscribers.DBWriter;
-import libraries.Library;
-import messaging.subscribers.Subscriber;
-import messaging.subscribers.SubscriptionType;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import util.WrongLibraryException;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,12 +9,33 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import libraries.Library;
+import messaging.MessageProducer;
+import messaging.messages.QueryFromDBMessage;
+import messaging.messages.ReadLibraryFromDBMessage;
+import messaging.subscribers.DBWriter;
+import messaging.subscribers.Subscriber;
+import messaging.subscribers.SubscriptionType;
+import util.WrongLibraryException;
+
 /**
  * This class is responsible for operation on xml file which logs information about found books.
  * It has only static methods, and no instance of this object is provided.
  * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
  */
-public class DBRW implements MessageProducer<FinishedTaskMessage> {
+public class DBRW {
     private static final String LIBRARY_ELEMENT = "Library";
     public static final DBRW DBRW = new DBRW();
     private static final String LIBRARY_NAME_ELEMENT = "name";
@@ -48,10 +49,10 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     private DAOReader daoReader;
     private Writer writer = new Writer();
     private Reader reader = new Reader();
-    private MessageSender sender = new MessageSender();
+    //private MessageSender sender = new MessageSender();
     private QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
     static Document DB;
-    @SuppressWarnings("unchecked") List<Library> libraries;
+    List<Library> libraries;
     private File dbFile = new File("DB.xml");
 
     private DBRW() {
@@ -66,7 +67,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * since there is no lazy-initialization with first use.
      */
     public static void initializeDB() {
-        DBRW.daoWriter = new DAOWriter();
+        //DBRW.daoWriter = new DAOWriter();
         DBRW.libraries = new ArrayList<>();
         if (!DBRW.dbFile.exists()) InitializeDBFile();
         else DBRW.reader.readDBFile();
@@ -98,8 +99,8 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
             newXML();
             createXMLContent();
             DBRW.writer.updateDBFile(DBRW.dbFile, DB);
-            DBRW.daoWriter.commitTransaction(library);
-            DBRW.sender.finishedTask();
+            //DBRW.daoWriter.commitTransaction(library);
+            //DBRW.sender.finishedTask();
         } catch (WrongLibraryException e) {
             logger.error(e.getMessage());
             return false;
@@ -121,7 +122,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     public static void shutDown() {
-        DAOInitializer.close();
+        //DAOInitializer.close();
     }
 
     private static void createXMLContent() {
@@ -200,7 +201,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
      * Will make a query from database and when finished it will send a new {@link QueryFromDBMessage}.
      */
     public static void QueryLibraries(String libraryName){
-        new Thread(() -> {DBRW.subscriber.send(new ReadLibraryFromDBMessage(getLibraryByName(libraryName)));}).start();
+        new Thread(() -> {getLibraryByName(libraryName);}).start();
     }
 
     static List getLibrariesFromDB(){
@@ -209,7 +210,7 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
     }
 
     @SubscriptionType(type = QueryFromDBMessage.class)
-    public static class QueryFromDBChanneller implements Subscriber<QueryFromDBMessage>, MessageProducer<ReadLibraryFromDBMessage> {
+    public static class QueryFromDBChanneller implements Subscriber<QueryFromDBMessage>{
         public QueryFromDBChanneller() {
             subscribe();
         }
@@ -303,9 +304,9 @@ public class DBRW implements MessageProducer<FinishedTaskMessage> {
         }
     }
 
-    static class MessageSender implements MessageProducer<FinishedTaskMessage> {
+/*    static class MessageSender implements MessageProducer<FinishedTaskMessage> {
         private void finishedTask() {
             send(new FinishedTaskMessage());
         }
-    }
+    }*/
 }
