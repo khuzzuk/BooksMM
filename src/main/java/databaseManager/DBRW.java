@@ -154,7 +154,8 @@ public class DBRW {
 
     }
     static class DAOReader {
-        public List getLibraries(){
+        @SuppressWarnings("unchecked")
+		public List<Library> getLibraries(){
             if (DAOInitializer.session==null) DAOInitializer.initialize();
             return DAOInitializer.session.createQuery("FROM Library").list();
         }
