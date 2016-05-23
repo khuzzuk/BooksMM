@@ -1,59 +1,37 @@
 package databaseManager;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import libraries.Library;
-import messaging.MessageProducer;
 import messaging.messages.QueryFromDBMessage;
-import messaging.messages.ReadLibraryFromDBMessage;
 import messaging.subscribers.DBWriter;
 import messaging.subscribers.Subscriber;
 import messaging.subscribers.SubscriptionType;
 import util.WrongLibraryException;
+import xmlParsing.XMLWriter;
 
 /**
- * This class is responsible for operation on xml file which logs information about found books.
+ * This class is responsible for operation on database which logs information about found books.
  * It has only static methods, and no instance of this object is provided.
- * It will read and write a file. Also it has Subscriber helper class {@link DBWriter}.
+ * It will read and write a database. Also it has Subscriber helper class {@link DBWriter}.
  */
 public class DBRW {
-    private static final String LIBRARY_ELEMENT = "Library";
     public static final DBRW DBRW = new DBRW();
-    private static final String LIBRARY_NAME_ELEMENT = "name";
-    private static final String LIBRARY_DATE_ELEMENT = "Date";
-    private static final String LIBRARY_TITLE_ELEMENT = "Title";
-    private static final String LIBRARY_TITLE_VALUE = "TitleText";
-    private static final String LIBRARY_TAG_ELEMENT = "tag";
-    private static final String LIBRARY_AUTHOR_ELEMENT = "author";
     private static final Logger logger = Logger.getLogger(DBRW.class);
     private DAOWriter daoWriter;
     private DAOReader daoReader;
-    private Writer writer = new Writer();
-    private Reader reader = new Reader();
     //private MessageSender sender = new MessageSender();
-    private QueryFromDBChanneller subscriber = new QueryFromDBChanneller();
-    static Document DB;
     List<Library> libraries;
-    private File dbFile = new File("DB.xml");
 
     private DBRW() {
     }
@@ -67,22 +45,8 @@ public class DBRW {
      * since there is no lazy-initialization with first use.
      */
     public static void initializeDB() {
-        //DBRW.daoWriter = new DAOWriter();
+        DBRW.daoWriter = new DAOWriter();
         DBRW.libraries = new ArrayList<>();
-        if (!DBRW.dbFile.exists()) InitializeDBFile();
-        else DBRW.reader.readDBFile();
-        new DBWriter();
-    }
-
-    private static void InitializeDBFile() {
-        try {
-            DBRW.writer.createFile(DBRW.dbFile);
-            DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            DB.appendChild(DB.createElement("DB"));
-        } catch (ParserConfigurationException e) {
-            logger.error("Cannot initialize new DB xml document in " + DBRW.class.toString());
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -96,11 +60,7 @@ public class DBRW {
         try {
             isLibraryValid(library);
             DBRW.libraries.add(library);
-            newXML();
-            createXMLContent();
-            DBRW.writer.updateDBFile(DBRW.dbFile, DB);
-            //DBRW.daoWriter.commitTransaction(library);
-            //DBRW.sender.finishedTask();
+            DBRW.daoWriter.commitTransaction(library);
         } catch (WrongLibraryException e) {
             logger.error(e.getMessage());
             return false;
@@ -122,64 +82,7 @@ public class DBRW {
     }
 
     public static void shutDown() {
-        //DAOInitializer.close();
-    }
-
-    private static void createXMLContent() {
-        Element root = DB.createElement("DB");
-        DB.appendChild(root);
-        for (Library l : DBRW.libraries) {
-            appendLibraryElement(root, l);
-        }
-    }
-
-    private static void appendLibraryElement(Element root, Library l) {
-        Element libraryElement = DB.createElement(LIBRARY_NAME_ELEMENT);
-        libraryElement.setAttribute(LIBRARY_NAME_ELEMENT, l.getName());
-        root.appendChild(libraryElement);
-        appendElement(libraryElement, l.getDate(), LIBRARY_DATE_ELEMENT);
-        writeTitles(libraryElement, l);
-    }
-
-    private static void writeTitles(Element libraryElement, Library library) {
-        for (String t : library.getTitles()) {
-            writeTitle(libraryElement, t, library);
-        }
-    }
-
-    private static void writeTitle(Element libraryElement, String title, Library library) {
-        Element titleElement = DB.createElement(LIBRARY_TITLE_ELEMENT);
-        appendElement(titleElement, title, LIBRARY_TITLE_VALUE);
-        String tags = library.getTags(title);
-        appendElement(titleElement, tags, LIBRARY_TAG_ELEMENT);
-        String author = library.getAuthor(title);
-        appendElement(titleElement, author, LIBRARY_AUTHOR_ELEMENT);
-        libraryElement.appendChild(titleElement);
-    }
-
-    private static void appendElement(Element rootElement, String newElementTextValue, String newElementName) {
-        Element newElement = DB.createElement(newElementName);
-        newElement.setTextContent(newElementTextValue);
-        rootElement.appendChild(newElement);
-    }
-
-    private static void newXML() {
-        try {
-            DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * This method provides a way to change destination file of the logs with books information.
-     * By default file will be created in execution path (commonly when the execution file is located),
-     * and will be named "DB.xml".
-     *
-     * @param file - new destination file.
-     */
-    public static void setOutputDBFile(File file) {
-        DBRW.dbFile = file;
+        DAOInitializer.close();
     }
 
     /**
@@ -273,34 +176,6 @@ public class DBRW {
         private static void close() {
             factory.close();
             session = null;
-        }
-    }
-
-    static class Reader {
-
-        private void readDBFile() {
-            try (InputStream stream = new FileInputStream(DBRW.dbFile)) {
-                DB = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
-                loadDB();
-            } catch (ParserConfigurationException | SAXException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void loadDB() {
-            NodeList listOfLibraries = DB.getDocumentElement().getElementsByTagName(LIBRARY_ELEMENT);
-            for (int i = 0; i < listOfLibraries.getLength(); i++) {
-                loadRecord(listOfLibraries, i);
-            }
-        }
-
-        private void loadRecord(NodeList listOfLibraries, int i) {
-            Element lib = (Element) listOfLibraries.item(i);
-            String name = lib.getAttribute(LIBRARY_NAME_ELEMENT);
-            String date = lib.getElementsByTagName(LIBRARY_DATE_ELEMENT).item(0).getTextContent();
-            Library library = new Library(name, date);
-            library.addAll(lib.getElementsByTagName(LIBRARY_TITLE_ELEMENT));
-            DBRW.libraries.add(library);
         }
     }
 

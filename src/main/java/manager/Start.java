@@ -14,9 +14,9 @@ public class Start implements Subscriber<FinishedQueryMessage>{
         subscribe();
     }
 
-    public static void main(String[] args) {
+    @SuppressWarnings("restriction")
+	public static void main(String[] args) {
         new Start();
-        DBRW.setOutputDBFile(new File("TestDB.xml"));
         if (args.length>0 && args[0].equals("-b")){
             QueryMaker query = new QueryMaker();
             query.startQuery();

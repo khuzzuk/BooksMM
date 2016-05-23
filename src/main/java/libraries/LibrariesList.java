@@ -1,7 +1,8 @@
 package libraries;
 
-import html.XMLParser;
-import databaseManager.XMLWriter;
+import xmlParsing.XMLParser;
+import xmlParsing.XMLWriter;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

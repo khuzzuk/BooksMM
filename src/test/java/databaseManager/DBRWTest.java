@@ -27,8 +27,8 @@ public class DBRWTest {
     private DBRW.Writer writer;
     @Mock
     private DBRW.DAOWriter daoWriter;
-    @Mock
-    private DBRW.MessageSender sender;
+    //@Mock
+    //private DBRW.MessageSender sender;
     @Mock
     private DBRW.DAOReader daoReader;
     @InjectMocks

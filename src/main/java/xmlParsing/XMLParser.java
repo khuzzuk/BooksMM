@@ -1,4 +1,4 @@
-package html;
+package xmlParsing;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -35,7 +35,6 @@ public interface XMLParser {
      */
     default Document getDocument(InputStream stream) throws IOException {
         Document doc = null;
-        //XXX: test after refactoring, add system.exit call if you wish to close the app or throw a runtime exception
         try (InputStream is = stream){
             doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
         } catch (ParserConfigurationException e) {

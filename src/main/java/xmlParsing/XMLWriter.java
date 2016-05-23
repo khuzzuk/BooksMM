@@ -1,4 +1,4 @@
-package databaseManager;
+package xmlParsing;
 
 import org.w3c.dom.Document;
 

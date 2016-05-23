@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import xmlParsing.XMLParser;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;

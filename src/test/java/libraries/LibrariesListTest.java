@@ -1,10 +1,11 @@
 package libraries;
 
-import html.XMLParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
+
+import xmlParsing.XMLParser;
 
 import java.io.File;
 import java.io.IOException;

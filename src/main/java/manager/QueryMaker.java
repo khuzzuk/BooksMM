@@ -66,12 +66,8 @@ public class QueryMaker implements MessageProducer<FinishedQueryMessage>{
     class QueryInitializer {
         boolean initQueries(){
             if (list==null) list = LibrariesList.getInstance();
-            if (dbrw==null) {
-                dbrw=DBRW.DBRW;
-                DBRW.initializeDB();
-            }
             if (channel==null) channel=TaskChannel.channel;
-            return list!=null && dbrw!=null && channel!=null;
+            return list!=null && channel!=null;
         }
     }
 }
